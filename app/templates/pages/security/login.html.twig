@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BioLeet - Login{% endblock %}
+
+{% block body %}
+    <!------ Include the above in your HEAD tag ---------->
+<div class="container mt-5">
+  <div class="row">
+    <aside class="col-sm-4">
+    </aside> <!-- col.// -->
+    <aside class="col-sm-4">
+      <div class="card mb-3">
+        <article class="card-body">
+          <h4 class="card-title text-center mb-4 mt-1">Login</h4>
+          <p class="text-success text-center">Put your Credentials to Login</p>
+          {% if error %}
+            <div class="alert alert-dismissible alert-danger">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                {{ error.messageKey|trans(error.messageData, 'security') }}
+            </div>
+          {% endif %}
+          <form action="{{ path('security.login') }}" method="post">
+            <div class="form-group">
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
+                <input type="email" name="_username" class="form-control" placeholder="Email" required value={{ last_username }}>
+              </div> <!-- input-group.// -->
+            </div> <!-- form-group// -->
+            <div class="form-group">
+              <div class="input-group mb-3">
+                  <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                <input class="form-control" placeholder="********" type="password" name="_password" required>
+              </div> <!-- input-group.// -->
+            </div> <!-- form-group// -->
+            <div class="form-group d-grid gap-2">
+              <button type="submit" class="btn btn-secondary"> Login </button>
+            </div> <!-- form-group// -->
+            {# <p class="text-center"><a [routerLink]="['/forgot-password']" class="btn-dark">Forgot password?</a></p>
+            <p class="text-center">Don't Have an account ? <a [routerLink]="['/signup']" class="btn-dark">Sign Up</a></p> #}
+          </form>
+        </article>
+      </div> <!-- card.// -->
+
+    </aside> <!-- col.// -->
+    <aside class="col-sm-4">
+    </aside> <!-- col.// -->
+  </div> <!-- row.// -->
+
+</div>
+<!--container end.//-->
+
+{% endblock %}
