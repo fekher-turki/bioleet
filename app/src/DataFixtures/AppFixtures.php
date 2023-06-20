@@ -35,7 +35,7 @@ class AppFixtures extends Fixture
                 ->setUsername($this->faker->firstName() . $this->faker->lastName())
                 ->setEmail($this->faker->email())
                 ->setPlainPassword('password')
-                ->setGender(mt_rand(0, 1) == 1 ? "Male" : "Female")
+                ->setGender(mt_rand(0, 1) == 1 ? "male" : "female")
                 ->setBirthday($this->faker->dateTimeBetween("-{$maxAge} years", "-{$minAge} years"))
                 ->setRoles(['ROLE_USER']);
 

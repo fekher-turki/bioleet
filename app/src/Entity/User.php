@@ -22,6 +22,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 180, unique: true)]
     #[Assert\Email()]
+    #[Assert\NotBlank()]
     #[Assert\Length(min: 2, max: 180)]
     private ?string $email = null;
 
@@ -35,7 +36,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     #[Assert\NotBlank()]
-    private ?string $password = null;
+    private ?string $password = 'password';
 
     #[ORM\Column(length: 30)]
     #[Assert\NotBlank()]
@@ -53,7 +54,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $username = null;
 
     #[ORM\Column(length: 50, nullable: true)]
-    #[Assert\NotBlank()]
     #[Assert\Length(min: 2, max: 50)]
     private ?string $nickname = null;
 
@@ -64,10 +64,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Assert\NotBlank()]
-    #[Assert\Range(
-        min: "-16 years",
-        minMessage: "You must be at least 16 years old."
-    )]
+    #[Assert\LessThanOrEqual("-16 years")]
     private ?\DateTimeInterface $birthday = null;
 
     #[ORM\Column(length: 35, nullable: true)]
@@ -75,11 +72,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $avatar = "default-avatar.png";
 
     #[ORM\Column]
-    #[Assert\NotBlank()]
     private ?bool $isVerified = false;
 
     #[ORM\Column]
-    #[Assert\NotBlank()]
     private ?bool $isFirstLogin = true;
 
     #[ORM\Column(type: Types::DATETIMETZ_MUTABLE, nullable: true)]

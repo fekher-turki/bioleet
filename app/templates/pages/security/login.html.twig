@@ -13,12 +13,21 @@
         <article class="card-body">
           <h4 class="card-title text-center mb-4 mt-1">Login</h4>
           <p class="text-success text-center">Put your Credentials to Login</p>
+
+          {% for message in app.flashes('success') %}
+            <div class="alert alert-dismissible alert-success">
+              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+              {{message}}
+            </div>
+          {% endfor %}
+
           {% if error %}
             <div class="alert alert-dismissible alert-danger">
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 {{ error.messageKey|trans(error.messageData, 'security') }}
             </div>
           {% endif %}
+          
           <form action="{{ path('security.login') }}" method="post">
             <div class="form-group">
               <div class="input-group mb-3">
@@ -35,8 +44,10 @@
             <div class="form-group d-grid gap-2">
               <button type="submit" class="btn btn-secondary"> Login </button>
             </div> <!-- form-group// -->
-            {# <p class="text-center"><a [routerLink]="['/forgot-password']" class="btn-dark">Forgot password?</a></p>
-            <p class="text-center">Don't Have an account ? <a [routerLink]="['/signup']" class="btn-dark">Sign Up</a></p> #}
+            {# <p class="text-center"><a [routerLink]="['/forgot-password']" class="btn-dark">Forgot password?</a></p> #}
+            <p class="text-center">Don't Have an account ?
+							<a href="{{ path('security.signup') }}" class="btn-dark">Sign Up</a>
+						</p>
           </form>
         </article>
       </div> <!-- card.// -->
