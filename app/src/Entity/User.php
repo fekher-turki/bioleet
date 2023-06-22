@@ -3,17 +3,23 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[UniqueEntity('email')]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\EntityListeners(['App\EntityListener\UserListener'])]
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+#[Vich\Uploadable]
+class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -30,6 +36,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private array $roles = [];
 
     private ?string $plainPassword = null;
+
+    private ?string $newPassword = null;
 
     /**
      * @var string The hashed password
@@ -67,8 +75,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\LessThanOrEqual("-16 years")]
     private ?\DateTimeInterface $birthday = null;
 
-    #[ORM\Column(length: 35, nullable: true)]
-    #[Assert\NotBlank()]
+    #[Vich\UploadableField(mapping: 'user_avatar', fileNameProperty: 'avatar')]
+    private ?File $avatarFile = null;
+
+    #[ORM\Column(length: 50, nullable: true)]
     private ?string $avatar = "default-avatar.png";
 
     #[ORM\Column]
@@ -96,10 +106,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotNull()]
     private ?\DateTimeImmutable $createdAt = null;
 
+    #[ORM\Column]
+    #[Assert\NotNull()]
+    private ?\DateTimeImmutable $updatedAt = null;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: SocialMedia::class, orphanRemoval: true)]
+    private Collection $socialMedia;
+
     public function __construct()
     {
         $this->nickname = $this->username;
         $this->createdAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
+        $this->socialMedia = new ArrayCollection();
+    }
+
+    #[ORM\PrePersist]
+    public function setUpdatedAtValue()
+    {
+        $this->updatedAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -148,22 +173,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * Get the value of plainPassword
-     */ 
     public function getPlainPassword()
     {
         return $this->plainPassword;
     }
 
-    /**
-     * Set the value of plainPassword
-     *
-     * @return  self
-     */ 
     public function setPlainPassword($plainPassword)
     {
         $this->plainPassword = $plainPassword;
+
+        return $this;
+    }
+
+    public function getNewPassword()
+    {
+        return $this->newPassword;
+    }
+
+    public function setNewPassword($newPassword)
+    {
+        $this->newPassword = $newPassword;
 
         return $this;
     }
@@ -269,11 +298,45 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->avatar;
     }
 
-    public function setAvatar(?string $avatar): static
+    public function setAvatar(?string $avatar): void
     {
         $this->avatar = $avatar;
+    }
 
-        return $this;
+    public function getAvatarFile(): ?File
+    {
+        return $this->avatarFile;
+    }
+
+    public function setAvatarFile(?File $avatarFile = null): void
+    {
+        $this->avatarFile = $avatarFile;
+
+        if ($this->avatarFile instanceof UploadedFile) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function serialize()
+    {
+
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->email,
+            $this->password,
+        ));
+    }
+
+    public function unserialize($serialized)
+    {
+
+        list(
+            $this->id,
+            $this->username,
+            $this->email,
+            $this->password,
+        ) = unserialize($serialized);
     }
 
     public function isIsVerified(): ?bool
@@ -368,6 +431,45 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getSocialMedia(): ?SocialMedia
+    {
+        return $this->socialMedia->first() ?: null;
+    }
+
+    public function addSocialMedium(SocialMedia $socialMedium): static
+    {
+        if (!$this->socialMedia->contains($socialMedium)) {
+            $this->socialMedia->add($socialMedium);
+            $socialMedium->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSocialMedium(SocialMedia $socialMedium): static
+    {
+        if ($this->socialMedia->removeElement($socialMedium)) {
+            // set the owning side to null (unless already changed)
+            if ($socialMedium->getUser() === $this) {
+                $socialMedium->setUser(null);
+            }
+        }
 
         return $this;
     }

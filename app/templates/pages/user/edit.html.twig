@@ -1,0 +1,348 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BioLeet Settings
+{% endblock %}
+
+
+{% block body %}
+	<div class="container">
+		<div class="col-md-6 offset-md-3">
+			<h3>
+				SETTINGS
+			</h3>
+			{% for message in app.flashes('success') %}
+				<div class="alert alert-dismissible alert-secondary">
+					<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+					<i class="fa-solid fa-check text-success me-3"></i>
+					{{message}}
+				</div>
+			{% endfor %}
+
+			{% for message in app.flashes('warning') %}
+				<div class="alert alert-dismissible alert-secondary">
+					<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+					<i class="fa-solid fa-xmark text-danger me-3"></i>
+					{{message}}
+				</div>
+			{% endfor %}
+
+			<h4 class="mt-4">Edit Avatar</h4>
+
+			{{ form_start(avatarForm) }}
+
+			{% set avatarModalId = 'avatarModal' %}
+
+			{% if vich_uploader_asset(user, 'avatarFile') is null %}
+				<button type="button" class="btn btn-outline-dark imagebottom" data-bs-toggle="modal" data-bs-target="#{{ avatarModalId }}">
+					<img src="{{ asset('images/default/default-avatar.png') }}" alt="default-avatar"/>
+					<i class="fas fa-upload fa-6x icontop"></i>
+				</button>
+			{% else %}
+				<button type="button" class="btn btn-outline-dark imagebottom" data-bs-toggle="modal" data-bs-target="#{{ avatarModalId }}">
+					<img width="200" height="150" src="{{ vich_uploader_asset(user, 'avatarFile') }}" alt="{{ user.username }}">
+					<i class="fas fa-upload fa-6x icontop"></i>
+				</button>
+			{% endif %}
+
+			<div class="form-error">
+				{{ form_errors(avatarForm.avatarFile) }}
+			</div>
+
+			{% set avatarModalTitle = 'Upload Avatar' %}
+			{% set avatarModalBody %}
+			Please select your avatar
+			<div class="form-group">
+				{{ form_label(avatarForm.avatarFile) }}
+				{{ form_widget(avatarForm.avatarFile) }}
+			</div>
+			{% endset %}
+
+			{% set avatarModalFooter %}
+			{{ form_widget(avatarForm.submit) }}
+			{{ form_widget(avatarForm.cancel) }}
+			{% endset %}
+
+			{% include 'partials/modal.html.twig' with {
+				modalId: avatarModalId,
+				modalTitle: avatarModalTitle,
+				modalBody: avatarModalBody,
+				modalFooter: avatarModalFooter
+			} only %}
+
+
+			{{ form_end(avatarForm) }}
+
+			<div class="accordion accordion-flush" id="settings">
+				<div class="accordion-item">
+					<h2 class="accordion-header">
+						<button class="accordion-button bg-transparent text-white collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accountInformations" aria-expanded="true" aria-controls="accountInformations">
+							<h5 class="mt-4">Account Information</h5>
+						</button>
+					</h2>
+					<div id="accountInformations" class="accordion-collapse collapse show">
+						<div class="accordion-body">
+							{{ form_start(form) }}
+							<div class="form-error">
+								{{ form_errors(form) }}
+							</div>
+							<div class="form-group">
+								<div class="input-group mb-3">
+									<div class="form-floating">
+										{{ form_widget(form.firstName) }}
+										{{ form_label(form.firstName) }}
+										<div class="form-error">
+											{{ form_errors(form.firstName) }}
+										</div>
+									</div>
+									<div class="form-floating">
+										{{ form_widget(form.lastName) }}
+										{{ form_label(form.lastName) }}
+										<div class="form-error">
+											{{ form_errors(form.lastName) }}
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="input-group mb-3">
+									<div class="form-floating">
+										{{ form_widget(form.nickname) }}
+										{{ form_label(form.nickname) }}
+										<div class="form-error">
+											{{ form_errors(form.nickname) }}
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="input-group mb-3">
+									<div class="form-floating">
+										{{ form_widget(form.gender) }}
+										{{ form_label(form.gender) }}
+										<div class="form-error">
+											{{ form_errors(form.gender) }}
+										</div>
+									</div>
+									<div class="form-floating">
+										{{ form_widget(form.birthday) }}
+										{{ form_label(form.birthday) }}
+										<div class="form-error">
+											{{ form_errors(form.birthday) }}
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								{{ form_widget(form.submit) }}
+								{{ form_widget(form.cancel) }}
+							</div>
+
+							{{ form_end(form) }}
+						</div>
+					</div>
+				</div>
+				<div class="accordion-item">
+					<h2 class="accordion-header">
+						<button class="accordion-button bg-transparent text-white collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accountSecurity" aria-expanded="false" aria-controls="accountSecurity">
+							Account Security
+						</button>
+					</h2>
+					<div id="accountSecurity" class="accordion-collapse collapse show">
+						<div class="accordion-body">
+							{{ form_start(passwordForm) }}
+							<div class="form-error">
+								{{ form_errors(passwordForm) }}
+							</div>
+
+							<div class="form-group">
+								<div class="input-group mb-3">
+									<div class="form-floating">
+										{{ form_widget(passwordForm.plainPassword) }}
+										{{ form_label(passwordForm.plainPassword) }}
+										<div class="form-error">
+											{{ form_errors(passwordForm.plainPassword) }}
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="input-group mb-3">
+									<div class="form-floating">
+										{{ form_widget(passwordForm.newPassword.first) }}
+										{{ form_label(passwordForm.newPassword.first) }}
+										<div class="form-error">
+											{{ form_errors(passwordForm.newPassword.first) }}
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="input-group mb-3">
+									<div class="form-floating">
+										{{ form_widget(passwordForm.newPassword.second) }}
+										{{ form_label(passwordForm.newPassword.second) }}
+										<div class="form-error">
+											{{ form_errors(passwordForm.newPassword.second) }}
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								{{ form_widget(passwordForm.submit) }}
+								{{ form_widget(passwordForm.cancel) }}
+							</div>
+
+							{{ form_end(passwordForm) }}
+						</div>
+					</div>
+				</div>
+				<div class="accordion-item">
+					<h2 class="accordion-header">
+						<button class="accordion-button collapsed bg-transparent text-white" type="button" data-bs-toggle="collapse" data-bs-target="#socialMedia" aria-expanded="false" aria-controls="socialMedia">
+							<h5 class="mt-4">Social Media</h5>
+						</button>
+					</h2>
+					<div id="socialMedia" class="accordion-collapse collapse show">
+						<div class="accordion-body">
+							{{ form_start(socialMediaForm) }}
+							<div class="form-error">
+								{{ form_errors(socialMediaForm) }}
+							</div>
+							<div class="form-group">
+								<div class="input-group mb-3">
+									<div class="form-floating">
+										{{ form_widget(socialMediaForm.discord) }}
+										{{ form_label(socialMediaForm.discord) }}
+										<div class="form-error">
+											{{ form_errors(socialMediaForm.discord) }}
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="input-group mb-3">
+									<div class="form-floating">
+										{{ form_widget(socialMediaForm.facebook) }}
+										{{ form_label(socialMediaForm.facebook) }}
+										<div class="form-error">
+											{{ form_errors(socialMediaForm.facebook) }}
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="input-group mb-3">
+									<div class="form-floating">
+										{{ form_widget(socialMediaForm.instagram) }}
+										{{ form_label(socialMediaForm.instagram) }}
+										<div class="form-error">
+											{{ form_errors(socialMediaForm.instagram) }}
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="input-group mb-3">
+									<div class="form-floating">
+										{{ form_widget(socialMediaForm.tiktok) }}
+										{{ form_label(socialMediaForm.tiktok) }}
+										<div class="form-error">
+											{{ form_errors(socialMediaForm.tiktok) }}
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="input-group mb-3">
+									<div class="form-floating">
+										{{ form_widget(socialMediaForm.twitter) }}
+										{{ form_label(socialMediaForm.twitter) }}
+										<div class="form-error">
+											{{ form_errors(socialMediaForm.twitter) }}
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="input-group mb-3">
+									<div class="form-floating">
+										{{ form_widget(socialMediaForm.vk) }}
+										{{ form_label(socialMediaForm.vk) }}
+										<div class="form-error">
+											{{ form_errors(socialMediaForm.vk) }}
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="input-group mb-3">
+									<div class="form-floating">
+										{{ form_widget(socialMediaForm.twitch) }}
+										{{ form_label(socialMediaForm.twitch) }}
+										<div class="form-error">
+											{{ form_errors(socialMediaForm.twitch) }}
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="input-group mb-3">
+									<div class="form-floating">
+										{{ form_widget(socialMediaForm.youtube) }}
+										{{ form_label(socialMediaForm.youtube) }}
+										<div class="form-error">
+											{{ form_errors(socialMediaForm.youtube) }}
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								{{ form_widget(socialMediaForm.submit) }}
+								{{ form_widget(socialMediaForm.cancel) }}
+							</div>
+
+							{{ form_end(socialMediaForm) }}
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<h4 class="mt-4">Danger Zone</h4>
+
+			{% set deleteModalId = 'deleteModal' %}
+
+			<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#{{ deleteModalId }}">
+				Delete my account
+			</button>
+
+			{% set deleteModalTitle = 'Confirmation' %}
+			{% set deleteModalBody %}
+			You are about to delete your account, once you confirm it will not be restored!
+			{% endset %}
+
+			{% set deleteModalFooter %}
+			<form action="{{ path('user.delete', {'id': user.id}) }}" method="get">
+				<button type="submit" class="btn btn-danger">Confirm</button>
+			</form>
+			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">
+				Cancel
+			</button>
+			{% endset %}
+
+			{% include 'partials/modal.html.twig' with {
+				modalId: deleteModalId,
+				modalTitle: deleteModalTitle,
+				modalBody: deleteModalBody,
+				modalFooter: deleteModalFooter
+			} only %}
+			<div class="mt-5"></div>
+		</div>
+	</div>
+{% endblock %}
