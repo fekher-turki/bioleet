@@ -72,8 +72,7 @@ class SignUpType extends AbstractType
                     'maxlength' => '180'
                 ],
                 'constraints' => [
-                    new Assert\NotBlank(),
-                    new Assert\Length(['min' => 3, 'max' => 180]),
+                    new Assert\NotBlank()
                 ],
             ])
             ->add('plainPassword', RepeatedType::class, [
@@ -129,8 +128,7 @@ class SignUpType extends AbstractType
                 ],
                 'widget' => 'single_text',
                 'constraints' => [
-                    new Assert\NotBlank(),
-                    new Assert\LessThanOrEqual('-16 years'),
+                    new Assert\NotBlank()
                 ],
             ])
             ->add('submit', SubmitType::class, [

@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reset your password
+{% endblock %}
+
+{% block body %}
+	<div class="container mt-5">
+		<div class="row">
+			<aside class="col-sm-4"></aside>
+			<aside class="col-sm-4">
+				<div class="card mb-3">
+					<article class="card-body">
+						<h4 class="card-title text-center mb-4 mt-1">Reset your password</h4>
+						<p class="text-danger text-center">Enter your new password</p>
+
+						{% for flash_error in app.flashes('reset_password_error') %}
+							<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+						{% endfor %}
+
+						{{ form_start(resetForm) }}
+						<div class="form-group">
+							<div class="input-group mb-3">
+								<span class="input-group-text">
+									<i class="fas fa-lock"></i>
+								</span>
+								<div class="form-floating">
+									{{ form_widget(resetForm.plainPassword.first) }}
+									{{ form_label(resetForm.plainPassword.first) }}
+									<div class="form-error">
+										{{ form_errors(resetForm.plainPassword.first) }}
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-group mb-3">
+								<span class="input-group-text">
+									<i class="fas fa-lock"></i>
+								</span>
+								<div class="form-floating">
+									{{ form_widget(resetForm.plainPassword.second) }}
+									{{ form_label(resetForm.plainPassword.second) }}
+									<div class="form-error">
+										{{ form_errors(resetForm.plainPassword.second) }}
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group d-grid gap-2">
+							{{ form_widget(resetForm.submit) }}
+						</div>
+						<p class="text-center mt-4">Back to Login
+							<a href="{{ path('security.login') }}" class="text-danger">Login</a>
+						</p>
+						{{ form_end(resetForm) }}
+					</article>
+				</div>
+			</aside>
+			<aside class="col-sm-4"></aside>
+		</div>
+	</div>
+{% endblock %}
