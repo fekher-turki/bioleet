@@ -113,12 +113,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: SocialMedia::class, orphanRemoval: true)]
     private Collection $socialMedia;
 
+    #[ORM\Column(length: 255)]
+    private ?string $country = null;
+
+    #[ORM\Column(type: Types::JSON, nullable: true)]
+    private array $languages = [];
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Profile::class, orphanRemoval: true)]
+    private Collection $profiles;
+
     public function __construct()
     {
         $this->nickname = $this->username;
         $this->createdAt = new \DateTimeImmutable();
         $this->updatedAt = new \DateTimeImmutable();
         $this->socialMedia = new ArrayCollection();
+        $this->profiles = new ArrayCollection();
     }
 
     #[ORM\PrePersist]
@@ -472,5 +482,75 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
         }
 
         return $this;
+    }
+
+    public function getCountry(): ?string
+    {
+        return $this->country;
+    }
+
+    public function setCountry(string $country): static
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    public function getLanguages(): array
+    {
+        return $this->languages;
+    }
+
+    public function setLanguages(?array $languages): static
+    {
+        $this->languages = $languages;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Profile>
+     */
+    public function getProfiles(): Collection
+    {
+        return $this->profiles;
+    }
+
+    public function addProfile(Profile $profile): static
+    {
+        if (!$this->profiles->contains($profile)) {
+            $this->profiles->add($profile);
+            $profile->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProfile(Profile $profile): static
+    {
+        if ($this->profiles->removeElement($profile)) {
+            // set the owning side to null (unless already changed)
+            if ($profile->getUser() === $this) {
+                $profile->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function isPremium(): bool
+    {
+        $now = new \DateTime();
+        $premiumEnd = $this->getPremiumEnd();
+        
+        return $premiumEnd !== null && $premiumEnd > $now;
+    }
+
+    public function isBanned(): bool
+    {
+        $now = new \DateTime();
+        $banEnd = $this->getBanEnd();
+        
+        return $banEnd !== null && $banEnd > $now;
     }
 }

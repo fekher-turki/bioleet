@@ -1,0 +1,166 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BioLeet Settings
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+{% endblock %}
+
+
+{% block body %}
+	<script>
+		$(document).ready(function () {
+			$('#myTable').DataTable();
+		});
+	</script>
+	<div class="container">
+		<div class="row mt-4">
+			<div class="col-xl-12">
+				<h3 class="page-header">DASHBOARD</h3>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item">
+						<i class="fa fa-dashboard"></i>
+						Account</li>
+					<li class="breadcrumb-item active">
+						<i class="fa fa-user-tie"></i>
+						Dashboard
+					</li>
+				</ol>
+				{% for message in app.flashes('success') %}
+					<div class="alert alert-dismissible alert-secondary">
+						<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+						<i class="fa-solid fa-check text-success me-3"></i>
+						{{message}}
+					</div>
+				{% endfor %}
+
+				{% for message in app.flashes('warning') %}
+					<div class="alert alert-dismissible alert-secondary">
+						<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+						<i class="fa-solid fa-xmark text-danger me-3"></i>
+						{{message}}
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+		<div class="row mt-4">
+			<div class="col-xl-4">
+				<h4 class="page-header col">Profiles</h4>
+			</div>
+			<div class="col-xl-4"></div>
+
+			<div class="col-xl-4 d-flex flex-row-reverse">
+				{% set createProfileModalId = 'createProfileModal' %}
+				<span class="tooltip-wrapper" tabindex="0" data-toggle="tooltip" title="Premium users only can have multiple profiles">
+					{% if isPremium == false and hasProfiles == true %}
+						<button type="button" disabled class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#{{ createProfileModalId }}">
+							Create Profile
+						</button>
+						<i class="text-warning fa fa-info-circle"></i>
+					{% elseif isPremium == true or hasProfiles == false %}
+						<button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#{{ createProfileModalId }}">
+							Create Profile
+						</button>
+						<i class="text-warning fa fa-info-circle"></i>
+					{% endif %}
+				</span>
+				{{ form_start(profileForm) }}
+				{% set createProfileModalTitle = 'Create New Profile' %}
+				{% set createProfileModalBody %}
+				<div class="form-error">
+					{{ form_errors(profileForm) }}
+				</div>
+				<div class="form-group">
+					<div class="input-group mb-3">
+						<div class="form-floating">
+							{{ form_widget(profileForm.game) }}
+							{{ form_label(profileForm.game) }}
+							<div class="form-error">
+								{{ form_errors(profileForm.game) }}
+							</div>
+						</div>
+					</div>
+				</div>
+				{% endset %}
+
+				{% set createProfileModalFooter %}
+				<div class="form-group">
+					{{ form_widget(profileForm.submit) }}
+				</div>
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">
+					Cancel
+				</button>
+				{% endset %}
+
+				{% include 'partials/modal.html.twig' with {
+				modalId: createProfileModalId,
+				modalTitle: createProfileModalTitle,
+				modalBody: createProfileModalBody,
+				modalFooter: createProfileModalFooter
+			} only %}
+				{{ form_end(profileForm) }}
+			</div>
+		</div>
+		<div class="table-responsive mt-4">
+			{% if hasProfiles %}
+				<table id="myTable" class="table table-hover table-bordered table-dark text-light">
+					<thead>
+						<tr>
+							<th>Game</th>
+							<th>Ingame Name</th>
+							<th class="text-center">Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for profile in profiles %}
+							<tr>
+								<td>
+									<img src="{{ asset('images/games/' ~ profile.game.code ~ '.png') }}" width="32" alt="{{ profile.game.name }}"/>
+									{{ profile.game.name }}
+								</td>
+								<td>
+									{{ profile.inGameName }}
+								</td>
+								<td class="text-center">
+									<button class="btn btn btn-outline-light btn-sm me-2" onclick="window.location.href='{{ path('profile.index', {'game': profile.game.code, 'ingameName': profile.ingameName}) }}'">
+										<i class="fa fa-eye"></i>
+									</button>
+									<button class="btn btn btn-outline-light btn-sm me-2" onclick="window.location.href='{{ path('profile.edit', {'game': profile.game.code, 'ingameName': profile.ingameName}) }}'">
+										<i class="fa fa-pencil"></i>
+									</button>
+									{% set deleteModalId = 'deleteModal' %}
+
+									<button type="button" class="btn btn btn-outline-light btn-sm me-2" data-bs-toggle="modal" data-bs-target="#{{ deleteModalId }}">
+										<i class="fa fa-trash"></i>
+									</button>
+
+									{% set deleteModalTitle = 'Confirmation' %}
+									{% set deleteModalBody %}
+									You are about to delete your profile, once you confirm it will not be restored!
+									{% endset %}
+
+									{% set deleteModalFooter %}
+									<button class="btn btn-danger" onclick="window.location.href='{{ path('profile.delete', {'game': profile.game.code, 'ingameName': profile.ingameName}) }}'">
+										Delete
+									</button>
+									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">
+										Cancel
+									</button>
+									{% endset %}
+
+									{% include 'partials/modal.html.twig' with {
+										modalId: deleteModalId,
+										modalTitle: deleteModalTitle,
+										modalBody: deleteModalBody,
+										modalFooter: deleteModalFooter
+									} only %}
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			{% endif %}
+		</div>
+	</div>
+{% endblock %}

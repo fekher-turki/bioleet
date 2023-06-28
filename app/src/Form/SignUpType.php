@@ -3,8 +3,11 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Repository\CountryRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -59,7 +62,7 @@ class SignUpType extends AbstractType
                 ],
                 'constraints' => [
                     new Assert\NotBlank(),
-                    new Assert\Length(['min' => 3, 'max' => 30]),
+                    new Assert\Length(['min' => 3, 'max' => 30])
                 ],
             ])
             ->add('email', EmailType::class, [
@@ -103,8 +106,20 @@ class SignUpType extends AbstractType
                 ],
                 'invalid_message' => 'The password fields must match.',
             ])
+            ->add('country', CountryType::class, [
+                'label' => 'Country',
+                'label_attr' => ['class' => 'form-label text-light'],
+                'placeholder' => 'Choose a country',
+                'required' => true,
+                'constraints' => [
+                    new Assert\NotBlank(),
+                ],
+                'attr' => [
+                    'class' => 'form-select text-light bg-dark'
+                ],
+            ])
             ->add('gender', ChoiceType::class, [
-                'label' => 'Select your Gender',
+                'label' => 'Gender',
                 'label_attr' => ['class' => 'form-label text-light'],
                 'placeholder' => 'Select your Gender',
                 'choices' => [

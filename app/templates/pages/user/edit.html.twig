@@ -3,6 +3,11 @@
 {% block title %}BioLeet Settings
 {% endblock %}
 
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="/styles/edit_settings.css">
+{% endblock %}
+
 
 {% block body %}
 	<div class="container">
@@ -55,6 +60,7 @@
 				{{ form_label(avatarForm.avatarFile) }}
 				{{ form_widget(avatarForm.avatarFile) }}
 			</div>
+
 			{% endset %}
 
 			{% set avatarModalFooter %}
@@ -110,6 +116,25 @@
 										{{ form_label(form.nickname) }}
 										<div class="form-error">
 											{{ form_errors(form.nickname) }}
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="input-group mb-3">
+									<div class="form-floating">
+										{{ form_widget(form.country) }}
+										{{ form_label(form.country) }}
+										<div class="form-error">
+											{{ form_errors(form.country) }}
+										</div>
+									</div>
+									<div class="form-floating">
+										{{ form_widget(form.languages) }}
+										{{ form_label(form.languages) }}
+										<div class="form-error">
+											{{ form_errors(form.languages) }}
 										</div>
 									</div>
 								</div>

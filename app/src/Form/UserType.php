@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -58,6 +59,30 @@ class UserType extends AbstractType
                 'constraints' => [
                     new Assert\NotBlank(),
                     new Assert\Length(['min' => 3, 'max' => 30]),
+                ],
+            ])
+            ->add('country', CountryType::class, [
+                'label' => 'Country',
+                'label_attr' => ['class' => 'form-label text-light'],
+                'placeholder' => 'Choose a country',
+                'required' => true,
+                'constraints' => [
+                    new Assert\NotBlank(),
+                ],
+                'attr' => [
+                    'class' => 'form-select text-light bg-dark'
+                ],
+            ])
+            ->add('languages', LanguageType::class, [
+                'label' => 'Language',
+                'label_attr' => ['class' => 'form-label text-light'],
+                'placeholder' => 'Choose languages',
+                'required' => false,
+                'constraints' => [
+                    new Assert\NotBlank(),
+                ],
+                'attr' => [
+                    'class' => 'form-select text-light bg-dark selectpicker'
                 ],
             ])
             ->add('gender', ChoiceType::class, [

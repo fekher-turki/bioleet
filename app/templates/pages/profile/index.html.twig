@@ -1,0 +1,322 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BioLeet Settings
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="/styles/profile.css">
+{% endblock %}
+
+
+{% block body %}
+	<script>
+		$(document).ready(function () {
+			$('#myTable').DataTable();
+		});
+	</script>
+	<div class="container">
+		{% if isBanned and user and profile %}
+			<div class="row justify-content-center">
+				<div class="col-md-7 col-lg-4 mb-5 mb-lg-0 wow fadeIn">
+					<div class="card border-0 shadow">
+						<img src="{{ asset('images/default/default-avatar.png') }}" alt="default-avatar" class="bg-custom-dark">
+						<div class="card-body p-1-9 p-xl-5 bg-dark">
+							<div class="mb-5">
+								<h2>
+									<span class="h1 mb-0 text-danger">BANNED</span>
+								</h2>
+								<h2>
+									<span class="h3 mb-0">Until
+										{{ user.banEnd | date('d/m/Y') }}</span>
+								</h2>
+							</div>
+							<div></div>
+						</div>
+					</div>
+					<div class="col-lg-8">
+						<div class="ps-lg-1-6 ps-xl-5">
+							<div class="mb-4"></div>
+							<div class="mb-4 wow fadeIn"></div>
+							<div class="mb-4 wow fadeIn">
+								<div class="text-start mb-1-6 wow fadeIn">
+									<h2 class="h3 mb-0 text-success">Reason</h2>
+								</div>
+								<p class="h4 text-danger">{{ user.banReason }}</p>
+							</div>
+							<div class="mb-4 wow fadeIn"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		{% elseif isBanned == false and user and profile %}
+			<div class="row justify-content-center">
+				<div class="col-md-7 col-lg-4 mb-5 mb-lg-0 wow fadeIn">
+					<div class="card border-0 shadow">
+						{% if user.avatar == "default-avatar.png" %}
+							<img src="{{ asset('images/default/default-avatar.png') | imagine_filter('logo_thumb') }}" alt="{{ user.nickname }}" class="bg-custom-dark">
+						{% else %}
+							<img src="{{ asset('images/users/' ~ user.avatar) | imagine_filter('logo_thumb') }}" alt="{{ user.nickname }}" class="bg-custom-dark">
+						{% endif %}
+						<div class="card-body p-1-9 p-xl-5 bg-dark">
+							<div>
+								<h2>
+									<table>
+										<tr>
+											<td>
+												<span class="h1 mb-0">{{ user.nickname }}
+												</span>
+											</td>
+											<td style="padding-left: 10px;">
+												{% if user.isVerified %}
+													<span class="h5 mb-2">
+														<i class="fa fa-check-circle me-2 fa-xl text-info" data-toggle="tooltip" data-placement="top" title="Verified"></i>
+													</span>
+												{% endif %}
+											</td>
+											<td>
+												{% if isPremium %}
+													<span class="h5 mb-2">
+														<i class="fa fa-crown me-2 fa-xl text-warning" data-toggle="tooltip" data-placement="top" title="Premium"></i>
+													</span>
+												{% endif %}
+											</td>
+										</tr>
+									</table>
+								</h2>
+								<h2 class="h3 mb-1">{{ user.firstName|upper ~ " " ~ user.lastName|upper }}
+								</h2>
+								<h2 class="h3 mb-1"><img src="{{ asset('images/countries/' ~ user.country|lower ~ '.png') }}" style="width: 40px;" alt="{{ user.country }}">
+									{{ user.country|country_name }}</h2>
+								<h2 class="h3 mb-1"><img src="{{ asset('images/games/' ~ profile.game.code|lower ~ '.png') }}" style="width: 40px;" alt="{{ profile.game.name }}">
+									{{ profile.game.code|upper }}</h2>
+								{% if team %}
+									<h2 class="h3 mb-2">
+										<a
+											href="/team/{{ team.game.code }}/{{ team.teamUrl }}">
+											{% if team.avatar == "default-logo.png" %}
+												<img src="{{ asset('images/default/default-logo.png') }}" alt="{{ team.teamName }}" style="width: 40px;" class="bg-custom-dark">
+											{% else %}
+												<img src="{{ asset('images/users/' ~ team.avatar) }}" alt="{{ team.teamName }}" style="width: 40px;" class="bg-custom-dark">
+											{% endif %}
+											{{ team.teamName }}</a>
+									</h2>
+								{% endif %}
+								<h2 class="h4 mb-3">
+									<i class="fa fa-cake me-2 fa-md"></i>
+									{{ user.birthday | date('M d, Y') }}
+								</h2>
+							</div>
+							{% if user.socialMedia %}
+								<ul class="list-unstyled">
+									{% if user.socialMedia.discord %}
+										<li>
+											<i class="fa-brands fa-discord me-2 fa-xl"></i>
+											{{ user.socialMedia.discord }}
+										</li>
+									{% endif %}
+								</ul>
+								<ul class="social-icon-style2 ps-0">
+									{% if user.socialMedia.facebook %}
+										<li>
+											<a href="{{ user.socialMedia.facebook }}" target="_blank">
+												{# <i class="fa-brands fa-facebook-f me-2 fa-xl"></i> #}
+												<i class="fa-brands fa-square-facebook me-2 fa-2xl"></i>
+											</a>
+										</li>
+									{% endif %}
+									{% if user.socialMedia.instagram %}
+										<li>
+											<a href="{{ user.socialMedia.instagram }}" target="_blank">
+												<i class="fa-brands fa-instagram me-2 fa-2xl"></i>
+											</a>
+										</li>
+									{% endif %}
+									{% if user.socialMedia.tiktok %}
+										<li>
+											<a href="{{ user.socialMedia.tiktok }}" target="_blank">
+												<i class="fa-brands fa-tiktok me-2 fa-2xl"></i>
+											</a>
+										</li>
+									{% endif %}
+									{% if user.socialMedia.twitter %}
+										<li>
+											<a href="{{ user.socialMedia.twitter }}" target="_blank">
+												<i class="fa-brands fa-square-twitter me-2 fa-2xl"></i>
+											</a>
+										</li>
+									{% endif %}
+									{% if user.socialMedia.vk %}
+										<li>
+											<a href="{{ user.socialMedia.vk }}" target="_blank">
+												<i class="fa-brands fa-vk me-2 fa-2xl"></i>
+											</a>
+										</li>
+									{% endif %}
+									{% if user.socialMedia.twitch %}
+										<li>
+											<a href="{{ user.socialMedia.twitch }}" target="_blank">
+												<i class="fa-brands fa-twitch me-2 fa-2xl"></i>
+											</a>
+										</li>
+									{% endif %}
+									{% if user.socialMedia.youtube %}
+										<li>
+											<a href="{{ user.socialMedia.youtube }}" target="_blank">
+												<i class="fa-brands fa-youtube me-2 fa-2xl"></i>
+											</a>
+										</li>
+									{% endif %}
+
+								</ul>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-8">
+					<div class="ps-lg-1-6 ps-xl-5">
+						<div class="mb-4"></div>
+						<div class="mb-3 wow fadeIn ">
+							<div class="text-start mb-1-6 wow fadeIn">
+								<h2 class="h3 mb-0 text-light"><img src="{{ asset('images/games/' ~ profile.game.code|lower ~ '.png') }}" style="width: 48px;" alt="{{profile.game.name}}">
+									{{ profile.ingameName }}
+									-
+									{{ profile.game.name }}</h2>
+							</div>
+						</div>
+						<div class="mb-4 wow fadeIn">
+							<div class="text-start mb-1-6 wow fadeIn">
+								<h2 class="h3 mb-0 text-success">About</h2>
+							</div>
+							<p>{{ profile.bio }}</p>
+						</div>
+						<div class="mb-4 wow fadeIn">
+							<div class="text-start mb-1-6 wow fadeIn">
+								<h2 class="h3 mb-0 text-success">Languages</h2>
+							</div>
+							<ul class="languages-style ps-0 mb-2">
+								{% for language in user.languages() %}
+									<li>
+										<a class="rounded-4 bg-dark">
+											{{ language|language_name }}
+										</a>
+									</li>
+								{% endfor %}
+							</ul>
+						</div>
+						<div class="mb-4 wow fadeIn">
+							<div class="text-start mb-1-6 wow fadeIn">
+								<h2 class="h3 mb-0 text-success">Roles</h2>
+							</div>
+							<ul class="languages-style ps-0 mb-2">
+								{% for _gameRole in profile.gameRole %}
+									<li>
+										<a class="rounded-4 bg-dark">
+											{{ _gameRole.name }}
+										</a>
+									</li>
+								{% endfor %}
+							</ul>
+						</div>
+						<div class="mb-4 wow fadeIn">
+							<div class="text-start mb-1-6 wow fadeIn">
+								<h2 class="h3 mb-0 text-success">Achievements</h2>
+							</div>
+							{% if isPremium and profile %}
+								<div class="table-responsive">
+									<table  id="myTable" class="table table-hover table-bordered table-dark text-light">
+										<thead>
+											<tr>
+												<th style="width: 15%;">Date</th>
+												<th style="width: 10%;">Place</th>
+												<th>Tournament</th>
+												<th style="width: 25%;">Team</th>
+											</tr>
+										</thead>
+										<tbody>
+											{% for experience in profile.experiences %}
+												<tr style="width: 100%;">
+													<td>
+														{{ experience.date|date('Y-m-d') }}
+													</td>
+													<td>
+														{{ experience.place }}
+													</td>
+													<td>
+														{% if experience.tournamentLink %}
+															<a href="{{ experience.tournamentLink }}" target="_blank">
+																<img src="{{ experience.tournamentLogo ?: 'https://i.imgur.com/h37Vq9Y.png' }}" width="32" alt="{{ experience.tournamentName }}">
+																{{ experience.tournamentName }}
+															</a>
+														{% else %}
+															<img src="{{ experience.tournamentLogo ?: 'https://i.imgur.com/h37Vq9Y.png' }}" width="32" alt="{{ experience.tournamentName }}">
+																{{ experience.tournamentName }}
+														{% endif %}
+													</td>
+													<td>
+														<img src="{{ experience.teamLogo ?: 'https://i.imgur.com/rL4O7Y6.png' }}" width="32" alt="{{ experience.teamName }}">
+														{{ experience.teamName }}
+													</td>
+												</tr>
+											{% endfor %}
+										</tbody>
+									</table>
+								</div>
+							{% elseif isPremium == false and  profile %}
+								<div class="table-responsive">
+									<table datatable [dtOptions]='dtOptions' class="table table-hover table-bordered table-dark text-light">
+										<thead>
+											<tr>
+												<th style="width: 15%;">Date</th>
+												<th style="width: 10%;">Place</th>
+												<th>Tournament</th>
+												<th style="width: 25%;">Team</th>
+											</tr>
+										</thead>
+										<tbody>
+											{% for experience in profile.experiences|slice(0, 3) %}
+												<tr style="width: 100%;">
+													<td>
+														{{ experience.date|date('Y-m-d') }}
+													</td>
+													<td>
+														{{ experience.place }}
+													</td>
+													<td>
+														{% if experience.tournamentLink %}
+															<a href="{{ experience.tournamentLink }}" target="_blank">
+																<img src="{{ experience.tournamentLogo ?: 'https://i.imgur.com/h37Vq9Y.png' }}" width="32" alt="{{ experience.tournamentName }}">
+																{{ experience.tournamentName }}
+															</a>
+														{% else %}
+															<img src="{{ experience.tournamentLogo ?: 'https://i.imgur.com/h37Vq9Y.png' }}" width="32" alt="{{ experience.tournamentName }}">
+																{{ experience.tournamentName }}
+														{% endif %}
+													</td>
+													<td>
+														<img src="{{ experience.teamLogo ?: 'https://i.imgur.com/rL4O7Y6.png' }}" width="32" alt="{{ experience.teamName }}">
+														{{ experience.teamName }}
+													</td>
+												</tr>
+											{% endfor %}
+
+										</tbody>
+									</table>
+								</div>
+							{% endif %}
+						</div>
+						{% set videoId = profile.montage|replace({'https://www.youtube.com/watch?v=': '', 'http://www.youtube.com/watch?v=': ''}) %}
+						{% if isPremium and profile.montage %}
+							<div class="mb-4 wow fadeIn">
+								<div class="text-start mb-1-6 wow fadeIn">
+									<h2 class="h3 mb-0 text-success">Montage</h2>
+								</div>
+								<iframe width="100%" height="400px" src="{{ embed ~ videoId }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+							</div>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		{% endif %}
+	</div>
+{% endblock %}

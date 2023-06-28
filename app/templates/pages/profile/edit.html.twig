@@ -1,0 +1,295 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BioLeet Settings
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="/styles/edit_settings.css">
+{% endblock %}
+
+
+{% block body %}
+	<script>
+		$(document).ready(function () {
+$('#myTable').DataTable();
+});
+	</script>
+	<div class="container">
+		<div class="row mt-4">
+			<div class="col-xl-12">
+				<h3 class="page-header">Edit Profile</h3>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item">
+						<i class="fa fa-dashboard"></i>
+						Profile</li>
+					<li class="breadcrumb-item active">
+						<i class="fa fa-user-tie"></i>
+						Edit Profile
+					</li>
+				</ol>
+				{% for message in app.flashes('success') %}
+					<div class="alert alert-dismissible alert-secondary">
+						<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+						<i class="fa-solid fa-check text-success me-3"></i>
+						{{message}}
+					</div>
+				{% endfor %}
+
+				{% for message in app.flashes('warning') %}
+					<div class="alert alert-dismissible alert-secondary">
+						<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+						<i class="fa-solid fa-xmark text-danger me-3"></i>
+						{{message}}
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+		<div class="col-md-6 offset-md-3 mt-3">
+			{{ form_start(profileForm) }}
+			<div class="form-error">
+				{{ form_errors(profileForm) }}
+			</div>
+			<div class="form-group">
+				<div class="input-group mb-3">
+					<div class="form-floating">
+						{{ form_widget(profileForm.ingameName) }}
+						{{ form_label(profileForm.ingameName) }}
+						<div class="form-error">
+							{{ form_errors(profileForm.ingameName) }}
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="input-group mb-3">
+					<div class="form-floating">
+						{{ form_widget(profileForm.gameRole) }}
+						{{ form_label(profileForm.gameRole) }}
+						<div class="form-error">
+							{{ form_errors(profileForm.gameRole) }}
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="input-group mb-3">
+					<div class="form-floating">
+						{{ form_widget(profileForm.bio) }}
+						{{ form_label(profileForm.bio) }}
+						<div class="form-error">
+							{{ form_errors(profileForm.bio) }}
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="input-group mb-3">
+					<div class="form-floating">
+						{{ form_widget(profileForm.montage) }}
+						{{ form_label(profileForm.montage) }}
+						<div class="form-error">
+							{{ form_errors(profileForm.montage) }}
+						</div>
+					</div>
+				</div>
+			</div>
+			{{ form_widget(profileForm.submit) }}
+			{{ form_end(profileForm) }}
+		</div>
+		<div class="row mt-4 col-md-10 offset-md-1">
+			<div class="col-xl-4">
+				<h4 class="page-header col">Experiences</h4>
+			</div>
+			<div class="col-xl-4"></div>
+
+			<div class="col-xl-4 d-flex flex-row-reverse">
+				{% set addExperienceModalId = 'addExperienceModal' %}
+				<button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#{{ addExperienceModalId }}">
+					Add Experience
+				</button>
+				{{ form_start(experienceForm) }}
+				{% set addExperienceModalTitle = 'Add New Experience' %}
+				{% set addExperienceModalBody %}
+				<div class="form-error">
+					{{ form_errors(experienceForm) }}
+				</div>
+				<div class="form-group">
+					<div class="input-group mb-3">
+						<div class="form-floating">
+							{{ form_widget(experienceForm.date) }}
+							{{ form_label(experienceForm.date) }}
+							<div class="form-error">
+								{{ form_errors(experienceForm.date) }}
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="input-group mb-3">
+						<div class="form-floating">
+							{{ form_widget(experienceForm.place) }}
+							{{ form_label(experienceForm.place) }}
+							<div class="form-error">
+								{{ form_errors(experienceForm.place) }}
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="input-group mb-3">
+						<div class="form-floating">
+							{{ form_widget(experienceForm.tournamentName) }}
+							{{ form_label(experienceForm.tournamentName) }}
+							<div class="form-error">
+								{{ form_errors(experienceForm.tournamentName) }}
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="input-group mb-3">
+						<div class="form-floating">
+							{{ form_widget(experienceForm.tournamentLink) }}
+							{{ form_label(experienceForm.tournamentLink) }}
+							<div class="form-error">
+								{{ form_errors(experienceForm.tournamentLink) }}
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="input-group mb-3">
+						<div class="form-floating">
+							{{ form_widget(experienceForm.tournamentLogo) }}
+							{{ form_label(experienceForm.tournamentLogo) }}
+							<div class="form-error">
+								{{ form_errors(experienceForm.tournamentLogo) }}
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="input-group mb-3">
+						<div class="form-floating">
+							{{ form_widget(experienceForm.teamName) }}
+							{{ form_label(experienceForm.teamName) }}
+							<div class="form-error">
+								{{ form_errors(experienceForm.teamName) }}
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="input-group mb-3">
+						<div class="form-floating">
+							{{ form_widget(experienceForm.teamLogo) }}
+							{{ form_label(experienceForm.teamLogo) }}
+							<div class="form-error">
+								{{ form_errors(experienceForm.teamLogo) }}
+							</div>
+						</div>
+					</div>
+				</div>
+
+				{% endset %}
+
+				{% set addExperienceModalFooter %}
+				<div class="form-group">
+					{{ form_widget(experienceForm.submit) }}
+				</div>
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">
+					Cancel
+				</button>
+				{% endset %}
+
+				{% include 'partials/modal.html.twig' with {
+				modalId: addExperienceModalId,
+				modalTitle: addExperienceModalTitle,
+				modalBody: addExperienceModalBody,
+				modalFooter: addExperienceModalFooter
+			} only %}
+				{{ form_end(experienceForm) }}
+			</div>
+		</div>
+		<div class="table-responsive mt-4 col-md-10 offset-md-1">
+			{% if hasExperiences %}
+				<table id="myTable" class="table table-hover table-bordered table-dark text-light">
+					<thead>
+						<tr>
+							<th>Date</th>
+							<th>Place</th>
+							<th>Tournament</th>
+							<th>Team</th>
+							<th class="text-center">Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for experience in experiences %}
+							<tr style="width: 100%;">
+								<td>
+									{{ experience.date|date('Y-m-d') }}
+								</td>
+								<td>
+									{{ experience.place }}
+								</td>
+								<td>
+									{% if experience.tournamentLink %}
+										<a href="{{ experience.tournamentLink }}" target="_blank">
+											<img src="{{ experience.tournamentLogo ?: 'https://i.imgur.com/h37Vq9Y.png' }}" width="32" alt="{{ experience.tournamentName }}">
+											{{ experience.tournamentName }}
+										</a>
+									{% else %}
+										<img src="{{ experience.tournamentLogo ?: 'https://i.imgur.com/h37Vq9Y.png' }}" width="32" alt="{{ experience.tournamentName }}">
+										{{ experience.tournamentName }}
+									{% endif %}
+								</td>
+								<td>
+									<img src="{{ experience.teamLogo ?: 'https://i.imgur.com/rL4O7Y6.png' }}" width="32" alt="{{ experience.teamName }}">
+									{{ experience.teamName }}
+								</td>
+								<td class="text-center">
+									{% set deleteModalId = 'deleteModal' %}
+
+									<button type="button" class="btn btn btn-outline-light btn-sm me-2" data-bs-toggle="modal" data-bs-target="#{{ deleteModalId }}">
+										<i class="fa fa-trash"></i>
+									</button>
+
+									{% set deleteModalTitle = 'Confirmation' %}
+									{% set deleteModalBody %}
+									You are about to delete an experience, once you confirm it will not be restored!
+									{% endset %}
+
+									{% set deleteModalFooter %}
+									<button class="btn btn-danger" onclick="window.location.href='{{ path('experience.delete', {'id': experience.id}) }}'">
+										Delete
+									</button>
+									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">
+										Cancel
+									</button>
+									{% endset %}
+
+									{% include 'partials/modal.html.twig' with {
+										modalId: deleteModalId,
+										modalTitle: deleteModalTitle,
+										modalBody: deleteModalBody,
+										modalFooter: deleteModalFooter
+									} only %}
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			{% endif %}
+		</div>
+		<div class="mt-5"></div>
+	</div>
+{% endblock %}

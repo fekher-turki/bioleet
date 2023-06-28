@@ -7,6 +7,7 @@ use App\Form\SocialMediaType;
 use App\Form\UserPasswordType;
 use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,6 +17,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class UserController extends AbstractController
 {
+    #[Security("is_granted('ROLE_USER')")]
     #[Route('/account/settings', name: 'user.edit', methods: ['GET', 'POST'])]
     public function edit(
         Request $request,
@@ -114,26 +116,17 @@ class UserController extends AbstractController
         $socialMediaForm->handleRequest($request);
 
         if ($socialMediaForm->isSubmitted() && $socialMediaForm->isValid()) {
-            $socialMedia = $form->getData();
+            $socialMedia = $socialMediaForm->getData();
+            $socialMedia->setUser($this->getUser());
+            // dd($socialMedia);
             $manager->persist($socialMedia);
             $manager->flush();
             $this->addFlash(
                 'success',
                 'Your Social Media has been successfully updated'
             );
-
             return $this->redirectToRoute('user.edit');
-        } elseif ($socialMediaForm->isSubmitted() && !$socialMediaForm->isValid()) {
-            $errors = $socialMediaForm->getErrors(true);
-            if ($errors->count() > 0) {
-                $errorMessage = $errors->current()->getMessage();
-                $this->addFlash(
-                    'warning',
-                    $errorMessage
-                );
-            }
         }
-
 
         return $this->render('pages/user/edit.html.twig', [
             'user' => $this->getUser(),

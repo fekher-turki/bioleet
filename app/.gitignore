@@ -7,4 +7,9 @@
 /public/bundles/
 /var/
 /vendor/
+/public/images
 ###< symfony/framework-bundle ###
+
+###> liip/imagine-bundle ###
+/public/media/cache/
+###< liip/imagine-bundle ###

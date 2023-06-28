@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\SignUpType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -39,15 +40,24 @@ class SecurityController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
-            $user->setNickname($user->getUsername());
-            $this->addFlash(
-                'success',
-                'Your account has been successfully created'
-            );
-            $manager->persist($user);
-            $manager->flush();
+            // Custom uniqueness validation for 'username'
+            $username = $user->getUsername();
+            $existingUser = $manager->getRepository(User::class)->findOneBy(['username' => $username]);
 
-            return $this->redirectToRoute('security.login');
+            if ($existingUser) {
+                $form->get('username')->addError(new FormError('This username is already taken.'));
+            } else {
+
+                $user->setNickname($user->getUsername());
+                $this->addFlash(
+                    'success',
+                    'Your account has been successfully created'
+                );
+                $manager->persist($user);
+                $manager->flush();
+
+                return $this->redirectToRoute('security.login');
+            }
         }
 
         return $this->render('pages/security/signup.html.twig', [
