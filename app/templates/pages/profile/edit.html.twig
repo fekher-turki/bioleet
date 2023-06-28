@@ -257,7 +257,7 @@ $('#myTable').DataTable();
 									{{ experience.teamName }}
 								</td>
 								<td class="text-center">
-									{% set deleteModalId = 'deleteModal' %}
+									{% set deleteModalId = 'deleteModal' ~ experience.id %}
 
 									<button type="button" class="btn btn btn-outline-light btn-sm me-2" data-bs-toggle="modal" data-bs-target="#{{ deleteModalId }}">
 										<i class="fa fa-trash"></i>
