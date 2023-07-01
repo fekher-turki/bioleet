@@ -1,0 +1,188 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BioLeet Settings
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="/styles/profile.css">
+{% endblock %}
+
+
+{% block body %}
+	<script>
+		$(document).ready(function () {
+$('#myTable').DataTable();
+});
+	</script>
+	<div class="container">
+		{% if isBanned and user and team %}
+			<div class="row justify-content-center">
+				<div class="col-md-7 col-lg-4 mb-5 mb-lg-0 wow fadeIn">
+					<div class="card border-0 shadow">
+						<img src="{{ asset('images/default/default-avatar.png') }}" alt="default-avatar" class="bg-custom-dark">
+						<div class="card-body p-1-9 p-xl-5 bg-dark">
+							<div class="mb-5">
+								<h2>
+									<span class="h1 mb-0 text-danger">BANNED</span>
+								</h2>
+								<h2>
+									<span class="h3 mb-0">Until
+										{{ user.banEnd | date('d/m/Y') }}</span>
+								</h2>
+							</div>
+							<div></div>
+						</div>
+					</div>
+					<div class="col-lg-8">
+						<div class="ps-lg-1-6 ps-xl-5">
+							<div class="mb-4"></div>
+							<div class="mb-4 wow fadeIn"></div>
+							<div class="mb-4 wow fadeIn">
+								<div class="text-start mb-1-6 wow fadeIn">
+									<h2 class="h3 mb-0 text-success">Reason</h2>
+								</div>
+								<p class="h4 text-danger">{{ user.banReason }}</p>
+							</div>
+							<div class="mb-4 wow fadeIn"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		{% elseif isBanned == false and user and team %}
+			<div class="row justify-content-center">
+				<div class="col-md-7 col-lg-4 mb-5 mb-lg-0 wow fadeIn">
+					<div class="card border-0 shadow">
+						{% if team.logo == "default-logo.png" %}
+							<img src="{{ asset('images/default/default-logo.png') | imagine_filter('logo_720') }}" alt="{{ team.teamName }}" class="bg-custom-dark">
+						{% else %}
+							<img src="{{ asset('images/teams/' ~ team.logo) | imagine_filter('logo_720') }}" alt="{{ team.teamName }}" class="bg-custom-dark">
+						{% endif %}
+						<div class="card-body p-1-9 p-xl-5 bg-secondary">
+							<div>
+								<h2>
+									<span class="h2 mb-0">{{ team.teamName }}</span>
+									{% if team.isVerified %}
+										<span class="h5 mb-2">
+											<i class="fa fa-check-circle me-2 fa-xl text-info" data-toggle="tooltip" data-placement="top" title="Verified"></i>
+										</span>
+									{% endif %}
+								</h2>
+							</h2>
+							<h2 class="h3 mb-1"><img src="{{ asset('images/countries/' ~ team.country|lower ~ '.png') }}" style="width: 40px;" alt="{{ user.country }}">
+								{{ team.country|country_name }}</h2>
+							<h2 class="h3 mb-1"><img src="{{ asset('images/games/' ~ team.game.code|lower ~ '.png') }}" style="width: 40px;" alt="{{ team.game.name }}">
+								{{ team.game.code|upper }}</h2>
+						</div>
+						{% if team.socialMedia is not empty %}
+							<ul class="social-icon-style2 ps-0">
+								{% if team.socialMedia.discord %}
+									<li>
+										<a href="{{ team.socialMedia.discord }}" target="_blank">
+											<i class="fa-brands fa-discord me-2 fa-2xl"></i>
+										</a>
+									</li>
+								{% endif %}
+								{% if team.socialMedia.facebook %}
+									<li>
+										<a href="{{ team.socialMedia.facebook }}" target="_blank">
+											<i class="fa-brands fa-square-facebook me-2 fa-2xl"></i>
+										</a>
+									</li>
+								{% endif %}
+								{% if team.socialMedia.instagram %}
+									<li>
+										<a href="{{ team.socialMedia.instagram }}" target="_blank">
+											<i class="fa-brands fa-instagram me-2 fa-2xl"></i>
+										</a>
+									</li>
+								{% endif %}
+								{% if team.socialMedia.tiktok %}
+									<li>
+										<a href="{{ team.socialMedia.tiktok }}" target="_blank">
+											<i class="fa-brands fa-tiktok me-2 fa-2xl"></i>
+										</a>
+									</li>
+								{% endif %}
+								{% if team.socialMedia.twitter %}
+									<li>
+										<a href="{{ team.socialMedia.twitter }}" target="_blank">
+											<i class="fa-brands fa-square-twitter me-2 fa-2xl"></i>
+										</a>
+									</li>
+								{% endif %}
+								{% if team.socialMedia.vk %}
+									<li>
+										<a href="{{ team.socialMedia.vk }}" target="_blank">
+											<i class="fa-brands fa-vk me-2 fa-2xl"></i>
+										</a>
+									</li>
+								{% endif %}
+								{% if team.socialMedia.twitch %}
+									<li>
+										<a href="{{ team.socialMedia.twitch }}" target="_blank">
+											<i class="fa-brands fa-twitch me-2 fa-2xl"></i>
+										</a>
+									</li>
+								{% endif %}
+								{% if team.socialMedia.youtube %}
+									<li>
+										<a href="{{ team.socialMedia.youtube }}" target="_blank">
+											<i class="fa-brands fa-youtube me-2 fa-2xl"></i>
+										</a>
+									</li>
+								{% endif %}
+
+							</ul>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-8">
+				<div class="ps-lg-1-6 ps-xl-5">
+					<div class="mb-4"></div>
+					<div class="mb-3 wow fadeIn ">
+						<div class="text-start mb-1-6 wow fadeIn">
+							<h2 class="h3 mb-0 text-light"><img src="{{ asset('images/games/' ~ team.game.code|lower ~ '.png') }}" style="width: 48px;" alt="{{team.game.name}}">
+								{{ team.teamName }}
+								-
+								{{ team.game.name }}</h2>
+						</div>
+					</div>
+					<div class="mb-4 wow fadeIn">
+						<div class="text-start mb-1-6 wow fadeIn">
+							<h2 class="h3 mb-0 text-success">Overview</h2>
+						</div>
+						<p>{{ team.overview }}</p>
+					</div>
+					<div class="mb-4 wow fadeIn">
+						<div class="text-start mb-1-6 wow fadeIn">
+							<h2 class="h3 mb-0 text-success">Roster</h2>
+						</div>
+						<div class="row">
+							{% for player in team.players %}
+								<div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+									<div class="card mb-4">
+										<a href="/profile/{{team.game.code}}/{{player.ingameName}}">
+											{% if player.user.avatar == "default-avatar.png" %}
+												<img src="{{ asset('images/default/default-avatar.png') | imagine_filter('avatar_256') }}" class="card-img-top" alt="{{ player.ingameName }}">
+											{% else %}
+												<img src="{{ asset('images/users/' ~ player.user.avatar) | imagine_filter('avatar_256') }}" class="card-img-top" alt="{{ player.user.avatar }}">
+											{% endif %}
+											<div class="card-body">
+												<h5 class="card-title text-center">
+													<img src="{{ asset('images/countries/' ~ player.user.country|lower ~ '.png') }}" style="width: 32px;" alt="{{ player.user.country }}">
+													{{player.ingameName}}
+												</h5>
+											</div>
+										</a>
+									</div>
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endif %}
+</div>{% endblock %}

@@ -47,8 +47,10 @@ class SocialMedia
     private ?string $tiktok = null;
 
     #[ORM\ManyToOne(inversedBy: 'socialMedia')]
-    #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
+
+    #[ORM\ManyToOne(inversedBy: 'socialMedia')]
+    private ?Team $team = null;
 
     public function getId(): ?int
     {
@@ -159,6 +161,18 @@ class SocialMedia
     public function setTiktok(?string $tiktok): static
     {
         $this->tiktok = $tiktok;
+
+        return $this;
+    }
+
+    public function getTeam(): ?Team
+    {
+        return $this->team;
+    }
+
+    public function setTeam(?Team $team): static
+    {
+        $this->team = $team;
 
         return $this;
     }

@@ -1,0 +1,268 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BioLeet Settings
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="/styles/edit_settings.css">
+{% endblock %}
+
+
+{% block body %}
+	<div class="container">
+		<div class="row mt-4">
+			<div class="col-xl-12">
+				<h3 class="page-header">Edit Team</h3>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item">
+						<i class="fa fa-dashboard"></i>
+						Team</li>
+					<li class="breadcrumb-item active">
+						<i class="fa fa-user-tie"></i>
+						Edit Team
+					</li>
+				</ol>
+				{% for message in app.flashes('success') %}
+					<div class="alert alert-dismissible alert-secondary">
+						<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+						<i class="fa-solid fa-check text-success me-3"></i>
+						{{message}}
+					</div>
+				{% endfor %}
+
+				{% for message in app.flashes('warning') %}
+					<div class="alert alert-dismissible alert-secondary">
+						<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+						<i class="fa-solid fa-xmark text-danger me-3"></i>
+						{{message}}
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+		<div class="col-md-6 offset-md-3 mt-3">
+			<h4 class="mt-4">Edit Logo</h4>
+
+			{{ form_start(logoForm) }}
+
+			{% set logoModalId = 'logoModal' %}
+
+			{% if team.logo == "default-logo.png" %}
+				<button type="button" class="btn btn-outline-dark imagebottom" data-bs-toggle="modal" data-bs-target="#{{ logoModalId }}">
+					<img src="{{ asset('images/default/default-logo.png') | imagine_filter('logo_256') }}" alt="default-logo"/>
+					<i class="fas fa-upload fa-6x icontop"></i>
+				</button>
+			{% else %}
+				<button type="button" class="btn btn-outline-dark imagebottom" data-bs-toggle="modal" data-bs-target="#{{ logoModalId }}">
+					<img src="{{ vich_uploader_asset(team, 'logoFile') | imagine_filter('logo_256') }}" alt="{{ team.teamName }}">
+					<i class="fas fa-upload fa-6x icontop"></i>
+				</button>
+			{% endif %}
+
+			<div class="form-error">
+				{{ form_errors(logoForm.logoFile) }}
+			</div>
+
+			{% set logoModalTitle = 'Upload logo' %}
+			{% set logoModalBody %}
+			Please select your logo
+			<div class="form-group">
+				{{ form_label(logoForm.logoFile) }}
+				{{ form_widget(logoForm.logoFile) }}
+			</div>
+
+			{% endset %}
+
+			{% set logoModalFooter %}
+			{{ form_widget(logoForm.submit) }}
+			{{ form_widget(logoForm.cancel) }}
+			{% endset %}
+
+			{% include 'partials/modal.html.twig' with {
+				modalId: logoModalId,
+				modalTitle: logoModalTitle,
+				modalBody: logoModalBody,
+				modalFooter: logoModalFooter
+			} only %}
+
+
+			{{ form_end(logoForm) }}
+
+			<div class="accordion accordion-flush" id="settings">
+				<div class="accordion-item">
+					<h2 class="accordion-header">
+						<button class="accordion-button bg-transparent text-white collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#teamInformations" aria-expanded="true" aria-controls="teamInformations">
+							<h5 class="mt-4">Team Information</h5>
+						</button>
+					</h2>
+					<div id="teamInformations" class="accordion-collapse collapse show">
+						<div class="accordion-body">
+							{{ form_start(teamForm) }}
+							<div class="form-error">
+								{{ form_errors(teamForm) }}
+							</div>
+							<div class="form-group">
+								<div class="input-group mb-3">
+									<div class="form-floating">
+										{{ form_widget(teamForm.teamName) }}
+										{{ form_label(teamForm.teamName) }}
+										<div class="form-error">
+											{{ form_errors(teamForm.teamName) }}
+										</div>
+									</div>
+									<div class="form-floating">
+										{{ form_widget(teamForm.password) }}
+										{{ form_label(teamForm.password) }}
+										<div class="form-error">
+											{{ form_errors(teamForm.password) }}
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="input-group mb-3">
+									<div class="form-floating">
+										{{ form_widget(teamForm.overview) }}
+										{{ form_label(teamForm.overview) }}
+										<div class="form-error">
+											{{ form_errors(teamForm.overview) }}
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="input-group mb-3">
+									<div class="form-floating">
+										{{ form_widget(teamForm.country) }}
+										{{ form_label(teamForm.country) }}
+										<div class="form-error">
+											{{ form_errors(teamForm.country) }}
+										</div>
+									</div>
+								</div>
+							</div>
+
+							{{ form_widget(teamForm.submit) }}
+							{{ form_end(teamForm) }}
+						</div>
+					</div>
+				</div>
+				<div class="accordion-item">
+					<h2 class="accordion-header">
+						<button class="accordion-button collapsed bg-transparent text-white" type="button" data-bs-toggle="collapse" data-bs-target="#socialMedia" aria-expanded="false" aria-controls="socialMedia">
+							<h5 class="mt-4">Social Media</h5>
+						</button>
+					</h2>
+					<div id="socialMedia" class="accordion-collapse collapse show">
+						<div class="accordion-body">
+							{{ form_start(socialMediaForm) }}
+							<div class="form-error">
+								{{ form_errors(socialMediaForm) }}
+							</div>
+							<div class="form-group">
+								<div class="input-group mb-3">
+									<div class="form-floating">
+										{{ form_widget(socialMediaForm.discord) }}
+										{{ form_label(socialMediaForm.discord) }}
+										<div class="form-error">
+											{{ form_errors(socialMediaForm.discord) }}
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="input-group mb-3">
+									<div class="form-floating">
+										{{ form_widget(socialMediaForm.facebook) }}
+										{{ form_label(socialMediaForm.facebook) }}
+										<div class="form-error">
+											{{ form_errors(socialMediaForm.facebook) }}
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="input-group mb-3">
+									<div class="form-floating">
+										{{ form_widget(socialMediaForm.instagram) }}
+										{{ form_label(socialMediaForm.instagram) }}
+										<div class="form-error">
+											{{ form_errors(socialMediaForm.instagram) }}
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="input-group mb-3">
+									<div class="form-floating">
+										{{ form_widget(socialMediaForm.tiktok) }}
+										{{ form_label(socialMediaForm.tiktok) }}
+										<div class="form-error">
+											{{ form_errors(socialMediaForm.tiktok) }}
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="input-group mb-3">
+									<div class="form-floating">
+										{{ form_widget(socialMediaForm.twitter) }}
+										{{ form_label(socialMediaForm.twitter) }}
+										<div class="form-error">
+											{{ form_errors(socialMediaForm.twitter) }}
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="input-group mb-3">
+									<div class="form-floating">
+										{{ form_widget(socialMediaForm.vk) }}
+										{{ form_label(socialMediaForm.vk) }}
+										<div class="form-error">
+											{{ form_errors(socialMediaForm.vk) }}
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="input-group mb-3">
+									<div class="form-floating">
+										{{ form_widget(socialMediaForm.twitch) }}
+										{{ form_label(socialMediaForm.twitch) }}
+										<div class="form-error">
+											{{ form_errors(socialMediaForm.twitch) }}
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="input-group mb-3">
+									<div class="form-floating">
+										{{ form_widget(socialMediaForm.youtube) }}
+										{{ form_label(socialMediaForm.youtube) }}
+										<div class="form-error">
+											{{ form_errors(socialMediaForm.youtube) }}
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								{{ form_widget(socialMediaForm.submit) }}
+								{{ form_widget(socialMediaForm.cancel) }}
+							</div>
+
+							{{ form_end(socialMediaForm) }}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="mt-5"></div>
+	</div>
+{% endblock %}

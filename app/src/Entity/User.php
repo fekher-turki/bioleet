@@ -122,6 +122,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Profile::class, orphanRemoval: true)]
     private Collection $profiles;
 
+    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Team::class, orphanRemoval: true)]
+    private Collection $teams;
+
     public function __construct()
     {
         $this->nickname = $this->username;
@@ -129,6 +132,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
         $this->updatedAt = new \DateTimeImmutable();
         $this->socialMedia = new ArrayCollection();
         $this->profiles = new ArrayCollection();
+        $this->teams = new ArrayCollection();
     }
 
     #[ORM\PrePersist]
@@ -462,22 +466,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
         return $this->socialMedia->first() ?: null;
     }
 
-    public function addSocialMedium(SocialMedia $socialMedium): static
+    public function addSocialMedia(SocialMedia $socialMedia): static
     {
-        if (!$this->socialMedia->contains($socialMedium)) {
-            $this->socialMedia->add($socialMedium);
-            $socialMedium->setUser($this);
+        if (!$this->socialMedia->contains($socialMedia)) {
+            $this->socialMedia->add($socialMedia);
+            $socialMedia->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeSocialMedium(SocialMedia $socialMedium): static
+    public function removeSocialMedia(SocialMedia $socialMedia): static
     {
-        if ($this->socialMedia->removeElement($socialMedium)) {
+        if ($this->socialMedia->removeElement($socialMedia)) {
             // set the owning side to null (unless already changed)
-            if ($socialMedium->getUser() === $this) {
-                $socialMedium->setUser(null);
+            if ($socialMedia->getUser() === $this) {
+                $socialMedia->setUser(null);
             }
         }
 
@@ -552,5 +556,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
         $banEnd = $this->getBanEnd();
         
         return $banEnd !== null && $banEnd > $now;
+    }
+
+    /**
+     * @return Collection<int, Team>
+     */
+    public function getTeams(): Collection
+    {
+        return $this->teams;
+    }
+
+    public function addTeam(Team $team): static
+    {
+        if (!$this->teams->contains($team)) {
+            $this->teams->add($team);
+            $team->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTeam(Team $team): static
+    {
+        if ($this->teams->removeElement($team)) {
+            // set the owning side to null (unless already changed)
+            if ($team->getOwner() === $this) {
+                $team->setOwner(null);
+            }
+        }
+
+        return $this;
     }
 }

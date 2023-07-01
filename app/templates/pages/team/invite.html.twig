@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BioLeet Settings
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="/styles/profile.css">
+{% endblock %}
+
+
+{% block body %}
+	<div class="container">
+		<div class="row">
+			<aside class="col-sm-4"></aside>
+			<aside class="col-sm-4">
+				<div class="card text-white bg-custom-secondary mb-3">
+					<article class="card-body">
+						<h4 class="card-title text-center mb-4 mt-1">Team Invite</h4>
+						<h5 class="card-title text-center mb-4 mt-1">You are about to join team
+							{{ team.teamName }}</h5>
+						{% for message in app.flashes('success') %}
+							<div class="alert alert-dismissible alert-secondary">
+								<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+								<i class="fa-solid fa-check text-success me-3"></i>
+								{{message}}
+							</div>
+						{% endfor %}
+
+						{% for message in app.flashes('warning') %}
+							<div class="alert alert-dismissible alert-secondary">
+								<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+								<i class="fa-solid fa-xmark text-danger me-3"></i>
+								{{message}}
+							</div>
+						{% endfor %}
+						{{ form_start(inviteForm) }}
+						<div class="form-error">
+							{{ form_errors(inviteForm) }}
+						</div>
+
+						<div class="form-group">
+							<div class="input-group mb-3">
+								<div class="form-floating">
+									{{ form_widget(inviteForm.password) }}
+									{{ form_label(inviteForm.password) }}
+									<div class="form-error">
+										{{ form_errors(inviteForm.password) }}
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+						<div class="form-group d-grid gap-2">
+							{{ form_widget(inviteForm.submit) }}
+						</div>
+
+						{{ form_end(inviteForm) }}
+					</article>
+				</div>
+
+			</aside>
+			<aside class="col-sm-4"></aside>
+		</div>
+	</div>
+{% endblock %}

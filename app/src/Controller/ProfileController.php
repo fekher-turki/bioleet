@@ -28,6 +28,11 @@ class ProfileController extends AbstractController
         if (!$profile) {
             return $this->redirectToRoute('account.index');
         }
+
+        $experiences = $profile->getExperiences();
+        $hasExperiences = $experiences->count() > 0;
+
+
         $user = $profile->getUser();
         $isBanned = $user->isBanned();
         $isPremium = $user->isPremium();
@@ -35,6 +40,7 @@ class ProfileController extends AbstractController
         return $this->render('pages/profile/index.html.twig', [
             'isPremium' => $isPremium,
             'isBanned' => $isBanned,
+            'hasExperiences' => $hasExperiences,
             'profile' => $profile,
             'team' => false,
             'user' => $user,

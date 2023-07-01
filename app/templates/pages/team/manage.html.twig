@@ -1,0 +1,138 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BioLeet Settings
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="/styles/edit_settings.css">
+{% endblock %}
+
+
+{% block body %}
+	<script>
+		function copyInputMessage(inputElement) {
+inputElement.select();
+document.execCommand('copy');
+inputElement.setSelectionRange(0, 0);
+}
+var tooltip = document.getElementById("tooltip");
+tooltip.innerHTML = "Copied to clipboard";
+	</script>
+	<div class="container">
+		<div class="row mt-4">
+			<div class="col-xl-12">
+				<h3 class="page-header">Manage Team</h3>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item">
+						<i class="fa fa-dashboard"></i>
+						Team</li>
+					<li class="breadcrumb-item active">
+						<i class="fa fa-user-tie"></i>
+						Manage Team
+					</li>
+				</ol>
+				{% for message in app.flashes('success') %}
+					<div class="alert alert-dismissible alert-secondary">
+						<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+						<i class="fa-solid fa-check text-success me-3"></i>
+						{{message}}
+					</div>
+				{% endfor %}
+
+				{% for message in app.flashes('warning') %}
+					<div class="alert alert-dismissible alert-secondary">
+						<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+						<i class="fa-solid fa-xmark text-danger me-3"></i>
+						{{message}}
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+		<div class="col-md-6 offset-md-3 mt-4">
+			<div class="d-flex flex-row-reverse">
+				{% set inviteModalId = 'inviteModal' %}
+				<button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#{{ inviteModalId }}">
+					Invite Player
+				</button>
+				{% set inviteModalTitle = 'Share this link with your player' %}
+				{% set inviteModalBody %}
+				<div class="input-group mb-3">
+					<div class="form-floating">
+						<input type="text" class="form-control text-white bg-dark" id="userinput" readonly value="{{ inviteLink }}" placeholder="Invite Link">
+						<label for="userinput">Invite Link</label>
+					</div>
+					<button onclick="copyInputMessage(userinput)" class="btn btn-secondary" value="click to copy">
+						<i class="fa fa-copy"></i>
+					</button>
+				</div>
+				{% endset %}
+
+				{% set inviteModalFooter %}
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">
+					Close
+				</button>
+				{% endset %}
+
+				{% include 'partials/modal.html.twig' with {
+				modalId: inviteModalId,
+				modalTitle: inviteModalTitle,
+				modalBody: inviteModalBody,
+				modalFooter: inviteModalFooter
+			} only %}
+			</div>
+		</div>
+		<div class="col-md-6 offset-md-3 mt-4">
+			<div class="table-responsive">
+				{% if team.players %}
+					<table class="table table-hover text-light">
+						<thead>
+							<tr>
+								<th>Team members</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for player in team.players %}
+								<tr>
+									<td>
+										{{player.ingameName}}
+									</td>
+									<td>
+										{% set deleteModalId = 'deleteModal' ~ player.id %}
+
+										<button type="button" class="btn btn btn-outline-danger btn-sm me-2" data-bs-toggle="modal" data-bs-target="#{{ deleteModalId }}">
+											<i class="fa fa-trash"></i>
+										</button>
+
+										{% set deleteModalTitle = 'Confirmation' %}
+										{% set deleteModalBody %}
+										You are about to kick a player!
+										{% endset %}
+
+										{% set deleteModalFooter %}
+										<button class="btn btn-danger" onclick="window.location.href='{{ path('team.kick', {'teamId': team.id, 'playerId': player.id}) }}'">
+											Kick
+										</button>
+										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">
+											Cancel
+										</button>
+										{% endset %}
+
+										{% include 'partials/modal.html.twig' with {
+										modalId: deleteModalId,
+										modalTitle: deleteModalTitle,
+										modalBody: deleteModalBody,
+										modalFooter: deleteModalFooter
+									} only %}
+									</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				{% endif %}
+			</div>
+		</div>
+		<div class="mt-5"></div>
+	</div>
+{% endblock %}

@@ -12,8 +12,12 @@
 {% block body %}
 	<script>
 		$(document).ready(function () {
-			$('#myTable').DataTable();
-		});
+$('#achievements').DataTable({
+"order": [
+[0, 'desc']
+]
+});
+});
 	</script>
 	<div class="container">
 		{% if isBanned and user and profile %}
@@ -54,35 +58,24 @@
 				<div class="col-md-7 col-lg-4 mb-5 mb-lg-0 wow fadeIn">
 					<div class="card border-0 shadow">
 						{% if user.avatar == "default-avatar.png" %}
-							<img src="{{ asset('images/default/default-avatar.png') | imagine_filter('logo_thumb') }}" alt="{{ user.nickname }}" class="bg-custom-dark">
+							<img src="{{ asset('images/default/default-avatar.png') | imagine_filter('avatar_720') }}" alt="{{ user.nickname }}" class="bg-custom-dark">
 						{% else %}
-							<img src="{{ asset('images/users/' ~ user.avatar) | imagine_filter('logo_thumb') }}" alt="{{ user.nickname }}" class="bg-custom-dark">
+							<img src="{{ asset('images/users/' ~ user.avatar) | imagine_filter('avatar_720') }}" alt="{{ user.nickname }}" class="bg-custom-dark">
 						{% endif %}
-						<div class="card-body p-1-9 p-xl-5 bg-dark">
+						<div class="card-body p-1-9 p-xl-5 bg-secondary">
 							<div>
 								<h2>
-									<table>
-										<tr>
-											<td>
-												<span class="h1 mb-0">{{ user.nickname }}
-												</span>
-											</td>
-											<td style="padding-left: 10px;">
-												{% if user.isVerified %}
-													<span class="h5 mb-2">
-														<i class="fa fa-check-circle me-2 fa-xl text-info" data-toggle="tooltip" data-placement="top" title="Verified"></i>
-													</span>
-												{% endif %}
-											</td>
-											<td>
-												{% if isPremium %}
-													<span class="h5 mb-2">
-														<i class="fa fa-crown me-2 fa-xl text-warning" data-toggle="tooltip" data-placement="top" title="Premium"></i>
-													</span>
-												{% endif %}
-											</td>
-										</tr>
-									</table>
+									<span class="h2 mb-0">{{ user.nickname }}</span>
+									{% if user.isVerified %}
+										<span class="h5 mb-2">
+											<i class="fa fa-check-circle me-2 fa-xl text-info" data-toggle="tooltip" data-placement="top" title="Verified"></i>
+										</span>
+									{% endif %}
+									{% if isPremium %}
+										<span class="h5 mb-2">
+											<i class="fa fa-crown me-2 fa-xl text-warning" data-toggle="tooltip" data-placement="top" title="Premium"></i>
+										</span>
+									{% endif %}
 								</h2>
 								<h2 class="h3 mb-1">{{ user.firstName|upper ~ " " ~ user.lastName|upper }}
 								</h2>
@@ -90,16 +83,15 @@
 									{{ user.country|country_name }}</h2>
 								<h2 class="h3 mb-1"><img src="{{ asset('images/games/' ~ profile.game.code|lower ~ '.png') }}" style="width: 40px;" alt="{{ profile.game.name }}">
 									{{ profile.game.code|upper }}</h2>
-								{% if team %}
+								{% if profile.team %}
 									<h2 class="h3 mb-2">
-										<a
-											href="/team/{{ team.game.code }}/{{ team.teamUrl }}">
-											{% if team.avatar == "default-logo.png" %}
-												<img src="{{ asset('images/default/default-logo.png') }}" alt="{{ team.teamName }}" style="width: 40px;" class="bg-custom-dark">
+										<a href="/team/{{ profile.team.game.code }}/{{ profile.team.teamUrl }}">
+											{% if profile.team.logo == "default-logo.png" %}
+												<img src="{{ asset('images/default/default-logo.png') | imagine_filter('logo_40') }}" alt="{{ profile.team.teamName }}" style="width: 40px;" class="bg-custom-dark">
 											{% else %}
-												<img src="{{ asset('images/users/' ~ team.avatar) }}" alt="{{ team.teamName }}" style="width: 40px;" class="bg-custom-dark">
+												<img src="{{ asset('images/teams/' ~ profile.team.logo) | imagine_filter('logo_40') }}" alt="{{ profile.team.teamName }}" style="width: 40px;" class="bg-custom-dark">
 											{% endif %}
-											{{ team.teamName }}</a>
+											{{ profile.team.teamName }}</a>
 									</h2>
 								{% endif %}
 								<h2 class="h4 mb-3">
@@ -107,7 +99,7 @@
 									{{ user.birthday | date('M d, Y') }}
 								</h2>
 							</div>
-							{% if user.socialMedia %}
+							{% if user.socialMedia is not empty %}
 								<ul class="list-unstyled">
 									{% if user.socialMedia.discord %}
 										<li>
@@ -120,7 +112,6 @@
 									{% if user.socialMedia.facebook %}
 										<li>
 											<a href="{{ user.socialMedia.facebook }}" target="_blank">
-												{# <i class="fa-brands fa-facebook-f me-2 fa-xl"></i> #}
 												<i class="fa-brands fa-square-facebook me-2 fa-2xl"></i>
 											</a>
 										</li>
@@ -224,84 +215,88 @@
 							</div>
 							{% if isPremium and profile %}
 								<div class="table-responsive">
-									<table  id="myTable" class="table table-hover table-bordered table-dark text-light">
-										<thead>
-											<tr>
-												<th style="width: 15%;">Date</th>
-												<th style="width: 10%;">Place</th>
-												<th>Tournament</th>
-												<th style="width: 25%;">Team</th>
-											</tr>
-										</thead>
-										<tbody>
-											{% for experience in profile.experiences %}
-												<tr style="width: 100%;">
-													<td>
-														{{ experience.date|date('Y-m-d') }}
-													</td>
-													<td>
-														{{ experience.place }}
-													</td>
-													<td>
-														{% if experience.tournamentLink %}
-															<a href="{{ experience.tournamentLink }}" target="_blank">
+									{% if hasExperiences %}
+										<table id="achievements" class="table table-hover table-bordered table-dark text-light">
+											<thead>
+												<tr>
+													<th style="width: 15%;">Date</th>
+													<th style="width: 10%;">Place</th>
+													<th>Tournament</th>
+													<th style="width: 25%;">Team</th>
+												</tr>
+											</thead>
+											<tbody>
+												{% for experience in profile.experiences %}
+													<tr style="width: 100%;">
+														<td>
+															{{ experience.date|date('Y-m-d') }}
+														</td>
+														<td>
+															{{ experience.place }}
+														</td>
+														<td>
+															{% if experience.tournamentLink %}
+																<a href="{{ experience.tournamentLink }}" target="_blank">
+																	<img src="{{ experience.tournamentLogo ?: 'https://i.imgur.com/h37Vq9Y.png' }}" width="32" alt="{{ experience.tournamentName }}">
+																	{{ experience.tournamentName }}
+																</a>
+															{% else %}
 																<img src="{{ experience.tournamentLogo ?: 'https://i.imgur.com/h37Vq9Y.png' }}" width="32" alt="{{ experience.tournamentName }}">
 																{{ experience.tournamentName }}
-															</a>
-														{% else %}
-															<img src="{{ experience.tournamentLogo ?: 'https://i.imgur.com/h37Vq9Y.png' }}" width="32" alt="{{ experience.tournamentName }}">
-																{{ experience.tournamentName }}
-														{% endif %}
-													</td>
-													<td>
-														<img src="{{ experience.teamLogo ?: 'https://i.imgur.com/rL4O7Y6.png' }}" width="32" alt="{{ experience.teamName }}">
-														{{ experience.teamName }}
-													</td>
-												</tr>
-											{% endfor %}
-										</tbody>
-									</table>
+															{% endif %}
+														</td>
+														<td>
+															<img src="{{ experience.teamLogo ?: 'https://i.imgur.com/rL4O7Y6.png' }}" width="32" alt="{{ experience.teamName }}">
+															{{ experience.teamName }}
+														</td>
+													</tr>
+												{% endfor %}
+											</tbody>
+										</table>
+									{% endif %}
 								</div>
 							{% elseif isPremium == false and  profile %}
 								<div class="table-responsive">
-									<table datatable [dtOptions]='dtOptions' class="table table-hover table-bordered table-dark text-light">
-										<thead>
-											<tr>
-												<th style="width: 15%;">Date</th>
-												<th style="width: 10%;">Place</th>
-												<th>Tournament</th>
-												<th style="width: 25%;">Team</th>
-											</tr>
-										</thead>
-										<tbody>
-											{% for experience in profile.experiences|slice(0, 3) %}
-												<tr style="width: 100%;">
-													<td>
-														{{ experience.date|date('Y-m-d') }}
-													</td>
-													<td>
-														{{ experience.place }}
-													</td>
-													<td>
-														{% if experience.tournamentLink %}
-															<a href="{{ experience.tournamentLink }}" target="_blank">
+									{% if hasExperiences %}
+										<table id="achievements" class="table table-hover table-bordered table-dark text-light">
+											<thead>
+												<tr>
+													<th style="width: 15%;">Date</th>
+													<th style="width: 10%;">Place</th>
+													<th>Tournament</th>
+													<th style="width: 25%;">Team</th>
+												</tr>
+											</thead>
+											<tbody>
+												{% for experience in profile.experiences|slice(0, 3) %}
+													<tr style="width: 100%;">
+														<td>
+															{{ experience.date|date('Y-m-d') }}
+														</td>
+														<td>
+															{{ experience.place }}
+														</td>
+														<td>
+															{% if experience.tournamentLink %}
+																<a href="{{ experience.tournamentLink }}" target="_blank">
+																	<img src="{{ experience.tournamentLogo ?: 'https://i.imgur.com/h37Vq9Y.png' }}" width="32" alt="{{ experience.tournamentName }}">
+																	{{ experience.tournamentName }}
+																</a>
+															{% else %}
 																<img src="{{ experience.tournamentLogo ?: 'https://i.imgur.com/h37Vq9Y.png' }}" width="32" alt="{{ experience.tournamentName }}">
 																{{ experience.tournamentName }}
-															</a>
-														{% else %}
-															<img src="{{ experience.tournamentLogo ?: 'https://i.imgur.com/h37Vq9Y.png' }}" width="32" alt="{{ experience.tournamentName }}">
-																{{ experience.tournamentName }}
-														{% endif %}
-													</td>
-													<td>
-														<img src="{{ experience.teamLogo ?: 'https://i.imgur.com/rL4O7Y6.png' }}" width="32" alt="{{ experience.teamName }}">
-														{{ experience.teamName }}
-													</td>
-												</tr>
-											{% endfor %}
+															{% endif %}
+														</td>
+														<td>
+															<img src="{{ experience.teamLogo ?: 'https://i.imgur.com/rL4O7Y6.png' }}" width="32" alt="{{ experience.teamName }}">
+															{{ experience.teamName }}
+														</td>
+													</tr>
+												{% endfor %}
 
-										</tbody>
-									</table>
+											</tbody>
+										</table>
+									{% endif %}
 								</div>
 							{% endif %}
 						</div>

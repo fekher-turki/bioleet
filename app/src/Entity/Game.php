@@ -27,6 +27,9 @@ class Game
     #[ORM\OneToMany(mappedBy: 'game', targetEntity: Profile::class)]
     private Collection $profiles;
 
+    #[ORM\OneToOne(mappedBy: 'game')]
+    private ?Team $team = null;
+
     public function __construct()
     {
         $this->gameRole = new ArrayCollection();
@@ -117,6 +120,23 @@ class Game
                 $profile->setGame(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTeam(): ?Team
+    {
+        return $this->team;
+    }
+
+    public function setTeam(Team $team): static
+    {
+        // set the owning side of the relation if necessary
+        if ($team->getGame() !== $this) {
+            $team->setGame($this);
+        }
+
+        $this->team = $team;
 
         return $this;
     }

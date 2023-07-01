@@ -39,7 +39,7 @@ class UserController extends AbstractController
                 'success',
                 'Your Avatar has been successfully updated'
             );
-            return $this->redirectToRoute('user.edit');
+            
         } elseif ($avatarForm->isSubmitted() && !$avatarForm->isValid()) {
             $errors = $avatarForm->getErrors(true);
             if ($errors->count() > 0) {
@@ -64,7 +64,6 @@ class UserController extends AbstractController
                 'success',
                 'Your Account has been successfully updated'
             );
-            return $this->redirectToRoute('user.edit');
         } elseif ($form->isSubmitted() && !$form->isValid()) {
             $errors = $form->getErrors(true);
             if ($errors->count() > 0) {
@@ -93,7 +92,6 @@ class UserController extends AbstractController
                     'Your Password has been successfully updated'
                 );
 
-                return $this->redirectToRoute('user.edit');
             } else {
                 $this->addFlash(
                     'warning',
@@ -118,14 +116,12 @@ class UserController extends AbstractController
         if ($socialMediaForm->isSubmitted() && $socialMediaForm->isValid()) {
             $socialMedia = $socialMediaForm->getData();
             $socialMedia->setUser($this->getUser());
-            // dd($socialMedia);
             $manager->persist($socialMedia);
             $manager->flush();
             $this->addFlash(
                 'success',
                 'Your Social Media has been successfully updated'
             );
-            return $this->redirectToRoute('user.edit');
         }
 
         return $this->render('pages/user/edit.html.twig', [
@@ -141,6 +137,16 @@ class UserController extends AbstractController
     public function delete(EntityManagerInterface $manager, TokenStorageInterface $tokenStorage): Response
     {
         $user = $this->getUser();
+        $teams = $user->getTeams();
+
+        foreach ($teams as $team) {
+            $profiles = $team->getPlayers();
+
+            foreach ($profiles as $profile) {
+                $profile->setTeam(null);
+            }
+        }
+
         $manager->remove($user);
         $manager->flush();
 

@@ -37,14 +37,14 @@
 
 			{% set avatarModalId = 'avatarModal' %}
 
-			{% if vich_uploader_asset(user, 'avatarFile') is null %}
+			{% if user.avatar == "default-avatar.png" %}
 				<button type="button" class="btn btn-outline-dark imagebottom" data-bs-toggle="modal" data-bs-target="#{{ avatarModalId }}">
-					<img src="{{ asset('images/default/default-avatar.png') }}" alt="default-avatar"/>
+					<img src="{{ asset('images/default/default-avatar.png') | imagine_filter('avatar_256') }}" alt="default-avatar"/>
 					<i class="fas fa-upload fa-6x icontop"></i>
 				</button>
 			{% else %}
 				<button type="button" class="btn btn-outline-dark imagebottom" data-bs-toggle="modal" data-bs-target="#{{ avatarModalId }}">
-					<img width="200" height="150" src="{{ vich_uploader_asset(user, 'avatarFile') }}" alt="{{ user.username }}">
+					<img src="{{ vich_uploader_asset(user, 'avatarFile') | imagine_filter('avatar_256') }}" alt="{{ user.username }}">
 					<i class="fas fa-upload fa-6x icontop"></i>
 				</button>
 			{% endif %}

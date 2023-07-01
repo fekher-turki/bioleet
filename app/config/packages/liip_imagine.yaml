@@ -13,3 +13,33 @@ liip_imagine:
             quality: 75
             filters:
                 thumbnail: { size: [350, 350], mode: outbound }
+        
+        avatar_720:
+            quality: 75
+            filters:
+                thumbnail: { size: [720, 720], mode: outbound }
+        
+        logo_720:
+            quality: 75
+            filters:
+                thumbnail: { size: [720, 720], mode: outbound }
+                
+        avatar_256:
+            quality: 75
+            filters:
+                thumbnail: { size: [256, 256], mode: outbound }
+
+        logo_256:
+            quality: 75
+            filters:
+                thumbnail: { size: [256, 256], mode: outbound }
+
+        avatar_40:
+            quality: 75
+            filters:
+                thumbnail: { size: [40, 40], mode: outbound }
+
+        logo_40:
+            quality: 75
+            filters:
+                thumbnail: { size: [40, 40], mode: outbound }

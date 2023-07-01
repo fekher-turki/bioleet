@@ -44,6 +44,9 @@ class Profile
     #[ORM\OneToMany(mappedBy: 'profile', targetEntity: Experience::class, cascade: ['persist', 'remove'])]
     private Collection $experiences;
 
+    #[ORM\ManyToOne(inversedBy: 'players')]
+    private ?Team $team = null;
+
     public function __construct()
     {
         $this->gameRole = new ArrayCollection();
@@ -178,6 +181,18 @@ class Profile
                 $experience->setProfile(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTeam(): ?Team
+    {
+        return $this->team;
+    }
+
+    public function setTeam(?Team $team): static
+    {
+        $this->team = $team;
 
         return $this;
     }

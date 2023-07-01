@@ -11,7 +11,8 @@
 {% block body %}
 	<script>
 		$(document).ready(function () {
-			$('#myTable').DataTable();
+			$('#profileTable').DataTable();
+			$('#teamTable').DataTable();
 		});
 	</script>
 	<div class="container">
@@ -104,7 +105,7 @@
 		</div>
 		<div class="table-responsive mt-4">
 			{% if hasProfiles %}
-				<table id="myTable" class="table table-hover table-bordered table-dark text-light">
+				<table id="profileTable" class="table table-hover table-bordered table-dark text-light">
 					<thead>
 						<tr>
 							<th>Game</th>
@@ -129,7 +130,7 @@
 									<button class="btn btn btn-outline-light btn-sm me-2" onclick="window.location.href='{{ path('profile.edit', {'game': profile.game.code, 'ingameName': profile.ingameName}) }}'">
 										<i class="fa fa-pencil"></i>
 									</button>
-									{% set deleteModalId = 'deleteModal' %}
+									{% set deleteModalId = 'deleteModal' ~ profile.id %}
 
 									<button type="button" class="btn btn btn-outline-light btn-sm me-2" data-bs-toggle="modal" data-bs-target="#{{ deleteModalId }}">
 										<i class="fa fa-trash"></i>
@@ -154,6 +155,157 @@
 										modalTitle: deleteModalTitle,
 										modalBody: deleteModalBody,
 										modalFooter: deleteModalFooter
+									} only %}
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			{% endif %}
+		</div>
+
+		<div class="row mt-4">
+			<div class="col-xl-4">
+				<h4 class="page-header col">Teams</h4>
+			</div>
+			<div class="col-xl-4"></div>
+
+			<div class="col-xl-4 d-flex flex-row-reverse">
+				{% set createTeamModalId = 'createTeamModal' %}
+				<span class="tooltip-wrapper" tabindex="0" data-toggle="tooltip" title="Premium users only can have multiple teams">
+					{% if isPremium == false and hasTeams == true %}
+						<button type="button" disabled class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#{{ createTeamModalId }}">
+							Create Team
+						</button>
+						<i class="text-warning fa fa-info-circle"></i>
+					{% elseif isPremium == true or hasTeams == false %}
+						<button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#{{ createTeamModalId }}">
+							Create Team
+						</button>
+						<i class="text-warning fa fa-info-circle"></i>
+					{% endif %}
+				</span>
+				{{ form_start(teamForm) }}
+				{% set createTeamModalTitle = 'Create New Team' %}
+				{% set createTeamModalBody %}
+				<div class="form-error">
+					{{ form_errors(teamForm) }}
+				</div>
+				<div class="form-group">
+					<div class="input-group mb-3">
+						<div class="form-floating">
+							{{ form_widget(teamForm.teamName) }}
+							{{ form_label(teamForm.teamName) }}
+							<div class="form-error">
+								{{ form_errors(teamForm.teamName) }}
+							</div>
+						</div>
+						<div class="form-floating">
+							{{ form_widget(teamForm.password) }}
+							{{ form_label(teamForm.password) }}
+							<div class="form-error">
+								{{ form_errors(teamForm.password) }}
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="input-group mb-3">
+						<div class="form-floating">
+							{{ form_widget(teamForm.game) }}
+							{{ form_label(teamForm.game) }}
+							<div class="form-error">
+								{{ form_errors(teamForm.game) }}
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="input-group mb-3">
+						<div class="form-floating">
+							{{ form_widget(teamForm.country) }}
+							{{ form_label(teamForm.country) }}
+							<div class="form-error">
+								{{ form_errors(teamForm.country) }}
+							</div>
+						</div>
+					</div>
+				</div>
+				{% endset %}
+
+				{% set createTeamModalFooter %}
+				<div class="form-group">
+					{{ form_widget(teamForm.submit) }}
+				</div>
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">
+					Cancel
+				</button>
+				{% endset %}
+
+				{% include 'partials/modal.html.twig' with {
+				modalId: createTeamModalId,
+				modalTitle: createTeamModalTitle,
+				modalBody: createTeamModalBody,
+				modalFooter: createTeamModalFooter
+			} only %}
+				{{ form_end(teamForm) }}
+			</div>
+		</div>
+		<div class="table-responsive mt-4">
+			{% if hasTeams %}
+				<table id="teamTable" class="table table-hover table-bordered table-dark text-light">
+					<thead>
+						<tr>
+							<th>Game</th>
+							<th>Team Name</th>
+							<th class="text-center">Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for team in teams %}
+							<tr>
+								<td>
+									<img src="{{ asset('images/games/' ~ team.game.code ~ '.png') }}" width="32" alt="{{ team.game.name }}"/>
+									{{ team.game.name }}
+								</td>
+								<td>
+									{{ team.teamName }}
+								</td>
+								<td class="text-center">
+									<button class="btn btn btn-outline-light btn-sm me-2" onclick="window.location.href='{{ path('team.index', {'game': team.game.code, 'teamUrl': team.teamUrl}) }}'">
+										<i class="fa fa-eye"></i>
+									</button>
+									<button class="btn btn btn-outline-light btn-sm me-2" onclick="window.location.href='{{ path('team.edit', {'game': team.game.code, 'teamUrl': team.teamUrl}) }}'">
+										<i class="fa fa-pencil"></i>
+									</button>
+									<button class="btn btn btn-outline-light btn-sm me-2" onclick="window.location.href='{{ path('team.manage', {'game': team.game.code, 'teamUrl': team.teamUrl}) }}'">
+										<i class="fa fa-gear"></i>
+									</button>
+									{% set deleteTeamModalId = 'deleteTeamModal' ~ team.id %}
+
+									<button type="button" class="btn btn btn-outline-light btn-sm me-2" data-bs-toggle="modal" data-bs-target="#{{ deleteTeamModalId }}">
+										<i class="fa fa-trash"></i>
+									</button>
+
+									{% set deleteTeamModalTitle = 'Confirmation' %}
+									{% set deleteTeamModalBody %}
+									You are about to delete your team, once you confirm it will not be restored!
+									{% endset %}
+
+									{% set deleteTeamModalFooter %}
+									<button class="btn btn-danger" onclick="window.location.href='{{ path('team.delete', {'game': team.game.code, 'teamUrl': team.teamUrl}) }}'">
+										Delete
+									</button>
+									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">
+										Cancel
+									</button>
+									{% endset %}
+
+									{% include 'partials/modal.html.twig' with {
+										modalId: deleteTeamModalId,
+										modalTitle: deleteTeamModalTitle,
+										modalBody: deleteTeamModalBody,
+										modalFooter: deleteTeamModalFooter
 									} only %}
 								</td>
 							</tr>

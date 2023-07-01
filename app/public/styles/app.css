@@ -22,3 +22,8 @@ body {
 .mat-option[aria-selected="true"] {
   color: rgba(0, 139, 139, 0.7);
 }
+
+a, a:active, a:focus {
+  color: #fff;
+  text-decoration: none;
+}

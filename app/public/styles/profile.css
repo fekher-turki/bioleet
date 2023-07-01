@@ -17,9 +17,12 @@
 }
 
 .social-icon-style2 li {
-    vertical-align: middle;
-    display: inline-block;
-    margin-right: 5px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  margin-left: -5px;
+  vertical-align: middle;
+  display: inline-block;
+  margin-right: 5px;
 }
 
 .languages-style {
@@ -33,11 +36,6 @@
   vertical-align: middle;
   display: inline-block;
   margin-right: 5px;
-}
-
-a, a:active, a:focus {
-    color: #fff;
-    text-decoration: none;
 }
 
 .text-success, .text-success-hover:hover {
