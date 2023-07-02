@@ -1,0 +1,295 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BioLeet - Your Esports BIO
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="/styles/home.css">
+{% endblock %}
+
+{% block body %}
+
+	<div>
+		<header class="bg-dark py-5">
+			<div class="container px-5">
+				<div class="row gx-5 justify-content-center">
+					<div class="col-lg-6">
+						<div class="text-center my-5">
+							<h1 class="display-5 fw-bolder text-white mb-2">JOIN US AND CREATE YOUR
+								<span class="text-orange">ESPORTS</span>
+								PROFILE</h1>
+							<p class="lead text-white-50 mb-4">Join all over the esports players and live the experience!</p>
+							<div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
+								<a class="btn btn-orange btn-lg px-4 me-sm-3" href="/signup">Get Started</a>
+								<!-- <a class="btn btn-outline-light btn-lg px-4" href="#!">Learn More</a> -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+		<section class="py-5" id="features">
+			<div class="container px-5 my-5">
+				<div class="text-center mb-5">
+					<h2 class="fw-bolder">3 Steps to get started</h2>
+				</div>
+				<div class="row gx-5">
+					<div class="col-lg-4 mb-5 mb-lg-0">
+						<div class="feature bg-orange bg-gradient text-white rounded-3 mb-3">
+							<i class="fa fa-arrow-right-to-bracket"></i>
+						</div>
+						<h2 class="h4 fw-bolder">Step I</h2>
+						<p>Create Account by filling basic informations and credentials.</p>
+						<a class="text-decoration-none text-orange" href="/signup">
+							Get Started
+							<i class="fa fa-arrow-right"></i>
+						</a>
+					</div>
+					<div class="col-lg-4 mb-5 mb-lg-0">
+						<div class="feature bg-orange bg-gradient text-white rounded-3 mb-3">
+							<i class="fa fa-sliders"></i>
+						</div>
+						<h2 class="h4 fw-bolder">Step II</h2>
+						<p>Fill your general informations that will be displayed on your profile.</p>
+						<a class="text-decoration-none text-orange" href="/signup">
+							Get Started
+							<i class="fa fa-arrow-right"></i>
+						</a>
+					</div>
+					<div class="col-lg-4">
+						<div class="feature bg-orange bg-gradient text-white rounded-3 mb-3">
+							<i class="fa fa-address-card"></i>
+						</div>
+						<h2 class="h4 fw-bolder">Step III</h2>
+						<p>Finally, Create a Profile and fill your informartions based on your choosen game.</p>
+						<a class="text-decoration-none text-orange" href="/signup">
+							Get Started
+							<i class="fa fa-arrow-right"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="bg-dark py-5" id="premium">
+			<div class="container px-5 my-5">
+				<div class="text-center mb-5">
+					<h2 class="fw-bolder">Get your premium!</h2>
+					<p class="lead mb-0">With our no hassle pricing plans</p>
+				</div>
+				<div class="row gx-5 justify-content-center">
+					<div class="col-lg-6 col-xl-4">
+						<div class="card mb-5 mb-xl-0 bg-custom-dark">
+							<div class="card-body p-5">
+								<div class="small text-uppercase fw-bold text-muted">Free</div>
+								<div class="mb-3">
+									<span class="display-4 fw-bold">$0</span>
+									<span class="text-muted">/ mo.</span>
+								</div>
+								<ul class="list-unstyled mb-4">
+									<li class="mb-2">
+										<i class="fa fa-check text-orange"></i>
+										1 Profile
+									</li>
+									<li class="mb-2">
+										<i class="fa fa-check text-orange"></i>
+										1 Team
+									</li>
+									<li class="mb-2">
+										<i class="fa fa-check text-orange"></i>
+										3 Achievements/Profile
+									</li>
+									<li class="mb-2 text-muted">
+										<i class="fa fa-x text-muted"></i>
+										Add Highlights Video
+									</li>
+									<li class="mb-2 text-muted">
+										<i class="fa fa-x text-muted"></i>
+										Players List Priority
+									</li>
+									<li class="mb-2 text-muted">
+										<i class="fa fa-x text-muted"></i>
+										Teams List Priority
+									</li>
+									<li class="mb-2 text-muted">
+										<i class="fa fa-x text-muted"></i>
+										Ads Free
+									</li>
+								</ul>
+								<div class="d-grid">
+									<a class="btn btn-outline-orange" href="/signup">Choose plan</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-6 col-xl-4 ">
+						<div class="card mb-5 mb-xl-0 bg-custom-dark">
+							<div class="card-body p-5">
+								<div class="small text-uppercase fw-bold">
+									<i class="fa fa-crown text-warning"></i>
+									Premium
+								</div>
+								<div class="mb-3">
+									<span class="display-4 fw-bold">$3</span>
+									<span class="text-muted">/ mo.</span>
+								</div>
+								<ul class="list-unstyled mb-4">
+									<li class="mb-2">
+										<i class="fa fa-check text-orange"></i>
+										<strong>
+											Unlimited Profiles</strong>
+									</li>
+									<li class="mb-2">
+										<i class="fa fa-check text-orange"></i>
+										<strong>
+											Unlimited Teams</strong>
+									</li>
+									<li class="mb-2">
+										<i class="fa fa-check text-orange"></i>
+										<strong>
+											Unlimited Achievements</strong>
+									</li>
+									<li class="mb-2">
+										<i class="fa fa-check text-orange"></i>
+										Add Highlights Video
+									</li>
+									<li class="mb-2">
+										<i class="fa fa-check text-orange"></i>
+										Players List Priority
+									</li>
+									<li class="mb-2">
+										<i class="fa fa-check text-orange"></i>
+										Teams List Priority
+									</li>
+									<li class="mb-2">
+										<i class="fa fa-check text-orange"></i>
+										Ads Free
+									</li>
+								</ul>
+								<div class="d-grid">
+									<a class="btn btn-orange" href="/login">Choose plan</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="py-5">
+			<div class="container px-5 my-5 px-5">
+				<div class="text-center mb-5">
+					<h2 class="fw-bolder">Customer testimonials</h2>
+					<p class="lead mb-0">What our customers said about us</p>
+				</div>
+				<div class="row gx-5 justify-content-center">
+					<div class="col-lg-6">
+						<div class="card mb-4 bg-dark">
+							<div class="card-body p-4">
+								<div class="d-flex">
+									<div class="flex-shrink-0">
+										<i class="fa fa-quote-right fs-1 text-orange"></i>
+									</div>
+									<div class="ms-4">
+										<p class="mb-1">Coming Soon!</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="card  bg-dark">
+							<div class="card-body p-4">
+								<div class="d-flex">
+									<div class="flex-shrink-0">
+										<i class="fa fa-quote-right fs-1 text-orange"></i>
+									</div>
+									<div class="ms-4">
+										<p class="mb-1">Coming Soon!</p>
+										<!-- <div class="small text-muted">- Client Name, Location</div> -->
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="bg-dark py-5" id="contact">
+			<div class="container px-5 my-5 px-5">
+				<div class="text-center mb-5">
+					<div class="feature bg-orange bg-gradient text-white rounded-3 mb-3">
+						<i class="fa fa-envelope"></i>
+					</div>
+					<h2 class="fw-bolder">Get in touch</h2>
+					<p class="lead mb-0">We'd love to hear from you</p>
+				</div>
+				<div class="row gx-5 justify-content-center">
+					<div class="col-lg-6">
+						{{ form_start(contactForm) }}
+						<div class="form-error">
+							{{ form_errors(contactForm) }}
+						</div>
+						<div class="form-group">
+							<div class="input-group mb-3">
+								<div class="form-floating">
+									{{ form_widget(contactForm.fullName) }}
+									{{ form_label(contactForm.fullName) }}
+									<div class="form-error">
+										{{ form_errors(contactForm.fullName) }}
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="input-group mb-3">
+								<div class="form-floating">
+									{{ form_widget(contactForm.email) }}
+									{{ form_label(contactForm.email) }}
+									<div class="form-error">
+										{{ form_errors(contactForm.email) }}
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="input-group mb-3">
+								<div class="form-floating">
+									{{ form_widget(contactForm.subject) }}
+									{{ form_label(contactForm.subject) }}
+									<div class="form-error">
+										{{ form_errors(contactForm.subject) }}
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-group mb-3">
+								<div class="form-floating">
+									{{ form_widget(contactForm.message) }}
+									{{ form_label(contactForm.message) }}
+									<div class="form-error">
+										{{ form_errors(contactForm.message) }}
+									</div>
+								</div>
+							</div>
+						</div>
+                        <div class="d-grid">
+						    {{ form_widget(contactForm.submit) }}
+                        </div>
+						{{ form_end(contactForm) }}
+                        {% for message in app.flashes('email-success') %}
+				        	<div class="text-center">
+                            <div class="fw-bolder">{{message}}</div>
+                        </div>
+				        {% endfor %}
+					</div>
+				</div>
+			</div>
+		</section>
+		{% block footer %}
+			{% include 'partials/_footer.html.twig' %}
+		{% endblock %}
+	</div>
+
+
+{% endblock %}
