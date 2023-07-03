@@ -1,0 +1,181 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BioLeet - Your Esports BIO
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="/styles/home.css">
+{% endblock %}
+
+{% block body %}
+
+	<section class="bg-custom-dark py-5">
+		<div class="container px-5 my-5">
+			<div class="text-center mb-5">
+				<h2 class="fw-bolder">Get your premium!</h2>
+				<p class="lead mb-0">With our no hassle pricing plans</p>
+			</div>
+			<div
+				class="row gx-5 justify-content-center">
+				<!-- Pricing card free-->
+				<div class="col-lg-6 col-xl-4">
+					<div class="card mb-5 mb-xl-0 bg-dark">
+						<div class="card-body p-5">
+							<div class="small text-uppercase fw-bold text-muted">Free</div>
+							<div class="mb-3">
+								<span class="display-4 fw-bold">$0</span>
+								<span class="text-muted">/ mo.</span>
+							</div>
+							<ul class="list-unstyled mb-4">
+								<li class="mb-2">
+									<i class="fa fa-check text-orange"></i>
+									1 Profile
+								</li>
+								<li class="mb-2">
+									<i class="fa fa-check text-orange"></i>
+									1 Team
+								</li>
+								<li class="mb-2">
+									<i class="fa fa-check text-orange"></i>
+									3 Achievements/Profile
+								</li>
+								<li class="mb-2 text-muted">
+									<i class="fa fa-x text-muted"></i>
+									Add Highlights Video
+								</li>
+								<li class="mb-2 text-muted">
+									<i class="fa fa-x text-muted"></i>
+									Players List Priority
+								</li>
+								<li class="mb-2 text-muted">
+									<i class="fa fa-x text-muted"></i>
+									Teams List Priority
+								</li>
+								<li class="mb-2 text-muted">
+									<i class="fa fa-x text-muted"></i>
+									Ads Free
+								</li>
+							</ul>
+							<div class="d-grid">
+								<a class="btn btn-outline-orange disabled" href="/">Choose plan</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Pricing card pro-->
+				<div class="col-lg-6 col-xl-4 ">
+					<div class="card mb-5 mb-xl-0 bg-dark">
+						<div class="card-body p-5">
+							<div class="small text-uppercase fw-bold">
+								<i class="fa fa-crown text-warning"></i>
+								Premium
+							</div>
+							<div class="mb-3">
+								<span class="display-4 fw-bold">$3</span>
+								<span class="text-muted">/ mo.</span>
+							</div>
+							<ul class="list-unstyled mb-4">
+								<li class="mb-2">
+									<i class="fa fa-check text-orange"></i>
+									<strong>
+										Unlimited Profiles</strong>
+								</li>
+								<li class="mb-2">
+									<i class="fa fa-check text-orange"></i>
+									<strong>
+										Unlimited Teams</strong>
+								</li>
+								<li class="mb-2">
+									<i class="fa fa-check text-orange"></i>
+									<strong>
+										Unlimited Achievements</strong>
+								</li>
+								<li class="mb-2">
+									<i class="fa fa-check text-orange"></i>
+									Add Highlights Video
+								</li>
+								<li class="mb-2">
+									<i class="fa fa-check text-orange"></i>
+									Players List Priority
+								</li>
+								<li class="mb-2">
+									<i class="fa fa-check text-orange"></i>
+									Teams List Priority
+								</li>
+								<li class="mb-2">
+									<i class="fa fa-check text-orange"></i>
+									Ads Free
+								</li>
+							</ul>
+							<div class="d-grid">
+								{% set subscribeModalId = 'subscribeModal' %}
+								<button type="button" class="btn btn-orange" data-bs-toggle="modal" data-bs-target="#{{ subscribeModalId }}">
+									Choose plan
+								</button>
+								{% set subscribeModalTitle = 'Subscribe to Premium' %}
+								{% set subscribeModalBody %}
+								<div class="card-deck row">
+									<div class="accordion-item card p-2 col-lg-4 bg-dark">
+										<a class="card-block stretched-link text-decoration-none text-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+											<h4 class="card-title">Quarterly</h4>
+											<p class="card-text">$3/mo.</p>
+											<p class="card-text">
+												<small class="text-muted">-0%</small>
+											</p>
+										</a>
+									</div>
+									<div class="accordion-item card p-2 col-lg-4 bg-dark">
+										<a class="card-block stretched-link text-decoration-none text-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+											<h4 class="card-title">Biannually</h4>
+											<p class="card-text">$2.7/mo.</p>
+											<p class="card-text">
+												<small class="text-success">-10%</small>
+											</p>
+										</a>
+									</div>
+									<div class="accordion-item card p-2 col-lg-4 bg-dark">
+										<a class="card-block stretched-link text-decoration-none text-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+											<h4 class="card-title">Annually</h4>
+											<p class="card-text">$2.4/mo.</p>
+											<p class="card-text">
+												<small class="text-success">-20%</small>
+											</p>
+										</a>
+									</div>
+								</div>
+								<hr>
+								<div class="accordion-group">
+									<div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#subscribeModal">
+										<div class="card card-body bg-dark">
+											Coming Soon
+										</div>
+									</div>
+									<div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#subscribeModal">
+										<div class="card card-body bg-dark">
+											Coming Soon
+										</div>
+									</div>
+									<div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#subscribeModal">
+										<div class="card card-body bg-dark">
+											Coming Soon
+										</div>
+									</div>
+								</div>
+								{% endset %}
+								{% include 'partials/modal.html.twig' with {
+									modalId: subscribeModalId,
+									modalTitle: subscribeModalTitle,
+									modalBody: subscribeModalBody
+								} only %}
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Pricing card enterprise-->
+			</div>
+		</div>
+	</section>
+
+
+{% endblock %}

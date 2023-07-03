@@ -11,7 +11,7 @@
 {% block body %}
 
 	<div>
-		<header class="bg-dark py-5">
+		<header class="py-5">
 			<div class="container px-5">
 				<div class="row gx-5 justify-content-center">
 					<div class="col-lg-6">
@@ -21,7 +21,7 @@
 								PROFILE</h1>
 							<p class="lead text-white-50 mb-4">Join all over the esports players and live the experience!</p>
 							<div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
-								<a class="btn btn-orange btn-lg px-4 me-sm-3" href="/signup">Get Started</a>
+								<a class="btn btn-orange btn-lg px-4 me-sm-3" href="{{ path('security.signup') }}">Get Started</a>
 								<!-- <a class="btn btn-outline-light btn-lg px-4" href="#!">Learn More</a> -->
 							</div>
 						</div>
@@ -29,7 +29,7 @@
 				</div>
 			</div>
 		</header>
-		<section class="py-5" id="features">
+		<section class="bg-dark py-5" id="features">
 			<div class="container px-5 my-5">
 				<div class="text-center mb-5">
 					<h2 class="fw-bolder">3 Steps to get started</h2>
@@ -41,7 +41,7 @@
 						</div>
 						<h2 class="h4 fw-bolder">Step I</h2>
 						<p>Create Account by filling basic informations and credentials.</p>
-						<a class="text-decoration-none text-orange" href="/signup">
+						<a class="text-decoration-none text-orange" href="{{ path('security.signup') }}">
 							Get Started
 							<i class="fa fa-arrow-right"></i>
 						</a>
@@ -52,7 +52,7 @@
 						</div>
 						<h2 class="h4 fw-bolder">Step II</h2>
 						<p>Fill your general informations that will be displayed on your profile.</p>
-						<a class="text-decoration-none text-orange" href="/signup">
+						<a class="text-decoration-none text-orange" href="{{ path('security.signup') }}">
 							Get Started
 							<i class="fa fa-arrow-right"></i>
 						</a>
@@ -63,7 +63,7 @@
 						</div>
 						<h2 class="h4 fw-bolder">Step III</h2>
 						<p>Finally, Create a Profile and fill your informartions based on your choosen game.</p>
-						<a class="text-decoration-none text-orange" href="/signup">
+						<a class="text-decoration-none text-orange" href="{{ path('security.signup') }}">
 							Get Started
 							<i class="fa fa-arrow-right"></i>
 						</a>
@@ -71,7 +71,7 @@
 				</div>
 			</div>
 		</section>
-		<section class="bg-dark py-5" id="premium">
+		<section class="py-5" id="premium">
 			<div class="container px-5 my-5">
 				<div class="text-center mb-5">
 					<h2 class="fw-bolder">Get your premium!</h2>
@@ -117,7 +117,7 @@
 									</li>
 								</ul>
 								<div class="d-grid">
-									<a class="btn btn-outline-orange" href="/signup">Choose plan</a>
+									<a class="btn btn-outline-orange" href="{{ path('security.signup') }}">Choose plan</a>
 								</div>
 							</div>
 						</div>
@@ -167,7 +167,7 @@
 									</li>
 								</ul>
 								<div class="d-grid">
-									<a class="btn btn-orange" href="/login">Choose plan</a>
+									<a class="btn btn-orange" href="{{ path('premium.index') }}">Choose plan</a>
 								</div>
 							</div>
 						</div>
@@ -175,7 +175,7 @@
 				</div>
 			</div>
 		</section>
-		<section class="py-5">
+		<section class="bg-dark py-5">
 			<div class="container px-5 my-5 px-5">
 				<div class="text-center mb-5">
 					<h2 class="fw-bolder">Customer testimonials</h2>
@@ -183,7 +183,7 @@
 				</div>
 				<div class="row gx-5 justify-content-center">
 					<div class="col-lg-6">
-						<div class="card mb-4 bg-dark">
+						<div class="card mb-4 bg-secondary">
 							<div class="card-body p-4">
 								<div class="d-flex">
 									<div class="flex-shrink-0">
@@ -195,7 +195,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="card  bg-dark">
+						<div class="card bg-secondary">
 							<div class="card-body p-4">
 								<div class="d-flex">
 									<div class="flex-shrink-0">
@@ -212,7 +212,7 @@
 				</div>
 			</div>
 		</section>
-		<section class="bg-dark py-5" id="contact">
+		<section class="py-5" id="contact">
 			<div class="container px-5 my-5 px-5">
 				<div class="text-center mb-5">
 					<div class="feature bg-orange bg-gradient text-white rounded-3 mb-3">

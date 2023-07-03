@@ -1,53 +1,76 @@
 .text-orange {
-    color: #ff712a;
-  }
-  
-  .btn-orange {
-    background-color: #ff712a;
-  }
-  
-  .bg-orange {
-    background-color: #ff712a;
-  }
-  
-  .btn-outline-orange {
-    color: #fff;
-    background-color: null;
-    border-color: #ff712a;
-  }
-  
-  .btn-outline-orange:active {
-    color: #000;
-    background-color: #ff712a;
-  }
-  
-  footer.footer {
-    padding-top: 4rem;
-    padding-bottom: 4rem;
-  }
-  
-  .list-inline {
-    padding-left: 0;
-    list-style: none;
-  }
-  
-  .list-inline-item {
-    display: inline-block;
-  }
-  .list-inline-item:not(:last-child) {
-    margin-right: 0.5rem;
-  }
-  
-  .text-lg-end {
-    text-align: right !important;
-  }
-  
-  .feature {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    height: 4rem;
-    width: 4rem;
-    font-size: 2rem;
-  }
-  
+  color: #ff712a;
+}
+
+.btn.btn-orange {
+  color: #fff;
+  background-color: #ff712a;
+}
+
+.btn.btn-orange:hover,
+.btn.btn-orange:focus {
+  color: #fff;
+  background-color: transparent;
+  border-color: #ff712a;
+}
+
+.btn.btn-orange:active {
+  color: #ff712a;
+  background-color: transparent;
+  border-color: #ff712a;
+}
+
+.bg-orange {
+  background-color: #ff712a;
+}
+
+.btn.btn-outline-orange {
+  color: #fff;
+  background-color: transparent;
+  border-color: #ff712a;
+}
+
+.btn.btn-outline-orange:hover,
+.btn.btn-outline-orange:focus {
+  color: #fff;
+  background-color: transparent;
+  border-color: #fff;
+}
+
+.btn.btn-outline-orange:active {
+  color: #ff712a;
+  background-color: transparent;
+  border-color: #fff;
+}
+
+
+footer.footer {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+.list-inline {
+  padding-left: 0;
+  list-style: none;
+}
+
+.list-inline-item {
+  display: inline-block;
+}
+
+.list-inline-item:not(:last-child) {
+  margin-right: 0.5rem;
+}
+
+.text-lg-end {
+  text-align: right !important;
+}
+
+.feature {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 4rem;
+  width: 4rem;
+  font-size: 2rem;
+}
