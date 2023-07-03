@@ -65,7 +65,9 @@ class ProfileController extends AbstractController
         } else {
             $profiles = $manager->getRepository(Profile::class)
                 ->createQueryBuilder('p')
-                ->orderBy('p.createdAt', 'DESC')
+                ->leftJoin('p.user', 'u')
+                ->orderBy('CASE WHEN (u.premiumEnd >= CURRENT_DATE()) THEN 0 ELSE 1 END')
+                ->addOrderBy('p.createdAt', 'DESC')
                 ->setMaxResults(40)
                 ->getQuery()
                 ->getResult();

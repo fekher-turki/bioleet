@@ -61,13 +61,15 @@ class ProfileRepository extends ServiceEntityRepository
         $query = $queryBuilder
             ->select('p')
             ->from(Profile::class, 'p')
-            ->join('p.user', 'u') // Join with the user relationship
+            ->leftJoin('p.user', 'u')
+            ->leftJoin('p.gameRole', 'gr')
             ->where('p.ingameName LIKE :str')
-            ->orderBy('p.createdAt', 'DESC')
+            ->orderBy('CASE WHEN (u.premiumEnd >= CURRENT_DATE()) THEN 0 ELSE 1 END')
+            ->addOrderBy('p.createdAt', 'DESC')
             ->setParameter('str', '%' . $str . '%');
 
         if (!empty($country)) {
-            $query->andWhere('u.country = :country') // Use the user.country property
+            $query->andWhere('u.country = :country')
                 ->setParameter('country', $country);
         }
 
@@ -77,12 +79,12 @@ class ProfileRepository extends ServiceEntityRepository
         }
 
         if (!empty($gameRole)) {
-            $query->andWhere('p.gameRole = :gameRole')
+            $query->andWhere('gr.id = :gameRole')
                 ->setParameter('gameRole', $gameRole);
         }
 
 
-        $query->setMaxResults(4);
+        $query->setMaxResults(40);
 
         return $query->getQuery()->getResult();
     }

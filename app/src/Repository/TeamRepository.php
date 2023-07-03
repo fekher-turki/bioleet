@@ -53,6 +53,36 @@ class TeamRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    public function search($str, $country, $game): array
+    {
+        $entityManager = $this->getEntityManager();
+        $queryBuilder = $entityManager->createQueryBuilder();
+
+        $query = $queryBuilder
+            ->select('t')
+            ->from(Team::class, 't')
+            ->leftJoin('t.owner', 'u')
+            ->where('t.teamName LIKE :str')
+            ->orderBy('CASE WHEN (u.premiumEnd >= CURRENT_DATE()) THEN 0 ELSE 1 END')
+            ->addOrderBy('t.createdAt', 'DESC')
+            ->setParameter('str', '%' . $str . '%');
+
+        if (!empty($country)) {
+            $query->andWhere('t.country = :country')
+                ->setParameter('country', $country);
+        }
+
+        if (!empty($game)) {
+            $query->andWhere('t.game = :game')
+                ->setParameter('game', $game);
+        }
+
+
+        $query->setMaxResults(40);
+
+        return $query->getQuery()->getResult();
+    }
+
 //    /**
 //     * @return Team[] Returns an array of Team objects
 //     */

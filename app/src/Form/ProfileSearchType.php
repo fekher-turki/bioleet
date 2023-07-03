@@ -4,11 +4,9 @@ namespace App\Form;
 
 use App\Entity\Game;
 use App\Entity\GameRole;
-use App\Entity\Profile;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
-use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -26,7 +24,7 @@ class ProfileSearchType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Search..',
                     'class' => 'form-control text-light bg-dark',
-                    'minlength' => '2',
+                    'minlength' => '3',
                 ],
                 'constraints' => [
                     new Assert\Length(['min' => 3]),

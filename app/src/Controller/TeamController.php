@@ -9,6 +9,7 @@ use App\Form\EditTeamType;
 use App\Form\InviteTeamType;
 use App\Form\LogoType;
 use App\Form\SocialMediaType;
+use App\Form\TeamSearchType;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -42,6 +43,38 @@ class TeamController extends AbstractController
             'isBanned' => $isBanned,
             'team' => $team,
             'user' => $user
+        ]);
+    }
+
+    #[Route('/teams', name: 'team.list', methods: ['GET'])]
+    public function list(Request $request, EntityManagerInterface $manager): Response
+    {
+        
+        $searchForm = $this->createForm(TeamSearchType::class);
+        $searchForm->handleRequest($request);
+    
+        if ($searchForm->isSubmitted() && $searchForm->isValid()) {
+            $data = $searchForm->getData();
+            $teams = $manager->getRepository(Team::class)
+                ->search(
+                    $data->getTeamName(),
+                    $data->getCountry(),
+                    $data->getGame()
+                );
+        } else {
+            $teams = $manager->getRepository(Team::class)
+                ->createQueryBuilder('t')
+                ->leftJoin('t.owner', 'o')
+                ->orderBy('CASE WHEN (o.premiumEnd >= CURRENT_DATE()) THEN 0 ELSE 1 END')
+                ->addOrderBy('t.createdAt', 'DESC')
+                ->setMaxResults(40)
+                ->getQuery()
+                ->getResult();
+        }
+    
+        return $this->render('pages/team/list.html.twig', [
+            'searchForm' => $searchForm->createView(),
+            'teams' => $teams,
         ]);
     }
 
