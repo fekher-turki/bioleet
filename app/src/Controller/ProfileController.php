@@ -20,9 +20,7 @@ class ProfileController extends AbstractController
         EntityManagerInterface $manager,
         string $game,
         string $ingameName,
-    ): Response
-    {
-        $currentUser = $this->getUser();
+    ): Response {
         $gameCode = $manager->getRepository(Game::class)->findOneBy(['code' => $game]);
         $profile = $manager->getRepository(Profile::class)->findOneBy(['ingameName' => $ingameName, 'game' => $gameCode]);
         if (!$profile) {
@@ -31,7 +29,6 @@ class ProfileController extends AbstractController
 
         $experiences = $profile->getExperiences();
         $hasExperiences = $experiences->count() > 0;
-
 
         $user = $profile->getUser();
         $isBanned = $user->isBanned();
@@ -48,6 +45,20 @@ class ProfileController extends AbstractController
         ]);
     }
 
+    #[Route('/players', name: 'profile.list', methods: ['GET'])]
+    public function list(
+        EntityManagerInterface $manager
+    ): Response {
+        $profiles = $manager->getRepository(Profile::class)->createQueryBuilder('p')
+            ->setMaxResults(40)
+            ->getQuery()
+            ->getResult();
+
+        return $this->render('pages/profile/list.html.twig', [
+            'profiles' => $profiles,
+        ]);
+    }
+
     #[Security("is_granted('ROLE_USER')")]
     #[Route('/account/profile/{game}/{ingameName}', name: 'profile.edit', methods: ['GET', 'POST'])]
     public function edit(
@@ -55,15 +66,14 @@ class ProfileController extends AbstractController
         EntityManagerInterface $manager,
         string $ingameName,
         string $game
-        ): Response
-    {        
+    ): Response {
         $gameCode = $manager->getRepository(Game::class)->findOneBy(['code' => $game]);
         $profile = $manager->getRepository(Profile::class)->findOneBy(['ingameName' => $ingameName, 'game' => $gameCode]);
 
         if (!$profile || $profile->getUser() !== $this->getUser()) {
             return $this->redirectToRoute('account.index');
         }
-        
+
         // $currentUser = $this->getUser();
         // $isPremium = $currentUser->isPremium();
         $experiences = $profile->getExperiences();
@@ -72,7 +82,7 @@ class ProfileController extends AbstractController
         // profile form
         $profileForm = $this->createForm(EditProfileType::class, $profile);
         $profileForm->handleRequest($request);
-        
+
         if ($profileForm->isSubmitted() && $profileForm->isValid()) {
             $profile = $profileForm->getData();
             $manager->persist($profile);
@@ -89,7 +99,7 @@ class ProfileController extends AbstractController
         // experience form
         $experienceForm = $this->createForm(ExperienceType::class);
         $experienceForm->handleRequest($request);
-        
+
         if ($experienceForm->isSubmitted() && $experienceForm->isValid()) {
             $experience = $experienceForm->getData();
             $experience->setProfile($profile);
@@ -121,8 +131,7 @@ class ProfileController extends AbstractController
         EntityManagerInterface $manager,
         string $ingameName,
         string $game
-    ): Response
-    {
+    ): Response {
         $gameCode = $manager->getRepository(Game::class)->findOneBy(['code' => $game]);
         $profile = $manager->getRepository(Profile::class)->findOneBy(['ingameName' => $ingameName, 'game' => $gameCode]);
 

@@ -18,7 +18,6 @@ class HomeController extends AbstractController
         MailerInterface $mailer,
         Request $request,
     ): Response {
-        $currentUser = $this->getUser();
         $contactForm = $this->createForm(ContactType::class);
         $contactForm->handleRequest($request);
 

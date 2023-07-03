@@ -7,8 +7,13 @@
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="navbarColor01">
-			<ul class="navbar-nav me-auto"></ul>
-			<div class="d-flex">
+			<ul class="navbar-nav me-auto">
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('profile.list') }}"><b>Players<b>
+					</a>
+				</li>
+			</ul>
+			<div class="d-flex align-items-center">
 				<a class="nav-item btn btn-secondary btn-sm rounded" style="width: 120px;" data-bs-toggle="modal" data-bs-target="#searchModal">
 					<i class="fa fa-search"></i>
 					Search..
@@ -40,7 +45,7 @@
 				<ul class="navbar-nav me-auto">
 					{% if app.user %}
 						<li class="nav-item dropdown" style="margin-right: 5rem">
-							<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ app.user.username}}</a>
+							<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ app.user.username|slice(0, 10)}}</a>
 							<div class="dropdown-menu">
 								<a class="dropdown-item" href="{{ path('account.index') }}">Dashboard</a>
 								<a class="dropdown-item" href="{{ path('user.edit') }}">Settings</a>

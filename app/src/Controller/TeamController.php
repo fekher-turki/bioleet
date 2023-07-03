@@ -28,7 +28,6 @@ class TeamController extends AbstractController
         string $teamUrl,
     ): Response
     {
-        $currentUser = $this->getUser();
         $gameCode = $manager->getRepository(Game::class)->findOneBy(['code' => $game]);
         $team = $manager->getRepository(Team::class)->findOneBy(['teamUrl' => $teamUrl, 'game' => $gameCode]);
         if (!$team) {

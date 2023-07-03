@@ -161,7 +161,7 @@ $('#myTable').DataTable();
 						</div>
 						<div class="row">
 							{% for player in team.players %}
-								<div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+								<div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 d-flex">
 									<div class="card mb-4">
 										<a href="/profile/{{team.game.code}}/{{player.ingameName}}">
 											{% if player.user.avatar == "default-avatar.png" %}
