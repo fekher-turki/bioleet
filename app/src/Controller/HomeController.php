@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Form\ContactType;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,9 +17,8 @@ class HomeController extends AbstractController
     public function index(
         MailerInterface $mailer,
         Request $request,
-        EntityManagerInterface $manager,
     ): Response {
-
+        $currentUser = $this->getUser();
         $contactForm = $this->createForm(ContactType::class);
         $contactForm->handleRequest($request);
 

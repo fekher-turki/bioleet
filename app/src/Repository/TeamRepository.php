@@ -39,6 +39,20 @@ class TeamRepository extends ServiceEntityRepository
         }
     }
 
+    public function findEntitiesByString($str)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT t 
+            FROM App\Entity\Team t 
+            WHERE t.teamName LIKE :str'
+        )->setParameter('str', '%'.$str.'%')
+        ->setMaxResults(4);;
+
+        return $query->getResult();
+    }
+
 //    /**
 //     * @return Team[] Returns an array of Team objects
 //     */

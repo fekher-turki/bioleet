@@ -39,6 +39,20 @@ class ProfileRepository extends ServiceEntityRepository
         }
     }
 
+    public function findEntitiesByString($str)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT p 
+            FROM App\Entity\Profile p 
+            WHERE p.ingameName LIKE :str'
+        )->setParameter('str', '%'.$str.'%')
+        ->setMaxResults(4);;
+
+        return $query->getResult();
+    }
+
 //    /**
 //     * @return Profile[] Returns an array of Profile objects
 //     */

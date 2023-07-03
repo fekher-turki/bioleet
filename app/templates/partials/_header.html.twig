@@ -1,28 +1,42 @@
 <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
 	<div class="container-fluid">
-		<a class="navbar-brand" href="{{ path('home.index') }}"><img src="{{ asset('images/BioLeet-full-white.png') }}" style="width: 80px;"
-      alt="BioLeet Logo">
+		<a class="navbar-brand" href="{{ path('home.index') }}"><img src="{{ asset('images/BioLeet-full-white.png') }}" style="width: 80px;" alt="BioLeet Logo">
 			<span class="visually-hidden">(current)</span>
 		</a>
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="navbarColor01">
-			<ul class="navbar-nav me-auto">
-				{# {% if app.user %}
-					<li class="nav-item">
-						<a class="nav-link active" href="{{ path('ingredient.index') }}">Mes Ingrédients
-							<span class="visually-hidden">(current)</span>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link active" href="{{ path('recipe.index') }}">Mes Recette
-							<span class="visually-hidden">(current)</span>
-						</a>
-					</li>
-				{% endif %} #}
-			</ul>
+			<ul class="navbar-nav me-auto"></ul>
 			<div class="d-flex">
+				<a class="nav-item btn btn-secondary btn-sm rounded" style="width: 120px;" data-bs-toggle="modal" data-bs-target="#searchModal">
+					<i class="fa fa-search"></i>
+					Search..
+				</a>
+
+				<div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-sm">
+						<div
+							class="modal-content bg-dark">
+
+							<!-- Modal Header -->
+							<div class="modal-header">
+								<h4 class="modal-title fs-5 w-100" id="exampleModalLabel">
+									<input class="form-control w-100 bg-dark text-light" name="search-box" autocomplete="off" type="search" placeholder="Search Player, Team" aria-label="Search" id="search">
+								</h4>
+							</div>
+
+							<!-- Modal body -->
+							<div class="modal-body">
+								<div id="error"></div>
+								<div id="profilesTitle"></div>
+								<div id="profiles"></div>
+								<div id="teamsTitle"></div>
+								<div id="teams"></div>
+							</div>
+						</div>
+					</div>
+				</div>
 				<ul class="navbar-nav me-auto">
 					{% if app.user %}
 						<li class="nav-item dropdown" style="margin-right: 5rem">
@@ -30,12 +44,10 @@
 							<div class="dropdown-menu">
 								<a class="dropdown-item" href="{{ path('account.index') }}">Dashboard</a>
 								<a class="dropdown-item" href="{{ path('user.edit') }}">Settings</a>
-								{# <a class="dropdown-item" href="{{ path('user.edit', { id : app.user.id }) }}">Modifier mes informations</a>
-								<a class="dropdown-item" href="{{ path('user.edit.password', { id : app.user.id }) }}">Modifier mon mot de passe</a>
 								{% if 'ROLE_ADMIN' in app.user.roles %}
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="{{ path('admin.index') }}">Administration</a>
-								{% endif %} #}
+									<div class="dropdown-divider"></div>
+									<a class="dropdown-item" href="{{ path('admin') }}">Administration</a>
+								{% endif %}
 								<div class="dropdown-divider"></div>
 								<a class="dropdown-item" href="{{ path('security.logout') }}">Logout</a>
 							</div>
@@ -46,16 +58,94 @@
 								<span class="visually-hidden">(current)</span>
 							</a>
 						</li>
-						{# <li class="nav-item">
-							<a class="nav-link active" href="{{ path('security.registration') }}">Inscription
+						<li class="nav-item">
+							<a class="nav-link active" href="{{ path('security.signup') }}">SignUp
 								<span class="visually-hidden">(current)</span>
 							</a>
-						</li> #}
+						</li>
 					{% endif %}
-
-
 				</ul>
 			</div>
 		</div>
 	</div>
 </nav>
+<!-- parse-ignore-start -->
+<script type="text/javascript">
+	jQuery(document).ready(function () {
+		var searchRequest = null;
+		$("#search").keyup(function () {
+			var minlength = 3;
+			var that = this;
+			var value = $(this).val();
+			var profileSelector = $("#profiles").html('');
+			var profileTitleSelector = $("#profilesTitle").html('');
+			var teamSelector = $("#teams").html('');
+			var teamTitleSelector = $("#teamsTitle").html('');
+			var errorSelector = $("#error").html('');
+			if (value.length >= minlength) {
+				if (searchRequest != null) 
+				searchRequest.abort();
+
+				searchRequest = $.ajax({
+					type: "GET",
+					url: "{{ path('ajax_search') }}",
+					data: {
+						'q': value
+					},
+					dataType: "text",
+					success: function (msg) {
+						if (value == $(that).val()) {
+							var result = JSON.parse(msg);
+							if (!result.hasOwnProperty('profiles') && !result.hasOwnProperty('teams'))
+							{
+								errorSelector.append('<p>' + result['error'] + '<p>');
+							}
+							else {
+								if (result.hasOwnProperty('profiles')) {
+									profileTitleSelector.append(`<div class="mb-2"><small>Players</small></div>`);
+								}
+								if (result.hasOwnProperty('teams')) {
+									teamTitleSelector.append(`<div class="mb-2"><small>Teams</small></div>`);
+								}
+								$.each(result, function (key, arr) {
+									$.each(arr, function (id, value) {
+										if (key == 'profiles') {
+											if (id != 'error') {
+												profileSelector.append(
+												    `<div class="mb-2">
+												        <a href="/profile/${value.game.code}/${value.ingameName}">
+												            <img src="{{ asset('images/countries/' ~ '${value.user.country}'|lower ~ '.png') }}" style="width: 32px; padding-left: 5px;" alt="${value.user.country}">
+												            ${value.ingameName}
+												            <img src="{{ asset('images/games/' ~ '${value.game.code}'|lower ~ '.png') }}" style="width: 32px; padding-right: 10px;" class="position-absolute end-0" alt="${value.game.name}">
+												        </a>
+												    </div>`
+												);
+											}
+										}
+										if (key == 'teams') {
+											if (id != 'error') {
+												teamSelector.append(
+												    `<div>
+												        <a href="/team/${value.game.code}/${value.teamUrl}">
+												            <img src="{{ asset('images/countries/' ~ '${value.country}'|lower ~ '.png') }}" style="width: 32px; padding-left: 5px;" alt="${value.country}">
+												            ${value.teamName}
+												            <img src="{{ asset('images/games/' ~ '${value.game.code}'|lower ~ '.png') }}" style="width: 32px; padding-right: 10px;" class="position-absolute end-0" alt="${value.game.name}">
+												        </a>
+												    </div>`
+												);
+											}
+										}
+									});
+								});
+							}
+							
+						}
+					}
+				});
+			} else {
+				errorSelector.append('<p>Please enter at least ' + minlength + ' characters.<p>');
+			}
+		});
+	});
+</script>
+<!-- parse-ignore-end -->

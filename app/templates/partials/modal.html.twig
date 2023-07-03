@@ -1,18 +1,24 @@
 <div class="modal fade" id="{{ modalId }}" tabindex="-1" aria-labelledby="{{ modalId }}Label" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content bg-dark">
-			<div class="modal-header">
+			{% if modalTitle is defined %}
+				<div class="modal-header">
 				<h5 class="modal-title fs-5" id="{{ modalId }}Label">{{ modalTitle }}</h5>
 				<button type="button" class="btn btn-dark" data-bs-dismiss="modal" aria-label="Close">
 					<i class="fas fa-close"></i>
 				</button>
 			</div>
-			<div class="modal-body">
+			{% endif %}
+			{% if modalBody is defined %}
+				<div class="modal-body">
 				{{ modalBody }}
 			</div>
-			<div class="modal-footer">
+			{% endif %}
+			{% if modalFooter is defined %}
+				<div class="modal-footer">
 				{{ modalFooter }}
 			</div>
+			{% endif %}
 		</div>
 	</div>
 </div>
