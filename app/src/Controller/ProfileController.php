@@ -6,6 +6,7 @@ use App\Entity\Game;
 use App\Entity\Profile;
 use App\Form\EditProfileType;
 use App\Form\ExperienceType;
+use App\Form\ProfileSearchType;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -46,15 +47,32 @@ class ProfileController extends AbstractController
     }
 
     #[Route('/players', name: 'profile.list', methods: ['GET'])]
-    public function list(
-        EntityManagerInterface $manager
-    ): Response {
-        $profiles = $manager->getRepository(Profile::class)->createQueryBuilder('p')
-            ->setMaxResults(40)
-            ->getQuery()
-            ->getResult();
-
+    public function list(Request $request, EntityManagerInterface $manager): Response
+    {
+        
+        $searchForm = $this->createForm(ProfileSearchType::class);
+        $searchForm->handleRequest($request);
+    
+        if ($searchForm->isSubmitted() && $searchForm->isValid()) {
+            $data = $searchForm->getData();
+            $profiles = $manager->getRepository(Profile::class)
+                ->search(
+                    $data['ingameName'],
+                    $data['country'],
+                    $data['game'],
+                    $data['gameRole']
+                );
+        } else {
+            $profiles = $manager->getRepository(Profile::class)
+                ->createQueryBuilder('p')
+                ->orderBy('p.createdAt', 'DESC')
+                ->setMaxResults(40)
+                ->getQuery()
+                ->getResult();
+        }
+    
         return $this->render('pages/profile/list.html.twig', [
+            'searchForm' => $searchForm->createView(),
             'profiles' => $profiles,
         ]);
     }

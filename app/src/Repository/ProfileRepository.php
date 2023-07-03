@@ -47,34 +47,68 @@ class ProfileRepository extends ServiceEntityRepository
             'SELECT p 
             FROM App\Entity\Profile p 
             WHERE p.ingameName LIKE :str'
-        )->setParameter('str', '%'.$str.'%')
-        ->setMaxResults(4);;
+        )->setParameter('str', '%' . $str . '%')
+            ->setMaxResults(4);;
 
         return $query->getResult();
     }
 
-//    /**
-//     * @return Profile[] Returns an array of Profile objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function search($str, $country, $game, $gameRole): array
+    {
+        $entityManager = $this->getEntityManager();
+        $queryBuilder = $entityManager->createQueryBuilder();
 
-//    public function findOneBySomeField($value): ?Profile
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        $query = $queryBuilder
+            ->select('p')
+            ->from(Profile::class, 'p')
+            ->join('p.user', 'u') // Join with the user relationship
+            ->where('p.ingameName LIKE :str')
+            ->orderBy('p.createdAt', 'DESC')
+            ->setParameter('str', '%' . $str . '%');
+
+        if (!empty($country)) {
+            $query->andWhere('u.country = :country') // Use the user.country property
+                ->setParameter('country', $country);
+        }
+
+        if (!empty($game)) {
+            $query->andWhere('p.game = :game')
+                ->setParameter('game', $game);
+        }
+
+        if (!empty($gameRole)) {
+            $query->andWhere('p.gameRole = :gameRole')
+                ->setParameter('gameRole', $gameRole);
+        }
+
+
+        $query->setMaxResults(4);
+
+        return $query->getQuery()->getResult();
+    }
+
+    //    /**
+    //     * @return Profile[] Returns an array of Profile objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('p')
+    //            ->andWhere('p.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('p.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
+
+    //    public function findOneBySomeField($value): ?Profile
+    //    {
+    //        return $this->createQueryBuilder('p')
+    //            ->andWhere('p.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }
