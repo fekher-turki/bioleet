@@ -125,6 +125,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Team::class, orphanRemoval: true)]
     private Collection $teams;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Setup::class, orphanRemoval: true)]
+    private Collection $setup;
+
     public function __construct()
     {
         $this->nickname = $this->username;
@@ -133,6 +136,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
         $this->socialMedia = new ArrayCollection();
         $this->profiles = new ArrayCollection();
         $this->teams = new ArrayCollection();
+        $this->setup = new ArrayCollection();
     }
 
     #[ORM\PrePersist]
@@ -582,6 +586,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
             // set the owning side to null (unless already changed)
             if ($team->getOwner() === $this) {
                 $team->setOwner(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getSetup(): ?Setup
+    {
+        return $this->setup->first() ?: null;
+    }
+
+    public function addSetup(Setup $setup): static
+    {
+        if (!$this->setup->contains($setup)) {
+            $this->setup->add($setup);
+            $setup->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSetup(Setup $setup): static
+    {
+        if ($this->setup->removeElement($setup)) {
+            // set the owning side to null (unless already changed)
+            if ($setup->getUser() === $this) {
+                $setup->setUser(null);
             }
         }
 

@@ -53,29 +53,49 @@
 						</div>
 					</div>
 				</div>
-				<ul class="navbar-nav me-auto">
+				<ul class="navbar-nav me-auto ms-4">
 					{% if app.user %}
-						<li class="nav-item dropdown" style="margin-right: 5rem">
-							<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ app.user.username|slice(0, 10)}}</a>
-							<div class="dropdown-menu">
-								<a class="dropdown-item" href="{{ path('account.index') }}">Dashboard</a>
-								<a class="dropdown-item" href="{{ path('user.edit') }}">Settings</a>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle dropstart" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ app.user.username|slice(0, 10)}}</a>
+							<div class="dropdown-menu dropdown-menu-end">
+								<a class="dropdown-item" href="{{ path('account.index') }}">
+									<i class="fa fa-fw fa fa-gauge"></i>
+									Dashboard
+								</a>
+								<a class="dropdown-item" href="{{ path('user.edit') }}">
+									<i class="fa fa-fw fa fa-user-cog"></i>
+									Settings
+								</a>
+								<a class="dropdown-item" href="{{ path('user.setup') }}">
+									<i class="fa fa-fw fa fa-computer"></i>
+									Setup
+								</a>
 								{% if 'ROLE_ADMIN' in app.user.roles %}
 									<div class="dropdown-divider"></div>
-									<a class="dropdown-item" href="{{ path('admin') }}">Administration</a>
+									<a class="dropdown-item" href="{{ path('admin') }}">
+										<i class="fa fa-fw fa fa-user-tie"></i>
+										Administration
+									</a>
 								{% endif %}
 								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="{{ path('security.logout') }}">Logout</a>
+								<a class="dropdown-item" href="{{ path('security.logout') }}">
+									<i class="fa fa-fw fa fa-sign-out"></i>
+									Logout
+								</a>
 							</div>
 						</li>
 					{% else %}
 						<li class="nav-item">
-							<a class="nav-link active" href="{{ path('security.login') }}">Login
+							<a class="nav-link active" href="{{ path('security.login') }}">
+								<i class="fa fa-fw fa fa-sign-in"></i>
+								Login
 								<span class="visually-hidden">(current)</span>
 							</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link active" href="{{ path('security.signup') }}">SignUp
+							<a class="nav-link active" href="{{ path('security.signup') }}">
+								<i class="fa fa-fw fa fa-newspaper"></i>
+								SignUp
 								<span class="visually-hidden">(current)</span>
 							</a>
 						</li>

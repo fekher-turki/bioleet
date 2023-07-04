@@ -1,5 +1,203 @@
 {% extends "@EasyAdmin/page/content.html.twig" %}
 
 {% block content %}
-    <h1>TBD</h1>
+<div>
+	<div class="row col-sm-8 mt-3 mb-5">
+		<div class="col-xl-3 col-lg-6">
+			<div class="card text-white bg-success">
+				<div class="card-header">
+					<div class="row">
+						<div class="col col-xs-3">
+							<i class="fa fa-user fa-4x"></i>
+						</div>
+						<div class="col col-xs-9 text-right">
+							<div class="d-block">
+								<h6>Users</h6>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="card-footer">
+					<span class="float-left">{{ users }}
+						Users</span>
+				</div>
+			</div>
+		</div>
+		<div class="col-xl-3 col-lg-6">
+			<div class="card text-white bg-info ">
+				<div class="card-header">
+					<div class="row">
+						<div class="col col-xs-3">
+							<i class="fa fa-id-card fa-4x"></i>
+						</div>
+						<div class="col col-xs-9 text-right">
+							<div class="d-block">
+								<h6>Profiles</h6>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="card-footer">
+					<span class="float-left">{{ profiles }}
+						Profiles</span>
+				</div>
+			</div>
+		</div>
+		<div class="col-xl-3 col-lg-6">
+			<div class="card text-white bg-primary">
+				<div class="card-header">
+					<div class="row">
+						<div class="col col-xs-3">
+							<i class="fa fa-id-card fa-4x"></i>
+						</div>
+						<div class="col col-xs-9 text-right">
+							<div class="d-block">
+								<h6>Teams</h6>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="card-footer">
+					<span class="float-left">{{ teams }}
+						Teams</span>
+				</div>
+			</div>
+		</div>
+		<div class="col-xl-3 col-lg-6">
+			<div class="card text-white bg-warning">
+				<div class="card-header">
+					<div class="row">
+						<div class="col col-xs-3">
+							<i class="fa fa-crown fa-4x"></i>
+						</div>
+						<div class="col col-xs-9 text-right">
+							<div class="d-block">
+								<h6>Premium Users</h6>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="card-footer">
+					<span class="float-left">{{ premiumUsers }}
+						Premium Users</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col col-sm-8 mt-3">
+	    <div class="card mb-3 bg-dark">
+	        <div class="card-header">
+	            Users By Countries
+	        </div>
+	        <div class="card-body">
+	            <canvas id="barChart" width="400" height="200"></canvas>
+	        </div>
+	    </div>
+	</div>
+
+	<div class="col col-sm-8">
+	    <div class="card mb-3 bg-dark">
+	        <div class="card-header">
+	          Users Growth
+	        </div>
+	        <div class="card-body">
+	            <canvas id="lineChart" width="400" height="200"></canvas>
+	        </div>
+	    </div>
+	</div>
+	
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha512-s+xg36jbIujB2S2VKfpGmlC3T5V2TF3lY48DX7u2r9XzGzgPsa6wTpOQA7J9iffvdeBN0q9tKzRxVxw1JviZPg==" crossorigin="anonymous"></script>
+
+    <script>
+		const countries = {{ countries|json_encode()|raw }};
+
+    	const ctx = document.getElementById('barChart').getContext('2d');
+    	const barChart = new Chart(ctx, {
+    	    type: 'bar',
+    	    data: {
+    	        labels: countries.map(country => country.code),
+    	        datasets: [{
+    	            label: 'Number of Users',
+    	            data: countries.map(country => country.count),
+    	            backgroundColor: '#ff712a',
+    	            borderColor: '#ff712a',
+    	            borderWidth: 1
+    	        }]
+    	    },
+    	    options: {
+            scales: {
+                x: {
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.1)',
+                    },
+                },
+                y: {
+                    beginAtZero: true,
+                    stepSize: 1,
+					
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.1)',
+                    },
+                    ticks: {
+                        color: '#fff',
+                    },
+                },
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        color: '#fff',
+                    }
+                }
+            }
+        }
+    	});
+
+		const userGrowthData = {{ userGrowth|json_encode()|raw }};
+		const months = userGrowthData.map(data => data.monthYear);
+    	const counts = userGrowthData.map(data => data.count);
+
+    	const ctx2 = document.getElementById('lineChart').getContext('2d');
+    	const lineChart = new Chart(ctx2, {
+    	    type: 'line',
+    	    data: {
+    	        labels: months,
+    	        datasets: [{
+    	            label: 'User Growth',
+    	            data: counts,
+    	            backgroundColor: '#ff712a',
+    	            borderColor: '#ff712a',
+    	            borderWidth: 1
+    	        }]
+    	    },
+    	    options: {
+    	        scales: {
+    	            x: {
+    	                grid: {
+    	                    color: 'rgba(255, 255, 255, 0.1)',
+    	                },
+    	            },
+    	            y: {
+    	                beginAtZero: true,
+    	                stepSize: 1,
+    	                grid: {
+    	                    color: 'rgba(255, 255, 255, 0.1)',
+    	                },
+    	                ticks: {
+    	                    color: '#fff',
+    	                },
+    	            },
+    	        },
+    	        plugins: {
+    	            legend: {
+    	                labels: {
+    	                    color: '#fff',
+    	                }
+    	            }
+    	        }
+    	    }
+    	});
+    </script>
+</div>
 {% endblock %}

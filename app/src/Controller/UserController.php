@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Form\AvatarType;
+use App\Form\SetupType;
 use App\Form\SocialMediaType;
 use App\Form\UserPasswordType;
 use App\Form\UserType;
@@ -130,6 +131,36 @@ class UserController extends AbstractController
             'form' => $form->createView(),
             'passwordForm' => $passwordForm->createView(),
             'socialMediaForm' => $socialMediaForm->createView(),
+        ]);
+    }
+
+    #[Security("is_granted('ROLE_USER')")]
+    #[Route('/account/setup', name: 'user.setup', methods: ['GET', 'POST'])]
+    public function setup(
+        Request $request,
+        EntityManagerInterface $manager,
+    ): Response {
+        $currentUser = $this->getUser();
+        $setup = $currentUser->getSetup();
+
+        // social media form
+        $setupForm = $this->createForm(SetupType::class, $setup);
+        $setupForm->handleRequest($request);
+        
+        if ($setupForm->isSubmitted() && $setupForm->isValid()) {
+            $setup = $setupForm->getData();
+            $setup->setUser($this->getUser());
+            $manager->persist($setup);
+            $manager->flush();
+            $this->addFlash(
+                'success',
+                'Your Setup has been successfully updated'
+            );
+        }
+
+        return $this->render('pages/user/setup.html.twig', [
+            'user' => $this->getUser(),
+            'setupForm' => $setupForm->createView()
         ]);
     }
 

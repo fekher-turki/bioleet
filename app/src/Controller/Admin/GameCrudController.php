@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Game;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
@@ -29,7 +30,10 @@ class GameCrudController extends AbstractCrudController
         return [
             TextField::new('name'),
             TextField::new('code'),
+            ArrayField::new('gameRole')
+            ->hideOnForm(),
             AssociationField::new('gameRole')->setCrudController(GameRoleCrudController::class)
+                ->hideOnIndex(),
         ];
     }
 }
