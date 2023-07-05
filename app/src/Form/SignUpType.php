@@ -125,6 +125,7 @@ class SignUpType extends AbstractType
                 'choices' => [
                     'Male' => 'male',
                     'Female' => 'female',
+                    'Other' => 'other',
                 ],
                 'constraints' => [
                     new Assert\NotBlank(),

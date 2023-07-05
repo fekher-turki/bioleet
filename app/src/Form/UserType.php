@@ -92,6 +92,7 @@ class UserType extends AbstractType
                 'choices' => [
                     'Male' => 'male',
                     'Female' => 'female',
+                    'other' => 'other',
                 ],
                 'constraints' => [
                     new Assert\NotBlank(),
