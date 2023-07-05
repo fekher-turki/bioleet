@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}BioLeet Settings
+{% block title %}Players List | BioLeet.com
 {% endblock %}
 
 {% block stylesheets %}
@@ -78,12 +78,12 @@
 								{% if profile.user.avatar == "default-avatar.png" %}
 									<img src="{{ asset('images/default/default-avatar.png') | imagine_filter('avatar_256') }}" class="card-img-top" alt="{{ profile.ingameName }}">
 								{% else %}
-									<img src="{{ asset('images/users/' ~ profile.user.avatar) | imagine_filter('avatar_256') }}" class="card-img-top" alt="{{ profile.user.avatar }}">
+									<img src="{{ asset('images/users/' ~ profile.user.avatar) | imagine_filter('avatar_256') }}" class="card-img-top" alt="{{ profile.ingameName }}">
 								{% endif %}
 								<img src="{{ asset('images/games/' ~ profile.game.code|lower ~ '.png') }}" style="width: 40px; padding-right: 10px;" class="position-absolute end-0" alt="{{ profile.game.name }}">
 								<div class="card-body">
 									<h4 class="text-center">
-										<img src="{{ asset('images/countries/' ~ profile.user.country|lower ~ '.png') }}" style="width: 32px;" alt="{{ profile.user.country }}">
+										<img src="{{ asset('images/countries/' ~ profile.user.country|lower ~ '.png') }}" style="width: 32px;" alt="{{ profile.user.country|country_name }}">
 										{{profile.ingameName}}
 										{% if profile.user.isVerified %}
 											<span class="h5 mb-2">

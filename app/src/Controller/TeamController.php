@@ -16,6 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Intl\Countries;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 
@@ -37,11 +38,19 @@ class TeamController extends AbstractController
         $user = $team->getOwner();
         $isBanned = $user->isBanned();
         $isPremium = $user->isPremium();
+        if ($team->getOverview())
+        {
+            $overview = $team->getOverview();
+        } else {
+            $countryName = Countries::getName($team->getCountry());
+            $overview = $team->getTeamName()." is a ".$team->getGame()." team from ".$countryName;
+        }
 
         return $this->render('pages/team/index.html.twig', [
             'isPremium' => $isPremium,
             'isBanned' => $isBanned,
             'team' => $team,
+            'overview' => $overview,
             'user' => $user
         ]);
     }

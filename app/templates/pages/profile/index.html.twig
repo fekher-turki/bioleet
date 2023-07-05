@@ -1,28 +1,51 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}BioLeet Settings
+{% block title %}{{ profile.user.firstName ~ " '" ~ profile.ingameName ~ "' " ~ profile.user.lastName ~ "'s " ~ profile.game.code ~ " Player Profile"}} | BioLeet.com
 {% endblock %}
+
+{% block meta_description %}{{ bio }}{% endblock %}
 
 {% block stylesheets %}
 	{{ parent() }}
-	<link rel="stylesheet" href="/styles/profile.css">
+		<meta property="og:type" content="article">
+		<meta property="og:url" content="{{ app.request.schemeAndHttpHost ~ app.request.requestUri }}">
+		<meta property="og:title" content="{{ profile.user.firstName ~ " '" ~ profile.ingameName ~ "' " ~ profile.user.lastName }}">
+		<meta property="og:description" content="Player profile for {{ profile.user.firstName ~ " '" ~ profile.ingameName ~ "' " ~ profile.user.lastName }}">
+{% if user.avatar == "default-avatar.png" %}
+		<meta property="og:image" content="{{ asset('images/default/default-avatar.png') | imagine_filter('avatar_720') }}?bg=3e4c54&amp;h=800&amp;ixlib=java-2.1.0&amp;rect=121%2C4%2C467%2C467&amp;w=800&amp;s=b7849a6a6f471ee77b3e67e5b07a5d90">
+{% else %}
+		<meta property="og:image" content="{{ asset('images/users/' ~ user.avatar) | imagine_filter('avatar_720') }}?bg=3e4c54&amp;h=800&amp;ixlib=java-2.1.0&amp;rect=121%2C4%2C467%2C467&amp;w=800&amp;s=b7849a6a6f471ee77b3e67e5b07a5d90">
+{% endif %}
+		<meta property="og:image:height" content="720">
+    	<meta property="og:image:width" content="720">
+		<meta property="og:site_name" content="BioLeet.com">
+		<meta name="twitter:card" content="summary">
+    	<meta name="twitter:site" content="@BioLeetCom">
+		<meta name="twitter:title" content="{{ profile.user.firstName ~ " '" ~ profile.ingameName ~ "' " ~ profile.user.lastName }}">
+    	<meta name="twitter:description" content="Player profile for {{ profile.user.firstName ~ " '" ~ profile.ingameName ~ "' " ~ profile.user.lastName }}">
+{% if user.avatar == "default-avatar.png" %}
+		<meta property="twitter:image" content="{{ asset('images/default/default-avatar.png') | imagine_filter('avatar_720') }}?bg=3e4c54&amp;h=800&amp;ixlib=java-2.1.0&amp;rect=121%2C4%2C467%2C467&amp;w=800&amp;s=b7849a6a6f471ee77b3e67e5b07a5d90">
+{% else %}
+		<meta property="twitter:image" content="{{ asset('images/users/' ~ user.avatar) | imagine_filter('avatar_720') }}?bg=3e4c54&amp;h=800&amp;ixlib=java-2.1.0&amp;rect=121%2C4%2C467%2C467&amp;w=800&amp;s=b7849a6a6f471ee77b3e67e5b07a5d90">
+{% endif %}
+    	<meta name="twitter:image:alt" content="{{ profile.user.firstName ~ " '" ~ profile.ingameName ~ "' " ~ profile.user.lastName }}">
+    	<link href="{{ app.request.schemeAndHttpHost ~ app.request.requestUri }}" rel="canonical">
+		<link rel="stylesheet" href="/styles/profile.css">
 {% endblock %}
 
 
 {% block body %}
 	<script>
 		$(document).ready(function () {
-$('#achievements').DataTable({
-"order": [
-[0, 'desc']
-]
-});
-});
+			$('#achievements').DataTable({
+				"order": [[0, 'desc']]
+			});
+		});
 	</script>
 	<div class="container">
 		{% if isBanned and user and profile %}
 			<div class="row justify-content-center">
-				<div class="col-md-7 col-lg-4 mb-5 mb-lg-0 wow fadeIn">
+				<div class="col-md-7 col-lg-4 mb-5 mb-lg-0 fadeIn">
 					<div class="card border-0 shadow">
 						<img src="{{ asset('images/default/default-avatar.png') }}" alt="default-avatar" class="bg-custom-dark">
 						<div class="card-body p-1-9 p-xl-5 bg-dark">
@@ -41,21 +64,21 @@ $('#achievements').DataTable({
 					<div class="col-lg-8">
 						<div class="ps-lg-1-6 ps-xl-5">
 							<div class="mb-4"></div>
-							<div class="mb-4 wow fadeIn"></div>
-							<div class="mb-4 wow fadeIn">
-								<div class="text-start mb-1-6 wow fadeIn">
+							<div class="mb-4 fadeIn"></div>
+							<div class="mb-4 fadeIn">
+								<div class="text-start mb-1-6 fadeIn">
 									<h2 class="h3 mb-0 text-success">Reason</h2>
 								</div>
 								<p class="h4 text-danger">{{ user.banReason }}</p>
 							</div>
-							<div class="mb-4 wow fadeIn"></div>
+							<div class="mb-4 fadeIn"></div>
 						</div>
 					</div>
 				</div>
 			</div>
 		{% elseif isBanned == false and user and profile %}
 			<div class="row justify-content-center">
-				<div class="col-md-7 col-lg-4 mb-5 mb-lg-0 wow fadeIn">
+				<div class="col-md-7 col-lg-4 mb-5 mb-lg-0 fadeIn">
 					<div class="card border-0 shadow">
 						{% if user.avatar == "default-avatar.png" %}
 							<img src="{{ asset('images/default/default-avatar.png') | imagine_filter('avatar_720') }}" alt="{{ user.nickname }}" class="bg-custom-dark">
@@ -79,7 +102,7 @@ $('#achievements').DataTable({
 								</h2>
 								<h2 class="h3 mb-1">{{ user.firstName|upper ~ " " ~ user.lastName|upper }}
 								</h2>
-								<h2 class="h3 mb-1"><img src="{{ asset('images/countries/' ~ user.country|lower ~ '.png') }}" style="width: 40px;" alt="{{ user.country }}">
+								<h2 class="h3 mb-1"><img src="{{ asset('images/countries/' ~ user.country|lower ~ '.png') }}" style="width: 40px;" alt="{{ user.country|country_name }}">
 									{{ user.country|country_name }}</h2>
 								<h2 class="h3 mb-1"><img src="{{ asset('images/games/' ~ profile.game.code|lower ~ '.png') }}" style="width: 40px;" alt="{{ profile.game.name }}">
 									{{ profile.game.code|upper }}</h2>
@@ -167,22 +190,22 @@ $('#achievements').DataTable({
 				<div class="col-lg-8">
 					<div class="ps-lg-1-6 ps-xl-5">
 						<div class="mb-4"></div>
-						<div class="mb-3 wow fadeIn ">
-							<div class="text-start mb-1-6 wow fadeIn">
+						<div class="mb-3 fadeIn ">
+							<div class="text-start mb-1-6 fadeIn">
 								<h2 class="h3 mb-0 text-light"><img src="{{ asset('images/games/' ~ profile.game.code|lower ~ '.png') }}" style="width: 48px;" alt="{{profile.game.name}}">
 									{{ profile.ingameName }}
 									-
 									{{ profile.game.name }}</h2>
 							</div>
 						</div>
-						<div class="mb-4 wow fadeIn">
-							<div class="text-start mb-1-6 wow fadeIn">
+						<div class="mb-4 fadeIn">
+							<div class="text-start mb-1-6 fadeIn">
 								<h2 class="h3 mb-0 text-success">About</h2>
 							</div>
-							<p>{{ profile.bio }}</p>
+							<p>{{ bio }}</p>
 						</div>
-						<div class="mb-4 wow fadeIn">
-							<div class="text-start mb-1-6 wow fadeIn">
+						<div class="mb-4 fadeIn">
+							<div class="text-start mb-1-6 fadeIn">
 								<h2 class="h3 mb-0 text-success">Languages</h2>
 							</div>
 							<ul class="languages-style ps-0 mb-2">
@@ -195,186 +218,195 @@ $('#achievements').DataTable({
 								{% endfor %}
 							</ul>
 						</div>
-						<div class="mb-4 wow fadeIn">
-							<div class="text-start mb-1-6 wow fadeIn">
+						<div class="mb-4 fadeIn">
+							<div class="text-start mb-1-6 fadeIn">
 								<h2 class="h3 mb-0 text-success">Roles</h2>
 							</div>
 							<ul class="languages-style ps-0 mb-2">
-								{% for _gameRole in profile.gameRole %}
+								{% if profile.gameRole is not empty %}
+									{% for _gameRole in profile.gameRole %}
 									<li>
 										<a class="rounded-4 bg-dark">
 											{{ _gameRole.name }}
 										</a>
 									</li>
 								{% endfor %}
+								{% else %}
+									<p>Roles not set.</p>
+								{% endif %}
+								
 							</ul>
 						</div>
-						<div class="mb-4 wow fadeIn">
-							<div class="text-start mb-1-6 wow fadeIn">
+						<div class="mb-4 fadeIn">
+							<div class="text-start mb-1-6 fadeIn">
 								<h2 class="h3 mb-0 text-success">Setup</h2>
 							</div>
-							<div class="row">
-								{% if profile.user.setup.cpu %}
-									<div class="col-sm-6 col-md-3 mb-1">
-										<div class="card">
-											<span class="bg-secondary rounded-top">
-												<i class="fas fa-microchip fa-1x me-2"></i>CPU
-											</span>
-											<div class="card-body fixed-height">
-												<h6 class="card-title">{{ profile.user.setup.cpu }}</h6>
+							{% if profile.user.setup %}
+								<div class="row">
+									{% if profile.user.setup.cpu %}
+										<div class="col-sm-6 col-md-3 mb-1">
+											<div class="card">
+												<span class="bg-secondary rounded-top">
+													<i class="fas fa-microchip fa-1x me-2"></i>CPU
+												</span>
+												<div class="card-body fixed-height">
+													<h6 class="card-title">{{ profile.user.setup.cpu }}</h6>
+												</div>
 											</div>
 										</div>
-									</div>
-								{% endif %}
+									{% endif %}
 
-								{% if profile.user.setup.gpu %}
-									<div class="col-sm-6 col-md-3 mb-1">
-										<div class="card">
-											<span class="bg-secondary rounded-top">
-												<i class="fas fa-exclamation fa-1x"></i>
-												<i class="fas fa-folder-closed fa-1x me-2"></i>GPU
-											</span>
-											<div class="card-body fixed-height">
-												<h6 class="card-title">{{ profile.user.setup.gpu }}</h6>
+									{% if profile.user.setup.gpu %}
+										<div class="col-sm-6 col-md-3 mb-1">
+											<div class="card">
+												<span class="bg-secondary rounded-top">
+													<i class="fas fa-exclamation fa-1x"></i>
+													<i class="fas fa-folder-closed fa-1x me-2"></i>GPU
+												</span>
+												<div class="card-body fixed-height">
+													<h6 class="card-title">{{ profile.user.setup.gpu }}</h6>
+												</div>
 											</div>
 										</div>
-									</div>
-								{% endif %}
+									{% endif %}
 
-								{% if profile.user.setup.ram %}
-									<div class="col-sm-6 col-md-3 mb-1">
-										<div class="card">
-											<span class="bg-secondary rounded-top">
-												<i class="fas fa-memory fa-1x me-2"></i>RAM
-											</span>
-											<div class="card-body fixed-height">
-												<h6 class="card-title">{{ profile.user.setup.ram }}</h6>
+									{% if profile.user.setup.ram %}
+										<div class="col-sm-6 col-md-3 mb-1">
+											<div class="card">
+												<span class="bg-secondary rounded-top">
+													<i class="fas fa-memory fa-1x me-2"></i>RAM
+												</span>
+												<div class="card-body fixed-height">
+													<h6 class="card-title">{{ profile.user.setup.ram }}</h6>
+												</div>
 											</div>
 										</div>
-									</div>
-								{% endif %}
+									{% endif %}
 
-								{% if profile.user.setup.disk %}
-									<div class="col-sm-6 col-md-3 mb-1">
-										<div class="card">
-											<span class="bg-secondary rounded-top">
-												<i class="fas fa-hdd fa-1x me-2"></i>Disk
-											</span>
-											<div class="card-body fixed-height">
-												<h6 class="card-title">{{ profile.user.setup.disk }}</h6>
+									{% if profile.user.setup.disk %}
+										<div class="col-sm-6 col-md-3 mb-1">
+											<div class="card">
+												<span class="bg-secondary rounded-top">
+													<i class="fas fa-hdd fa-1x me-2"></i>Disk
+												</span>
+												<div class="card-body fixed-height">
+													<h6 class="card-title">{{ profile.user.setup.disk }}</h6>
+												</div>
 											</div>
 										</div>
-									</div>
-								{% endif %}
+									{% endif %}
 
-								{% if profile.user.setup.monitor %}
-									<div class="col-sm-6 col-md-3 mb-1">
-										<div class="card">
-											<span class="bg-secondary rounded-top">
-												<i class="fas fa-desktop fa-1x me-2"></i>Monitor
-											</span>
-											<div class="card-body fixed-height">
-												<h6 class="card-title">{{ profile.user.setup.monitor }}</h6>
+									{% if profile.user.setup.monitor %}
+										<div class="col-sm-6 col-md-3 mb-1">
+											<div class="card">
+												<span class="bg-secondary rounded-top">
+													<i class="fas fa-desktop fa-1x me-2"></i>Monitor
+												</span>
+												<div class="card-body fixed-height">
+													<h6 class="card-title">{{ profile.user.setup.monitor }}</h6>
+												</div>
 											</div>
 										</div>
-									</div>
-								{% endif %}
+									{% endif %}
 
-								{% if profile.user.setup.mouse %}
-									<div class="col-sm-6 col-md-3 mb-1">
-										<div class="card">
-											<span class="bg-secondary rounded-top">
-												<i class="fas fa-mouse fa-1x me-2"></i>Mouse
-											</span>
-											<div class="card-body fixed-height">
-												<h6 class="card-title">{{ profile.user.setup.mouse }}</h6>
+									{% if profile.user.setup.mouse %}
+										<div class="col-sm-6 col-md-3 mb-1">
+											<div class="card">
+												<span class="bg-secondary rounded-top">
+													<i class="fas fa-mouse fa-1x me-2"></i>Mouse
+												</span>
+												<div class="card-body fixed-height">
+													<h6 class="card-title">{{ profile.user.setup.mouse }}</h6>
+												</div>
 											</div>
 										</div>
-									</div>
-								{% endif %}
+									{% endif %}
 
-								{% if profile.user.setup.keyboard %}
-									<div class="col-sm-6 col-md-3 mb-1">
-										<div class="card">
-											<span class="bg-secondary rounded-top">
-												<i class="fas fa-keyboard fa-1x me-2"></i>Keyboard
-											</span>
-											<div class="card-body fixed-height">
-												<h6 class="card-title">{{ profile.user.setup.keyboard }}</h6>
+									{% if profile.user.setup.keyboard %}
+										<div class="col-sm-6 col-md-3 mb-1">
+											<div class="card">
+												<span class="bg-secondary rounded-top">
+													<i class="fas fa-keyboard fa-1x me-2"></i>Keyboard
+												</span>
+												<div class="card-body fixed-height">
+													<h6 class="card-title">{{ profile.user.setup.keyboard }}</h6>
+												</div>
 											</div>
 										</div>
-									</div>
-								{% endif %}
+									{% endif %}
 
-								{% if profile.user.setup.mousepad %}
-									<div class="col-sm-6 col-md-3 mb-1">
-										<div class="card">
-											<span class="bg-secondary rounded-top">
-												<i class="fas fa-note-sticky fa-1x me-2"></i>Mousepad
-											</span>
-											<div class="card-body fixed-height">
-												<h6 class="card-title">{{ profile.user.setup.mousepad }}</h6>
+									{% if profile.user.setup.mousepad %}
+										<div class="col-sm-6 col-md-3 mb-1">
+											<div class="card">
+												<span class="bg-secondary rounded-top">
+													<i class="fas fa-note-sticky fa-1x me-2"></i>Mousepad
+												</span>
+												<div class="card-body fixed-height">
+													<h6 class="card-title">{{ profile.user.setup.mousepad }}</h6>
+												</div>
 											</div>
 										</div>
-									</div>
-								{% endif %}
+									{% endif %}
 
-								{% if profile.user.setup.headphone %}
-									<div class="col-sm-6 col-md-3 mb-1">
-										<div class="card">
-											<span class="bg-secondary rounded-top">
-												<i class="fas fa-headphones fa-1x me-2"></i>Headphone
-											</span>
-											<div class="card-body fixed-height">
-												<h6 class="card-title">{{ profile.user.setup.headphone }}</h6>
+									{% if profile.user.setup.headphone %}
+										<div class="col-sm-6 col-md-3 mb-1">
+											<div class="card">
+												<span class="bg-secondary rounded-top">
+													<i class="fas fa-headphones fa-1x me-2"></i>Headphone
+												</span>
+												<div class="card-body fixed-height">
+													<h6 class="card-title">{{ profile.user.setup.headphone }}</h6>
+												</div>
 											</div>
 										</div>
-									</div>
-								{% endif %}
+									{% endif %}
 
-								{% if profile.user.setup.microphone %}
-									<div class="col-sm-6 col-md-3 mb-1">
-										<div class="card">
-											<span class="bg-secondary rounded-top">
-												<i class="fas fa-microphone fa-1x me-2"></i>Microphone
-											</span>
-											<div class="card-body fixed-height">
-												<h6 class="card-title">{{ profile.user.setup.microphone }}</h6>
+									{% if profile.user.setup.microphone %}
+										<div class="col-sm-6 col-md-3 mb-1">
+											<div class="card">
+												<span class="bg-secondary rounded-top">
+													<i class="fas fa-microphone fa-1x me-2"></i>Microphone
+												</span>
+												<div class="card-body fixed-height">
+													<h6 class="card-title">{{ profile.user.setup.microphone }}</h6>
+												</div>
 											</div>
 										</div>
-									</div>
-								{% endif %}
+									{% endif %}
 
-								{% if profile.user.setup.console %}
-									<div class="col-sm-6 col-md-3 mb-1">
-										<div class="card">
-											<span class="bg-secondary rounded-top">
-												<i class="fas fa-inbox fa-1x me-2"></i>Console
-											</span>
+									{% if profile.user.setup.console %}
+										<div class="col-sm-6 col-md-3 mb-1">
+											<div class="card">
+												<span class="bg-secondary rounded-top">
+													<i class="fas fa-inbox fa-1x me-2"></i>Console
+												</span>
 
-											<div class="card-body fixed-height">
-												<h6 class="card-title">{{ profile.user.setup.console }}</h6>
+												<div class="card-body fixed-height">
+													<h6 class="card-title">{{ profile.user.setup.console }}</h6>
+												</div>
 											</div>
 										</div>
-									</div>
-								{% endif %}
+									{% endif %}
 
-								{% if profile.user.setup.controller %}
-									<div class="col-sm-6 col-md-3 mb-1">
-										<div class="card">
-											<span class="bg-secondary rounded-top">
-												<i class="fas fa-gamepad fa-1x me-2"></i>Controller
-											</span>
-											<div class="card-body fixed-height">
-												<h6 class="card-title">{{ profile.user.setup.controller }}</h6>
+									{% if profile.user.setup.controller %}
+										<div class="col-sm-6 col-md-3 mb-1">
+											<div class="card">
+												<span class="bg-secondary rounded-top">
+													<i class="fas fa-gamepad fa-1x me-2"></i>Controller
+												</span>
+												<div class="card-body fixed-height">
+													<h6 class="card-title">{{ profile.user.setup.controller }}</h6>
+												</div>
 											</div>
 										</div>
-									</div>
-								{% endif %}
-							</div>
+									{% endif %}
+								</div>
+							{% else %}
+								<p>Setup information not set.</p>
+							{% endif %}
 						</div>
-						<div class="mb-4 wow fadeIn">
-							<div class="text-start mb-1-6 wow fadeIn">
+						<div class="mb-4 fadeIn">
+							<div class="text-start mb-1-6 fadeIn">
 								<h2 class="h3 mb-0 text-success">Achievements</h2>
 							</div>
 							{% if isPremium and profile %}
@@ -417,6 +449,8 @@ $('#achievements').DataTable({
 												{% endfor %}
 											</tbody>
 										</table>
+									{% else %}
+										<p>Achievements not set.</p>
 									{% endif %}
 								</div>
 							{% elseif isPremium == false and  profile %}
@@ -460,14 +494,16 @@ $('#achievements').DataTable({
 
 											</tbody>
 										</table>
+									{% else %}
+										<p>Achievements not set.</p>
 									{% endif %}
 								</div>
 							{% endif %}
 						</div>
 						{% set videoId = profile.montage|replace({'https://www.youtube.com/watch?v=': '', 'http://www.youtube.com/watch?v=': ''}) %}
 						{% if isPremium and profile.montage %}
-							<div class="mb-4 wow fadeIn">
-								<div class="text-start mb-1-6 wow fadeIn">
+							<div class="mb-4 fadeIn">
+								<div class="text-start mb-1-6 fadeIn">
 									<h2 class="h3 mb-0 text-success">Montage</h2>
 								</div>
 								<iframe width="100%" height="400px" src="{{ embed ~ videoId }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

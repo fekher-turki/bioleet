@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}BioLeet Settings
+{% block title %}Teams List | BioLeet.com
 {% endblock %}
 
 {% block stylesheets %}
@@ -72,7 +72,7 @@
 								<img src="{{ asset('images/games/' ~ team.game.code|lower ~ '.png') }}" style="width: 40px; padding-right: 10px;" class="position-absolute end-0" alt="{{ team.game.name }}">
 								<div class="card-body">
 									<h4 class="text-center">
-										<img src="{{ asset('images/countries/' ~ team.country|lower ~ '.png') }}" style="width: 32px;" alt="{{ team.country }}">
+										<img src="{{ asset('images/countries/' ~ team.country|lower ~ '.png') }}" style="width: 32px;" alt="{{ team.country|country_name }}">
 										{{team.teamName}}
 										{% if team.isVerified %}
 											<span class="h5 mb-2">

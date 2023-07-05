@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}BioLeet Settings
+{% block title %}Settings | BioLeet.com
 {% endblock %}
 
 {% block stylesheets %}
@@ -39,7 +39,7 @@
 
 			{% if user.avatar == "default-avatar.png" %}
 				<button type="button" class="btn btn-outline-dark imagebottom" data-bs-toggle="modal" data-bs-target="#{{ avatarModalId }}">
-					<img src="{{ asset('images/default/default-avatar.png') | imagine_filter('avatar_256') }}" alt="default-avatar"/>
+					<img src="{{ asset('images/default/default-avatar.png') | imagine_filter('avatar_256') }}" alt="{{ user.username }}"/>
 					<i class="fas fa-upload fa-6x icontop"></i>
 				</button>
 			{% else %}

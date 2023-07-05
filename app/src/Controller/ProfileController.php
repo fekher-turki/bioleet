@@ -12,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Intl\Countries;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ProfileController extends AbstractController
@@ -34,12 +35,20 @@ class ProfileController extends AbstractController
         $user = $profile->getUser();
         $isBanned = $user->isBanned();
         $isPremium = $user->isPremium();
+        if ($profile->getBio())
+        {
+            $bio = $profile->getBio();
+        } else {
+            $countryName = Countries::getName($user->getCountry());
+            $bio = $user->getFirstName()." ".$user->getlastName()." is a player from ".$countryName;
+        }
 
         return $this->render('pages/profile/index.html.twig', [
             'isPremium' => $isPremium,
             'isBanned' => $isBanned,
             'hasExperiences' => $hasExperiences,
             'profile' => $profile,
+            'bio' => $bio,
             'team' => false,
             'user' => $user,
             'embed' => "https://www.youtube.com/embed/",

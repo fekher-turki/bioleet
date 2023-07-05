@@ -23,7 +23,7 @@ class UserCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInPlural('Users')
             ->setEntityLabelInSingular('User')
-            ->setPageTitle("index", "Admin - Users")
+            ->setPageTitle("index", "Users | BioLeet.com")
             ->setPaginatorPageSize(10)
         ;
     }

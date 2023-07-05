@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}BioLeet Settings
+{% block title %}Edit Team | BioLeet.com
 {% endblock %}
 
 {% block stylesheets %}
@@ -49,7 +49,7 @@
 
 			{% if team.logo == "default-logo.png" %}
 				<button type="button" class="btn btn-outline-dark imagebottom" data-bs-toggle="modal" data-bs-target="#{{ logoModalId }}">
-					<img src="{{ asset('images/default/default-logo.png') | imagine_filter('logo_256') }}" alt="default-logo"/>
+					<img src="{{ asset('images/default/default-logo.png') | imagine_filter('logo_256') }}" alt="{{ team.teamName }}"/>
 					<i class="fas fa-upload fa-6x icontop"></i>
 				</button>
 			{% else %}

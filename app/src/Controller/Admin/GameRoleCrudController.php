@@ -18,7 +18,7 @@ class GameRoleCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInPlural('Game Roles')
             ->setEntityLabelInSingular('Game Role')
-            ->setPageTitle("index", "Admin - Game Roles")
+            ->setPageTitle("index", "Game Roles | BioLeet.com")
             ->setPaginatorPageSize(10)
         ;
     }

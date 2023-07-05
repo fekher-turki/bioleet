@@ -21,7 +21,7 @@ class GameCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInPlural('Games')
             ->setEntityLabelInSingular('Game')
-            ->setPageTitle("index", "Admin - Games")
+            ->setPageTitle("index", "Games | BioLeet.com")
             ->setPaginatorPageSize(10);
     }
 
