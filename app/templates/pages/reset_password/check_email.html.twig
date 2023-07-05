@@ -4,26 +4,31 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container mt-5">
-		<div class="row">
-			<aside class="col-sm-4"></aside>
-			<aside class="col-sm-4">
-				<div class="card mb-3">
-					<article class="card-body">
-						<h4 class="card-title text-center mb-4 mt-1">Reset password</h4>
-						<p class="text-center">If an account matching your email exists, then an email was just sent that contains a link that you can use to reset your password.
-														        This link will expire in
-							{{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.</p>
-						<p class="text-center">If you don't receive an email please check your spam folder or
-							<a href="{{ path('app_forgot_password_request') }}" class="text-danger">try again</a>.</p>
-						<p class="text-center mt-4">Back to Login
-							<a href="{{ path('security.login') }}" class="text-danger">Login</a>
-						</p>
+	<div class="main-content">
+		<div class="container mt-5">
+			<div class="row">
+				<aside class="col-sm-4"></aside>
+				<aside class="col-sm-4">
+					<div class="card mb-3">
+						<article class="card-body">
+							<h4 class="card-title text-center mb-4 mt-1">Reset password</h4>
+							<p class="text-center">If an account matching your email exists, then an email was just sent that contains a link that you can use to reset your password.
+															        This link will expire in
+								{{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.</p>
+							<p class="text-center">If you don't receive an email please check your spam folder or
+								<a href="{{ path('app_forgot_password_request') }}" class="text-danger">try again</a>.</p>
+							<p class="text-center mt-4">Back to Login
+								<a href="{{ path('security.login') }}" class="text-danger">Login</a>
+							</p>
 
-					</article>
-				</div>
-			</aside>
-			<aside class="col-sm-4"></aside>
+						</article>
+					</div>
+				</aside>
+				<aside class="col-sm-4"></aside>
+			</div>
 		</div>
+		{% block footer %}
+			{% include 'partials/_footer.html.twig' %}
+		{% endblock %}
 	</div>
 {% endblock %}

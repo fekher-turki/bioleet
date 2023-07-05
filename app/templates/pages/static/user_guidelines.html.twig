@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User Guidelines | BioLeet.com
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="/styles/home.css">
+{% endblock %}
+
+{% block body %}
+	<div>
+		<section class="py-5">
+			<div class="container px-5 my-5 px-5">
+				<div class="text-center text-orange mb-5">
+					<h2 class="fw-bolder">USER GUIDELINES</h2>
+				</div>
+				<div class="row gx-5 justify-content-center">
+					<div class="col-lg-10">
+						<p>Welcome to Bioleet! To ensure a positive and enjoyable experience for all users, we have established the following User Guidelines that outline the expected behavior and usage of our service. By accessing or using Bioleet, you agree to abide by these guidelines.</p>
+
+						<h2>1. Respectful Communication</h2>
+
+						<p>1.1. Treat others with respect and courtesy. Avoid engaging in personal attacks, harassment, or discrimination based on race, ethnicity, gender, religion, or any other characteristic.</p>
+
+						<p>1.2. Use appropriate language and refrain from posting or sharing content that is offensive, obscene, or inappropriate.</p>
+
+						<p>1.3. Refrain from spamming, spreading misinformation, or engaging in any form of deceptive or malicious behavior.</p>
+
+						<h2>2. Content Standards</h2>
+
+						<p>2.1. Only share content that you have the right to distribute. Respect intellectual property rights and avoid infringing upon the copyrights, trademarks, or patents of others.</p>
+
+						<p>2.2. Do not post or share content that violates any applicable laws or regulations.</p>
+
+						<p>2.3. Content related to violence, hate speech, illegal activities, or any form of explicit material is strictly prohibited.</p>
+
+						<h2>3. Privacy and Data Protection</h2>
+
+						<p>3.1. Respect the privacy of others. Do not share personal information about others without their consent.</p>
+
+						<p>3.2. Protect your own privacy. Avoid sharing sensitive personal information that could compromise your security or put you at risk.</p>
+
+						<h2>4. Reporting Violations</h2>
+
+						<p>4.1. If you come across any content or behavior that violates these User Guidelines, please report it to our support team immediately.</p>
+
+						<p>4.2. Provide detailed information and evidence to assist us in investigating and addressing the reported violation.</p>
+
+						<p>4.3. False reporting or misuse of the reporting system may result in disciplinary action.</p>
+
+						<h2>5. Consequences of Violations</h2>
+
+						<p>5.1. Failure to comply with these User Guidelines may result in various actions, including warnings, content removal, temporary or permanent suspension of your account, or legal consequences where applicable.</p>
+
+						<p>5.2. We reserve the right to take appropriate action based on the severity and frequency of the violation.</p>
+
+						<h2>6. Modifications to User Guidelines</h2>
+
+						<p>6.1. These User Guidelines may be updated or modified from time to time. Any changes will be communicated through our website or other appropriate means.</p>
+
+						<p>6.2. It is your responsibility to review and familiarize yourself with the most recent version of the User Guidelines.</p>
+
+						<p>If you have any questions or concerns regarding these User Guidelines, please contact us at bioleet@gmail.com.</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		{% block footer %}
+			{% include 'partials/_footer.html.twig' %}
+		{% endblock %}
+	</div>
+{% endblock %}

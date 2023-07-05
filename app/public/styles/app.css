@@ -1,6 +1,7 @@
 body {
   font-family: Play, sans-serif, cursive;
 }
+
 .form-floating>.form-control-plaintext~label::after,
 .form-floating>.form-control:focus~label::after,
 .form-floating>.form-control:not(:placeholder-shown)~label::after,
@@ -23,7 +24,9 @@ body {
   color: rgba(0, 139, 139, 0.7);
 }
 
-a, a:active, a:focus {
+a,
+a:active,
+a:focus {
   color: #fff;
   text-decoration: none;
 }
@@ -73,12 +76,19 @@ a, a:active, a:focus {
   border-color: #fff;
 }
 
+.main-content {
+  min-height: 91vh;
+  display: flex;
+  flex-direction: column;
+}
 
 footer.footer {
+  margin-top: auto;
   padding-top: 4rem;
   padding-bottom: 4rem;
 }
 
 .fixed-height {
-  height: 100px; /* Adjust the height value as per your requirement */
+  height: 100px;
+  /* Adjust the height value as per your requirement */
 }

@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PRIVACY POLICY | BioLeet.com
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="/styles/home.css">
+{% endblock %}
+
+{% block body %}
+	<div>
+		<section class="py-5">
+			<div class="container px-5 my-5 px-5">
+				<div class="text-center text-orange mb-5">
+					<h2 class="fw-bolder">PRIVACY POLICY</h2>
+				</div>
+				<div class="row gx-5 justify-content-center">
+					<div class="col-lg-10">
+						<p>Last updated: 05 July, 2023</p>
+
+						<p>This Privacy Policy explains how Bioleet ("we," "us," or "our") collects, uses, discloses, and protects the personal information of our users ("you" or "users") when accessing and using our website bioleet.com and any related services (collectively, the "Service"). We are committed to protecting your privacy and ensuring the security of your personal information.</p>
+
+						<h2>Information We Collect</h2>
+						<h3>1. Personal Information:</h3>
+						<p>When you create an account on Bioleet, we may collect certain personal information from you, including but not limited to your name, email address, username, and profile information.</p>
+
+						<h3>1.2. Game and Team Information:</h3>
+						<p>To enhance your experience on Bioleet, you may choose to provide additional game-related information, including your game achievements, statistics, team details, and other relevant data.</p>
+
+						<h3>1.3. Usage Data:</h3>
+						<p>We automatically collect certain information about your use of the Service, such as your IP address, browser type, device information, and usage statistics. This information helps us analyze and improve the performance and functionality of our website.</p>
+
+						<h2>Use of Information</h2>
+						<h3>2.1. Personalization:</h3>
+						<p>We may use the information collected during the registration process to create and display your user profile on Bioleet. Your username and profile information will be visible to other users of the website. Please be cautious about the information you choose to include in your profile.</p>
+
+						<h3>2.2. Communication:</h3>
+						<p>We will use your email address for the sole purpose of account management and authentication. We may send you important updates, notifications, and password reset emails related to your account. We will not use your email address for promotional purposes without your explicit consent.</p>
+
+						<h3>2.3. Service Improvement:</h3>
+						<p>We may analyze the usage data and other information collected to understand user behavior, preferences, and trends. This analysis helps us improve the functionality, features, and performance of Bioleet, ensuring a better user experience for all.</p>
+
+						<h2>Use of Ads</h2>
+						<h3>3.1. Third-Party Advertising:</h3>
+						<p>We use third-party advertising networks, such as Google Ads, to display advertisements on Bioleet. These networks may collect certain information about your visits to our website and other sites to provide targeted advertisements that may be of interest to you. We do not provide any personally identifiable information to these networks.</p>
+
+						<h3>3.2. Cookies and Tracking Technologies:</h3>
+						<p>The advertising networks may use cookies, web beacons, and similar tracking technologies to collect information about your activities on Bioleet and other websites to provide targeted advertisements. These technologies may track your IP address, browser type, device information, and other browsing data.</p>
+
+						<h3>3.3. Opting Out:</h3>
+						<p>If you do not wish to receive targeted advertisements from Google Ads or other third-party advertising networks, you can opt-out of personalized ads by visiting the network's opt-out page or by adjusting your browser settings. Please note that opting out does not mean you will no longer see ads; it means the ads may be less relevant to your interests.</p>
+
+						<h2>Data Security</h2>
+						<p>We take appropriate security measures to protect your personal information from unauthorized access, alteration, disclosure, or destruction. However, please note that no method of transmission over the internet or electronic storage is 100% secure. While we strive to use commercially acceptable means to protect your information, we cannot guarantee absolute security.</p>
+
+						<h2>Third-Party Links</h2>
+						<p>Bioleet may contain links to third-party websites or services. We are not responsible for the privacy practices or content of these third-party sites. We encourage you to read the privacy policies of any third-party websites you visit.</p>
+
+						<h2>Children's Privacy</h2>
+						<p>Bioleet is not intended for use by individuals under the age of 13. We do not knowingly collect personal information from children. If you become aware that your child has provided us with personal information without your consent, please contact us, and we will take steps to remove that information from our servers.</p>
+
+						<h2>Changes to this Privacy Policy</h2>
+						<p>We reserve the right to modify or update this Privacy Policy at any time. We will notify you of any changes by updating the "Last updated" date at the top of this page. We encourage you to review this Privacy Policy periodically for any changes. Your continued use of the Service after the posting of any modifications to the Privacy Policy will constitute your acknowledgment of the modifications and your consent to abide and be bound by the modified Privacy Policy.</p>
+
+						<h2>Contact Us</h2>
+						<p>If you have any questions or concerns about this Privacy Policy or our data practices, please contact us at bioleetcom@gmail.com.</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		{% block footer %}
+			{% include 'partials/_footer.html.twig' %}
+		{% endblock %}
+	</div>
+{% endblock %}

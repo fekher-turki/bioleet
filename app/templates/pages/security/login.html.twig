@@ -4,69 +4,74 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container mt-5">
-		<div class="row">
-			<aside class="col-sm-4"></aside>
-			<aside class="col-sm-4">
-				<div class="card mb-3">
-					<article class="card-body">
-						<h4 class="card-title text-center mb-4 mt-1">Login</h4>
-						<p class="text-danger text-center">Put your Credentials to Login</p>
+	<div class="main-content">
+		<div class="container mt-5">
+			<div class="row">
+				<aside class="col-sm-4"></aside>
+				<aside class="col-sm-4">
+					<div class="card mb-3">
+						<article class="card-body">
+							<h4 class="card-title text-center mb-4 mt-1">Login</h4>
+							<p class="text-danger text-center">Put your Credentials to Login</p>
 
-						{% for message in app.flashes('success') %}
-							<div class="alert alert-dismissible alert-success">
-								<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-								{{message}}
-							</div>
-						{% endfor %}
+							{% for message in app.flashes('success') %}
+								<div class="alert alert-dismissible alert-success">
+									<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+									{{message}}
+								</div>
+							{% endfor %}
 
-						{% if error %}
-							<div class="alert alert-dismissible alert-danger">
-								<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-								{{ error.messageKey|trans(error.messageData, 'security') }}
-							</div>
-						{% endif %}
+							{% if error %}
+								<div class="alert alert-dismissible alert-danger">
+									<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+									{{ error.messageKey|trans(error.messageData, 'security') }}
+								</div>
+							{% endif %}
 
-						<form action="{{ path('security.login') }}" method="post">
-							<div class="form-group">
-								<div class="input-group mb-3">
-									<span class="input-group-text" id="basic-addon1">
-										<i class="fas fa-user"></i>
-									</span>
-									<div class="form-floating">
-										<input type="email" id="username" name="_username" class="form-control bg-dark text-light" placeholder="Email" required value={{ last_username }}>
-										<label for="username" class="form-label text-light">Email</label>
+							<form action="{{ path('security.login') }}" method="post">
+								<div class="form-group">
+									<div class="input-group mb-3">
+										<span class="input-group-text" id="basic-addon1">
+											<i class="fas fa-user"></i>
+										</span>
+										<div class="form-floating">
+											<input type="email" id="username" name="_username" class="form-control bg-dark text-light" placeholder="Email" required value={{ last_username }}>
+											<label for="username" class="form-label text-light">Email</label>
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="form-group">
-								<div class="input-group mb-3">
-									<span class="input-group-text">
-										<i class="fas fa-lock"></i>
-									</span>
-									<div class="form-floating">
-										<input class="form-control bg-dark text-light" placeholder="Password" type="password" name="_password" id="password" required>
-										<label for="password" class="form-label text-light">Password</label>
+								<div class="form-group">
+									<div class="input-group mb-3">
+										<span class="input-group-text">
+											<i class="fas fa-lock"></i>
+										</span>
+										<div class="form-floating">
+											<input class="form-control bg-dark text-light" placeholder="Password" type="password" name="_password" id="password" required>
+											<label for="password" class="form-label text-light">Password</label>
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="form-group d-grid gap-2">
-								<button type="submit" class="btn btn-secondary">
-									Login
-								</button>
-							</div>
-							<p class="text-center mt-4">Don't Have an account ?
-								<a href="{{ path('app_forgot_password_request') }}" class="text-danger">Forgot password?</a>
-							</p>
-							<p class="text-center">Don't Have an account ?
-								<a href="{{ path('security.signup') }}" class="text-danger">Sign Up</a>
-							</p>
-						</form>
-					</article>
-				</div>
-			</aside>
-			<aside class="col-sm-4"></aside>
+								<div class="form-group d-grid gap-2">
+									<button type="submit" class="btn btn-secondary">
+										Login
+									</button>
+								</div>
+								<p class="text-center mt-4">Don't Have an account ?
+									<a href="{{ path('app_forgot_password_request') }}" class="text-danger">Forgot password?</a>
+								</p>
+								<p class="text-center">Don't Have an account ?
+									<a href="{{ path('security.signup') }}" class="text-danger">Sign Up</a>
+								</p>
+							</form>
+						</article>
+					</div>
+				</aside>
+				<aside class="col-sm-4"></aside>
+			</div>
 		</div>
+		{% block footer %}
+			{% include 'partials/_footer.html.twig' %}
+		{% endblock %}
 	</div>
 
 {% endblock %}
