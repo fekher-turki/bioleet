@@ -11,6 +11,15 @@
 
 {% block body %}
 	<div class="container">
+		{% if isPremium == false %}
+			<div class="col-md-6 offset-md-3">
+				<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6724869879733839" crossorigin="anonymous"></script>
+				<ins class="adsbygoogle" style="display:block" data-ad-format="fluid" data-ad-layout-key="-h2+d+5c-9-3e" data-ad-client="ca-pub-6724869879733839" data-ad-slot="8084743962"></ins>
+				<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+				</script>
+			</div>
+		{% endif %}
 		<div class="col-md-6 offset-md-3">
 			<h3>
 				MY SETUP
@@ -32,191 +41,191 @@
 			{% endfor %}
 
 			{{ form_start(setupForm) }}
-							<div class="form-error">
-								{{ form_errors(setupForm) }}
-							</div>
-							<div class="form-group">
-								<div class="input-group mb-3">
-									<span class="input-group-text" style="width: 60px">
-										<i class="fas fa-microchip fa-2x"></i>
-									</span>
-									<div class="form-floating">
-										{{ form_widget(setupForm.cpu) }}
-										{{ form_label(setupForm.cpu) }}
-										<div class="form-error">
-											{{ form_errors(setupForm.cpu) }}
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="input-group mb-3">
-									<span class="input-group-text" style="width: 60px">
-										<i class="fas fa-exclamation fa-2x"></i>
-										<i class="fas fa-folder-closed fa-2x"></i>
-									</span>
-									<div class="form-floating">
-										{{ form_widget(setupForm.gpu) }}
-										{{ form_label(setupForm.gpu) }}
-										<div class="form-error">
-											{{ form_errors(setupForm.gpu) }}
-										</div>
-									</div>
-								</div>
-							</div>
+			<div class="form-error">
+				{{ form_errors(setupForm) }}
+			</div>
+			<div class="form-group">
+				<div class="input-group mb-3">
+					<span class="input-group-text" style="width: 60px">
+						<i class="fas fa-microchip fa-2x"></i>
+					</span>
+					<div class="form-floating">
+						{{ form_widget(setupForm.cpu) }}
+						{{ form_label(setupForm.cpu) }}
+						<div class="form-error">
+							{{ form_errors(setupForm.cpu) }}
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="input-group mb-3">
+					<span class="input-group-text" style="width: 60px">
+						<i class="fas fa-exclamation fa-2x"></i>
+						<i class="fas fa-folder-closed fa-2x"></i>
+					</span>
+					<div class="form-floating">
+						{{ form_widget(setupForm.gpu) }}
+						{{ form_label(setupForm.gpu) }}
+						<div class="form-error">
+							{{ form_errors(setupForm.gpu) }}
+						</div>
+					</div>
+				</div>
+			</div>
 
-							<div class="form-group">
-								<div class="input-group mb-3">
-									<span class="input-group-text" style="width: 60px">
-										<i class="fas fa-memory fa-2x"></i>
-									</span>
-									<div class="form-floating">
-										{{ form_widget(setupForm.ram) }}
-										{{ form_label(setupForm.ram) }}
-										<div class="form-error">
-											{{ form_errors(setupForm.ram) }}
-										</div>
-									</div>
-								</div>
-							</div>
+			<div class="form-group">
+				<div class="input-group mb-3">
+					<span class="input-group-text" style="width: 60px">
+						<i class="fas fa-memory fa-2x"></i>
+					</span>
+					<div class="form-floating">
+						{{ form_widget(setupForm.ram) }}
+						{{ form_label(setupForm.ram) }}
+						<div class="form-error">
+							{{ form_errors(setupForm.ram) }}
+						</div>
+					</div>
+				</div>
+			</div>
 
-							<div class="form-group">
-								<div class="input-group mb-3">
-									<span class="input-group-text" style="width: 60px">
-										<i class="fas fa-hdd fa-2x"></i>
-									</span>
-									<div class="form-floating">
-										{{ form_widget(setupForm.disk) }}
-										{{ form_label(setupForm.disk) }}
-										<div class="form-error">
-											{{ form_errors(setupForm.disk) }}
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="input-group mb-3">
-									<span class="input-group-text" style="width: 60px">
-										<i class="fas fa-fas fa-desktop fa-2x"></i>
-									</span>
-									<div class="form-floating">
-										{{ form_widget(setupForm.monitor) }}
-										{{ form_label(setupForm.monitor) }}
-										<div class="form-error">
-											{{ form_errors(setupForm.monitor) }}
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="input-group mb-3">
-									<span class="input-group-text" style="width: 60px">
-										<i class="fas fa-mouse fa-2x"></i>
-									</span>
-									<div class="form-floating">
-										{{ form_widget(setupForm.mouse) }}
-										{{ form_label(setupForm.mouse) }}
-										<div class="form-error">
-											{{ form_errors(setupForm.mouse) }}
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="input-group mb-3">
-									<span class="input-group-text" style="width: 60px">
-										<i class="fas fa-keyboard fa-2x"></i>
-									</span>
-									<div class="form-floating">
-										{{ form_widget(setupForm.keyboard) }}
-										{{ form_label(setupForm.keyboard) }}
-										<div class="form-error">
-											{{ form_errors(setupForm.keyboard) }}
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="input-group mb-3">
-									<span class="input-group-text" style="width: 60px">
-										<i class="fas fa-note-sticky fa-2x"></i>
-									</span>
-									<div class="form-floating">
-										{{ form_widget(setupForm.mousepad) }}
-										{{ form_label(setupForm.mousepad) }}
-										<div class="form-error">
-											{{ form_errors(setupForm.mousepad) }}
-										</div>
-									</div>
-								</div>
-							</div>
+			<div class="form-group">
+				<div class="input-group mb-3">
+					<span class="input-group-text" style="width: 60px">
+						<i class="fas fa-hdd fa-2x"></i>
+					</span>
+					<div class="form-floating">
+						{{ form_widget(setupForm.disk) }}
+						{{ form_label(setupForm.disk) }}
+						<div class="form-error">
+							{{ form_errors(setupForm.disk) }}
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="input-group mb-3">
+					<span class="input-group-text" style="width: 60px">
+						<i class="fas fa-fas fa-desktop fa-2x"></i>
+					</span>
+					<div class="form-floating">
+						{{ form_widget(setupForm.monitor) }}
+						{{ form_label(setupForm.monitor) }}
+						<div class="form-error">
+							{{ form_errors(setupForm.monitor) }}
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="input-group mb-3">
+					<span class="input-group-text" style="width: 60px">
+						<i class="fas fa-mouse fa-2x"></i>
+					</span>
+					<div class="form-floating">
+						{{ form_widget(setupForm.mouse) }}
+						{{ form_label(setupForm.mouse) }}
+						<div class="form-error">
+							{{ form_errors(setupForm.mouse) }}
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="input-group mb-3">
+					<span class="input-group-text" style="width: 60px">
+						<i class="fas fa-keyboard fa-2x"></i>
+					</span>
+					<div class="form-floating">
+						{{ form_widget(setupForm.keyboard) }}
+						{{ form_label(setupForm.keyboard) }}
+						<div class="form-error">
+							{{ form_errors(setupForm.keyboard) }}
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="input-group mb-3">
+					<span class="input-group-text" style="width: 60px">
+						<i class="fas fa-note-sticky fa-2x"></i>
+					</span>
+					<div class="form-floating">
+						{{ form_widget(setupForm.mousepad) }}
+						{{ form_label(setupForm.mousepad) }}
+						<div class="form-error">
+							{{ form_errors(setupForm.mousepad) }}
+						</div>
+					</div>
+				</div>
+			</div>
 
-							<div class="form-group">
-								<div class="input-group mb-3">
-									<span class="input-group-text" style="width: 60px">
-										<i class="fas fa-headphones fa-2x"></i>
-									</span>
-									<div class="form-floating">
-										{{ form_widget(setupForm.headphone) }}
-										{{ form_label(setupForm.headphone) }}
-										<div class="form-error">
-											{{ form_errors(setupForm.headphone) }}
-										</div>
-									</div>
-								</div>
-							</div>
+			<div class="form-group">
+				<div class="input-group mb-3">
+					<span class="input-group-text" style="width: 60px">
+						<i class="fas fa-headphones fa-2x"></i>
+					</span>
+					<div class="form-floating">
+						{{ form_widget(setupForm.headphone) }}
+						{{ form_label(setupForm.headphone) }}
+						<div class="form-error">
+							{{ form_errors(setupForm.headphone) }}
+						</div>
+					</div>
+				</div>
+			</div>
 
-							<div class="form-group">
-								<div class="input-group mb-3">
-									<span class="input-group-text" style="width: 60px">
-										<i class="fas fa-microphone fa-2x"></i>
-									</span>
-									<div class="form-floating">
-										{{ form_widget(setupForm.microphone) }}
-										{{ form_label(setupForm.microphone) }}
-										<div class="form-error">
-											{{ form_errors(setupForm.microphone) }}
-										</div>
-									</div>
-								</div>
-							</div>
+			<div class="form-group">
+				<div class="input-group mb-3">
+					<span class="input-group-text" style="width: 60px">
+						<i class="fas fa-microphone fa-2x"></i>
+					</span>
+					<div class="form-floating">
+						{{ form_widget(setupForm.microphone) }}
+						{{ form_label(setupForm.microphone) }}
+						<div class="form-error">
+							{{ form_errors(setupForm.microphone) }}
+						</div>
+					</div>
+				</div>
+			</div>
 
-							<div class="form-group">
-								<div class="input-group mb-3">
-									<span class="input-group-text" style="width: 60px">
-										<i class="fas fa-inbox fa-2x"></i>
-									</span>
-									<div class="form-floating">
-										{{ form_widget(setupForm.console) }}
-										{{ form_label(setupForm.console) }}
-										<div class="form-error">
-											{{ form_errors(setupForm.console) }}
-										</div>
-									</div>
-								</div>
-							</div>
+			<div class="form-group">
+				<div class="input-group mb-3">
+					<span class="input-group-text" style="width: 60px">
+						<i class="fas fa-inbox fa-2x"></i>
+					</span>
+					<div class="form-floating">
+						{{ form_widget(setupForm.console) }}
+						{{ form_label(setupForm.console) }}
+						<div class="form-error">
+							{{ form_errors(setupForm.console) }}
+						</div>
+					</div>
+				</div>
+			</div>
 
-							<div class="form-group">
-								<div class="input-group mb-3">
-									<span class="input-group-text" style="width: 60px">
-										<i class="fas fa-gamepad fa-2x"></i>
-									</span>
-									<div class="form-floating">
-										{{ form_widget(setupForm.controller) }}
-										{{ form_label(setupForm.controller) }}
-										<div class="form-error">
-											{{ form_errors(setupForm.controller) }}
-										</div>
-									</div>
-								</div>
-							</div>
+			<div class="form-group">
+				<div class="input-group mb-3">
+					<span class="input-group-text" style="width: 60px">
+						<i class="fas fa-gamepad fa-2x"></i>
+					</span>
+					<div class="form-floating">
+						{{ form_widget(setupForm.controller) }}
+						{{ form_label(setupForm.controller) }}
+						<div class="form-error">
+							{{ form_errors(setupForm.controller) }}
+						</div>
+					</div>
+				</div>
+			</div>
 
-							<div class="form-group">
-								{{ form_widget(setupForm.submit) }}
-								{{ form_widget(setupForm.cancel) }}
-							</div>
+			<div class="form-group">
+				{{ form_widget(setupForm.submit) }}
+				{{ form_widget(setupForm.cancel) }}
+			</div>
 
-							{{ form_end(setupForm) }}
+			{{ form_end(setupForm) }}
 			<div class="mt-5"></div>
 		</div>
 	</div>

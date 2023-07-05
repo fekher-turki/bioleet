@@ -1,40 +1,45 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ profile.user.firstName ~ " '" ~ profile.ingameName ~ "' " ~ profile.user.lastName ~ "'s " ~ profile.game.code ~ " Player Profile"}} | BioLeet.com
+{% block title %}
+	{{ profile.user.firstName ~ " '" ~ profile.ingameName ~ "' " ~ profile.user.lastName ~ "'s " ~ profile.game.code ~ " Player Profile"}}
+	| BioLeet.com
 {% endblock %}
 
-{% block meta_description %}{{ bio }}{% endblock %}
+{% block meta_description %}
+	{{ bio }}
+{% endblock %}
 
 {% block stylesheets %}
 	{{ parent() }}
-		<meta property="og:type" content="article">
-		<meta property="og:url" content="{{ app.request.schemeAndHttpHost ~ app.request.requestUri }}">
-		<meta property="og:title" content="{{ profile.user.firstName ~ " '" ~ profile.ingameName ~ "' " ~ profile.user.lastName }}">
-		<meta property="og:description" content="Player profile for {{ profile.user.firstName ~ " '" ~ profile.ingameName ~ "' " ~ profile.user.lastName }}">
-{% if user.avatar == "default-avatar.png" %}
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="{{ app.request.schemeAndHttpHost ~ app.request.requestUri }}">
+	<meta property="og:title" content="{{ profile.user.firstName ~ " '" ~ profile.ingameName ~ "' " ~ profile.user.lastName }}">
+	<meta property="og:description" content="Player profile for {{ profile.user.firstName ~ " '" ~ profile.ingameName ~ "' " ~ profile.user.lastName }}">
+	{% if user.avatar == "default-avatar.png" %}
 		<meta property="og:image" content="{{ asset('images/default/default-avatar.png') | imagine_filter('avatar_720') }}?bg=3e4c54&amp;h=800&amp;ixlib=java-2.1.0&amp;rect=121%2C4%2C467%2C467&amp;w=800&amp;s=b7849a6a6f471ee77b3e67e5b07a5d90">
-{% else %}
+	{% else %}
 		<meta property="og:image" content="{{ asset('images/users/' ~ user.avatar) | imagine_filter('avatar_720') }}?bg=3e4c54&amp;h=800&amp;ixlib=java-2.1.0&amp;rect=121%2C4%2C467%2C467&amp;w=800&amp;s=b7849a6a6f471ee77b3e67e5b07a5d90">
-{% endif %}
-		<meta property="og:image:height" content="720">
-    	<meta property="og:image:width" content="720">
-		<meta property="og:site_name" content="BioLeet.com">
-		<meta name="twitter:card" content="summary">
-    	<meta name="twitter:site" content="@BioLeetCom">
-		<meta name="twitter:title" content="{{ profile.user.firstName ~ " '" ~ profile.ingameName ~ "' " ~ profile.user.lastName }}">
-    	<meta name="twitter:description" content="Player profile for {{ profile.user.firstName ~ " '" ~ profile.ingameName ~ "' " ~ profile.user.lastName }}">
-{% if user.avatar == "default-avatar.png" %}
+	{% endif %}
+	<meta property="og:image:height" content="720">
+	<meta property="og:image:width" content="720">
+	<meta property="og:site_name" content="BioLeet.com">
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:site" content="@BioLeetCom">
+	<meta name="twitter:title" content="{{ profile.user.firstName ~ " '" ~ profile.ingameName ~ "' " ~ profile.user.lastName }}">
+	<meta name="twitter:description" content="Player profile for {{ profile.user.firstName ~ " '" ~ profile.ingameName ~ "' " ~ profile.user.lastName }}">
+	{% if user.avatar == "default-avatar.png" %}
 		<meta property="twitter:image" content="{{ asset('images/default/default-avatar.png') | imagine_filter('avatar_720') }}?bg=3e4c54&amp;h=800&amp;ixlib=java-2.1.0&amp;rect=121%2C4%2C467%2C467&amp;w=800&amp;s=b7849a6a6f471ee77b3e67e5b07a5d90">
-{% else %}
+	{% else %}
 		<meta property="twitter:image" content="{{ asset('images/users/' ~ user.avatar) | imagine_filter('avatar_720') }}?bg=3e4c54&amp;h=800&amp;ixlib=java-2.1.0&amp;rect=121%2C4%2C467%2C467&amp;w=800&amp;s=b7849a6a6f471ee77b3e67e5b07a5d90">
-{% endif %}
-    	<meta name="twitter:image:alt" content="{{ profile.user.firstName ~ " '" ~ profile.ingameName ~ "' " ~ profile.user.lastName }}">
-    	<link href="{{ app.request.schemeAndHttpHost ~ app.request.requestUri }}" rel="canonical">
-		<link rel="stylesheet" href="/styles/profile.css">
+	{% endif %}
+	<meta name="twitter:image:alt" content="{{ profile.user.firstName ~ " '" ~ profile.ingameName ~ "' " ~ profile.user.lastName }}">
+	<link href="{{ app.request.schemeAndHttpHost ~ app.request.requestUri }}" rel="canonical">
+	<link rel="stylesheet" href="/styles/profile.css">
 {% endblock %}
 
 
 {% block body %}
+	<!-- parse-ignore-start -->
 	<script>
 		$(document).ready(function () {
 			$('#achievements').DataTable({
@@ -42,12 +47,17 @@
 			});
 		});
 	</script>
+	<!-- parse-ignore-end -->
 	<div class="container">
 		{% if isBanned and user and profile %}
 			<div class="row justify-content-center">
 				<div class="col-md-7 col-lg-4 mb-5 mb-lg-0 fadeIn">
 					<div class="card border-0 shadow">
-						<img src="{{ asset('images/default/default-avatar.png') }}" alt="default-avatar" class="bg-custom-dark">
+						<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6724869879733839" crossorigin="anonymous"></script>
+						<ins class="adsbygoogle" style="display:block" data-ad-format="fluid" data-ad-layout-key="-5s+dg-49-7o+14r" data-ad-client="ca-pub-6724869879733839" data-ad-slot="3238777244"></ins>
+						<script>
+							(adsbygoogle = window.adsbygoogle || []).push({});
+						</script>
 						<div class="card-body p-1-9 p-xl-5 bg-dark">
 							<div class="mb-5">
 								<h2>
@@ -79,7 +89,7 @@
 		{% elseif isBanned == false and user and profile %}
 			<div class="row justify-content-center">
 				<div class="col-md-7 col-lg-4 mb-5 mb-lg-0 fadeIn">
-					<div class="card border-0 shadow">
+					<div class="card border-0 shadow mb-4">
 						{% if user.avatar == "default-avatar.png" %}
 							<img src="{{ asset('images/default/default-avatar.png') | imagine_filter('avatar_720') }}" alt="{{ user.nickname }}" class="bg-custom-dark">
 						{% else %}
@@ -186,10 +196,18 @@
 							{% endif %}
 						</div>
 					</div>
+					<div class="card border-0 shadow">
+						{% if isPremiumProfile == false %}
+							<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6724869879733839" crossorigin="anonymous"></script>
+							<ins class="adsbygoogle" style="display:block" data-ad-format="fluid" data-ad-layout-key="-5s+dg-49-7o+14r" data-ad-client="ca-pub-6724869879733839" data-ad-slot="3238777244"></ins>
+							<script>
+								(adsbygoogle = window.adsbygoogle || []).push({});
+							</script>
+						{% endif %}
+					</div>
 				</div>
 				<div class="col-lg-8">
 					<div class="ps-lg-1-6 ps-xl-5">
-						<div class="mb-4"></div>
 						<div class="mb-3 fadeIn ">
 							<div class="text-start mb-1-6 fadeIn">
 								<h2 class="h3 mb-0 text-light"><img src="{{ asset('images/games/' ~ profile.game.code|lower ~ '.png') }}" style="width: 48px;" alt="{{profile.game.name}}">
@@ -198,6 +216,15 @@
 									{{ profile.game.name }}</h2>
 							</div>
 						</div>
+						{% if isPremiumProfile == false %}
+							<div class="mb-4 fadeIn">
+								<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6724869879733839" crossorigin="anonymous"></script>
+								<ins class="adsbygoogle" style="display:block" data-ad-format="fluid" data-ad-layout-key="-g7-1f+56-5v+6o" data-ad-client="ca-pub-6724869879733839" data-ad-slot="4360287224"></ins>
+								<script>
+									(adsbygoogle = window.adsbygoogle || []).push({});
+								</script>
+							</div>
+						{% endif %}
 						<div class="mb-4 fadeIn">
 							<div class="text-start mb-1-6 fadeIn">
 								<h2 class="h3 mb-0 text-success">About</h2>
@@ -225,16 +252,16 @@
 							<ul class="languages-style ps-0 mb-2">
 								{% if profile.gameRole is not empty %}
 									{% for _gameRole in profile.gameRole %}
-									<li>
-										<a class="rounded-4 bg-dark">
-											{{ _gameRole.name }}
-										</a>
-									</li>
-								{% endfor %}
+										<li>
+											<a class="rounded-4 bg-dark">
+												{{ _gameRole.name }}
+											</a>
+										</li>
+									{% endfor %}
 								{% else %}
 									<p>Roles not set.</p>
 								{% endif %}
-								
+
 							</ul>
 						</div>
 						<div class="mb-4 fadeIn">
@@ -252,6 +279,18 @@
 												<div class="card-body fixed-height">
 													<h6 class="card-title">{{ profile.user.setup.cpu }}</h6>
 												</div>
+											</div>
+										</div>
+									{% endif %}
+
+									{% if isPremiumProfile == false %}
+										<div class="col-sm-6 col-md-3 mb-1">
+											<div class="card">
+												<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6724869879733839" crossorigin="anonymous"></script>
+												<ins class="adsbygoogle" style="display:inline-block;width:184px;height:126px" data-ad-client="ca-pub-6724869879733839" data-ad-slot="2706679801"></ins>
+												<script>
+													(adsbygoogle = window.adsbygoogle || []).push({});
+												</script>
 											</div>
 										</div>
 									{% endif %}
@@ -507,6 +546,15 @@
 									<h2 class="h3 mb-0 text-success">Montage</h2>
 								</div>
 								<iframe width="100%" height="400px" src="{{ embed ~ videoId }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+							</div>
+						{% endif %}
+						{% if isPremiumProfile == false %}
+							<div class="mb-4 fadeIn">
+								<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6724869879733839" crossorigin="anonymous"></script>
+								<ins class="adsbygoogle" style="display:block" data-ad-format="fluid" data-ad-layout-key="-g7-1f+56-5v+6o" data-ad-client="ca-pub-6724869879733839" data-ad-slot="4360287224"></ins>
+								<script>
+									(adsbygoogle = window.adsbygoogle || []).push({});
+								</script>
 							</div>
 						{% endif %}
 					</div>

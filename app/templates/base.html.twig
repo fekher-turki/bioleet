@@ -9,37 +9,74 @@
 		</title>
 		<link rel="icon" href="{{ asset('images/favicon.ico')}}">
 		<meta property="fb:admins" content="100000685245359">
-    	<meta property="fb:pages" content="113448854942370">
-    	<meta property="fb:app_id" content="1506145509790490">
+		<meta property="fb:pages" content="113448854942370">
+		<meta property="fb:app_id" content="1506145509790490">
 		<meta name="theme-color" content="#ffffff">
 		<meta name="description" content="{% block meta_description %}Welcome to the leading Esports Bio site in the world!{% endblock %}">
-    	<meta property="og:title" content="BioLeet.com - The home of Esports Bio">
-    	<meta property="og:image" content="{{ asset('images/BL.png')}}">
-    	<meta property="og:site_name" content="BioLeet.com">
+		<meta property="og:title" content="BioLeet.com - The home of Esports Bio">
+		<meta property="og:image" content="{{ asset('images/BL.png')}}">
+		<meta
+		property="og:site_name" content="BioLeet.com">
 		{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
 		{% block stylesheets %}
-		{{ encore_entry_link_tags('app') }}
-		<link rel="stylesheet" href="https://bootswatch.com/5/darkly/bootstrap.min.css">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/css/bootstrap-select.min.css" integrity="sha512-mR/b5Y7FRsKqrYZou7uysnOdCIJib/7r5QeJMFvLNHNhtye3xJp1TdJVPLtetkukFn227nKpXD9OjUc09lx97Q==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
-		<link rel="stylesheet" href="https://bootswatch.com/5/darkly/_variables.scss">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
-		<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css"/>
-		<link rel="stylesheet" href="/styles/app.css">
-		<link href="https://fonts.googleapis.com/css2?family=Play" rel="stylesheet">
+			{{ encore_entry_link_tags('app') }}
+			<link rel="stylesheet" href="https://bootswatch.com/5/darkly/bootstrap.min.css">
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/css/bootstrap-select.min.css" integrity="sha512-mR/b5Y7FRsKqrYZou7uysnOdCIJib/7r5QeJMFvLNHNhtye3xJp1TdJVPLtetkukFn227nKpXD9OjUc09lx97Q==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+			<link rel="stylesheet" href="https://bootswatch.com/5/darkly/_variables.scss">
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+			<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css"/>
+			<link rel="stylesheet" href="/styles/app.css">
+			<link href="https://fonts.googleapis.com/css2?family=Play" rel="stylesheet">
 		{% endblock %}
 
 		{% block javascripts %}
-		{{ encore_entry_script_tags('app') }}
-		<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/js/bootstrap-select.min.js" integrity="sha512-FHZVRMUW9FsXobt+ONiix6Z0tIkxvQfxtCSirkKc5Sb4TKHmqq1dZa8DphF0XqKb3ldLu/wgMa8mT6uXiLlRlw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-		<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+			{{ encore_entry_script_tags('app') }}
+			<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/js/bootstrap-select.min.js" integrity="sha512-FHZVRMUW9FsXobt+ONiix6Z0tIkxvQfxtCSirkKc5Sb4TKHmqq1dZa8DphF0XqKb3ldLu/wgMa8mT6uXiLlRlw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+			<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+			<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6724869879733839" crossorigin="anonymous"></script>
 		{% endblock %}
 	</head>
 	<body>
-	{% block header %}
-	{% include "partials/_header.html.twig" %}
-	{% endblock %}
+		<!-- parse-ignore-start -->
+		<script>
+			async function detectAdBlock() {
+			  let adBlockEnabled = false
+			  const googleAdUrl = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'
+			  try {
+			    await fetch(new Request(googleAdUrl)).catch(_ => adBlockEnabled = true)
+			  } catch (e) {
+			    adBlockEnabled = true;
+			  } finally {
+				if (adBlockEnabled) {
+					// Get a reference to the modal element
+					var myModal = new bootstrap.Modal(document.getElementById('adBlockModal'));
+					
+					// Open the modal
+					myModal.show();
+				}
+			  }
+			}
+			detectAdBlock()
+		</script>
+		<!-- parse-ignore-end -->
+		<button hidden data-bs-toggle="modal" data-bs-target="#adBlockModal">
+			Launch demo modal
+		</button>
+		<div class="modal fade" id="adBlockModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="adBlockModalLabel" aria-hidden="true">
+			<div class="modal-dialog" style="width: 320px">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5" id="adBlockModalLabel">Please disable AdBlock  <i class="fa-solid fa-location-arrow"></i></h1>
+					</div>
+					<div class="modal-body" style="background-image: url({{ asset('/images/adblock.png') }});background-repeat: no-repeat;height: 385px;"></div>
+				</div>
+			</div>
+		</div>
+		{% block header %}
+			{% include "partials/_header.html.twig" %}
+		{% endblock %}
 		{% block body %}{% endblock %}
 	</body>
 </html>

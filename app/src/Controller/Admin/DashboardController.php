@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Feedback;
 use App\Entity\Game;
 use App\Entity\GameRole;
 use App\Entity\Profile;
@@ -105,6 +106,7 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Games', 'fa fa-gamepad', Game::class),
             MenuItem::linkToCrud('Game Roles', 'fa fa-chess-pawn', GameRole::class),
         ]);
+        yield MenuItem::linkToCrud('Feedback', 'fas fa-comment', Feedback::class);
         yield MenuItem::linkToRoute('Back to Home', 'fas fa-rotate-right', 'home.index');
     }
 }

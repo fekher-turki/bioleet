@@ -16,6 +16,7 @@ doctrine:
             string_functions:
                 MONTH: DoctrineExtensions\Query\Mysql\Month
                 YEAR: DoctrineExtensions\Query\Mysql\Year
+                RAND: DoctrineExtensions\Query\Mysql\Rand
         mappings:
             App:
                 is_bundle: false

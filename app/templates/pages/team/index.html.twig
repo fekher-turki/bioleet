@@ -1,51 +1,60 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ team.teamName ~ "'s " ~ team.game.code ~ " Team Overview"}} | BioLeet.com
+{% block title %}
+	{{ team.teamName ~ "'s " ~ team.game.code ~ " Team Overview"}}
+	| BioLeet.com
 {% endblock %}
 
-{% block meta_description %}{{ overview }}{% endblock %}
+{% block meta_description %}
+	{{ overview }}
+{% endblock %}
 
 {% block stylesheets %}
 	{{ parent() }}
-		<meta property="og:type" content="article">
-		<meta property="og:url" content="{{ app.request.schemeAndHttpHost ~ app.request.requestUri }}">
-		<meta property="og:title" content="{{ team.teamName }}">
-		<meta property="og:description" content="Team overview for {{ team.teamName }}">
-{% if team.logo == "default-logo.png" %}
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="{{ app.request.schemeAndHttpHost ~ app.request.requestUri }}">
+	<meta property="og:title" content="{{ team.teamName }}">
+	<meta property="og:description" content="Team overview for {{ team.teamName }}">
+	{% if team.logo == "default-logo.png" %}
 		<meta property="og:image" content="{{ asset('images/default/default-logo.png') | imagine_filter('logo_720') }}?bg=3e4c54&amp;h=800&amp;ixlib=java-2.1.0&amp;rect=121%2C4%2C467%2C467&amp;w=800&amp;s=b7849a6a6f471ee77b3e67e5b07a5d90">
-{% else %}
+	{% else %}
 		<meta property="og:image" content="{{ asset('images/teams/' ~ team.logo) | imagine_filter('logo_720') }}?bg=3e4c54&amp;h=800&amp;ixlib=java-2.1.0&amp;rect=121%2C4%2C467%2C467&amp;w=800&amp;s=b7849a6a6f471ee77b3e67e5b07a5d90">
-{% endif %}
-		<meta property="og:image:height" content="720">
-    	<meta property="og:image:width" content="720">
-		<meta property="og:site_name" content="BioLeet.com">
-		<meta name="twitter:card" content="summary">
-    	<meta name="twitter:site" content="@BioLeetCom">
-		<meta name="twitter:title" content="{{ team.teamName }}">
-    	<meta name="twitter:description" content="Team overview for {{ team.teamName }}">
-{% if team.logo == "default-logo.png" %}
+	{% endif %}
+	<meta property="og:image:height" content="720">
+	<meta property="og:image:width" content="720">
+	<meta property="og:site_name" content="BioLeet.com">
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:site" content="@BioLeetCom">
+	<meta name="twitter:title" content="{{ team.teamName }}">
+	<meta name="twitter:description" content="Team overview for {{ team.teamName }}">
+	{% if team.logo == "default-logo.png" %}
 		<meta property="twitter:image" content="{{ asset('images/default/default-logo.png') | imagine_filter('logo_720') }}?bg=3e4c54&amp;h=800&amp;ixlib=java-2.1.0&amp;rect=121%2C4%2C467%2C467&amp;w=800&amp;s=b7849a6a6f471ee77b3e67e5b07a5d90">
-{% else %}
+	{% else %}
 		<meta property="twitter:image" content="{{ asset('images/teams/' ~ team.logo) | imagine_filter('logo_720') }}?bg=3e4c54&amp;h=800&amp;ixlib=java-2.1.0&amp;rect=121%2C4%2C467%2C467&amp;w=800&amp;s=b7849a6a6f471ee77b3e67e5b07a5d90">
-{% endif %}
-    	<meta name="twitter:image:alt" content="{{ team.teamName }}">
-    	<link href="{{ app.request.schemeAndHttpHost ~ app.request.requestUri }}" rel="canonical">
-		<link rel="stylesheet" href="/styles/profile.css">
+	{% endif %}
+	<meta name="twitter:image:alt" content="{{ team.teamName }}">
+	<link href="{{ app.request.schemeAndHttpHost ~ app.request.requestUri }}" rel="canonical">
+	<link rel="stylesheet" href="/styles/profile.css">
 {% endblock %}
 
-
 {% block body %}
+	<!-- parse-ignore-start -->
 	<script>
 		$(document).ready(function () {
-$('#myTable').DataTable();
-});
+			$('#myTable').DataTable();
+		});
 	</script>
+	<!-- parse-ignore-end -->
 	<div class="container">
 		{% if isBanned and user and team %}
 			<div class="row justify-content-center">
-				<div class="col-md-7 col-lg-4 mb-5 mb-lg-0 wow fadeIn">
+				<div class="col-md-7 col-lg-4 mb-5 mb-lg-0 fadeIn">
 					<div class="card border-0 shadow">
-						<img src="{{ asset('images/default/default-logo.png') }}" alt="default-logo" class="bg-custom-dark">
+						<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6724869879733839" crossorigin="anonymous"></script>
+						<ins class="adsbygoogle" style="display:block" data-ad-format="fluid" data-ad-layout-key="-5s+dg-49-7o+14r" data-ad-client="ca-pub-6724869879733839" data-ad-slot="3238777244"></ins>
+						<script>
+							(adsbygoogle = window.adsbygoogle || []).push({});
+						</script>
 						<div class="card-body p-1-9 p-xl-5 bg-dark">
 							<div class="mb-5">
 								<h2>
@@ -62,22 +71,22 @@ $('#myTable').DataTable();
 					<div class="col-lg-8">
 						<div class="ps-lg-1-6 ps-xl-5">
 							<div class="mb-4"></div>
-							<div class="mb-4 wow fadeIn"></div>
-							<div class="mb-4 wow fadeIn">
-								<div class="text-start mb-1-6 wow fadeIn">
+							<div class="mb-4 fadeIn"></div>
+							<div class="mb-4 fadeIn">
+								<div class="text-start mb-1-6 fadeIn">
 									<h2 class="h3 mb-0 text-success">Reason</h2>
 								</div>
 								<p class="h4 text-danger">{{ user.banReason }}</p>
 							</div>
-							<div class="mb-4 wow fadeIn"></div>
+							<div class="mb-4 fadeIn"></div>
 						</div>
 					</div>
 				</div>
 			</div>
 		{% elseif isBanned == false and user and team %}
 			<div class="row justify-content-center">
-				<div class="col-md-7 col-lg-4 mb-5 mb-lg-0 wow fadeIn">
-					<div class="card border-0 shadow">
+				<div class="col-md-7 col-lg-4 mb-5 mb-lg-0 fadeIn">
+					<div class="card border-0 shadow mb-4">
 						{% if team.logo == "default-logo.png" %}
 							<img src="{{ asset('images/default/default-logo.png') | imagine_filter('logo_720') }}" alt="{{ team.teamName }}" class="bg-custom-dark">
 						{% else %}
@@ -162,30 +171,60 @@ $('#myTable').DataTable();
 						{% endif %}
 					</div>
 				</div>
+				<div class="card border-0 shadow">
+					{% if isPremiumTeam == false %}
+						<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6724869879733839" crossorigin="anonymous"></script>
+						<ins class="adsbygoogle" style="display:block" data-ad-format="fluid" data-ad-layout-key="-5s+dg-49-7o+14r" data-ad-client="ca-pub-6724869879733839" data-ad-slot="3238777244"></ins>
+						<script>
+							(adsbygoogle = window.adsbygoogle || []).push({});
+						</script>
+					{% endif %}
+				</div>
 			</div>
 			<div class="col-lg-8">
 				<div class="ps-lg-1-6 ps-xl-5">
-					<div class="mb-4"></div>
-					<div class="mb-3 wow fadeIn ">
-						<div class="text-start mb-1-6 wow fadeIn">
+					<div class="mb-3 fadeIn ">
+						<div class="text-start mb-1-6 fadeIn">
 							<h2 class="h3 mb-0 text-light"><img src="{{ asset('images/games/' ~ team.game.code|lower ~ '.png') }}" style="width: 48px;" alt="{{team.game.name}}">
 								{{ team.teamName }}
 								-
 								{{ team.game.name }}</h2>
 						</div>
 					</div>
-					<div class="mb-4 wow fadeIn">
-						<div class="text-start mb-1-6 wow fadeIn">
+					{% if isPremiumTeam == false %}
+						<div class="mb-4 fadeIn">
+							<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6724869879733839" crossorigin="anonymous"></script>
+							<ins class="adsbygoogle" style="display:block" data-ad-format="fluid" data-ad-layout-key="-g7-1f+56-5v+6o" data-ad-client="ca-pub-6724869879733839" data-ad-slot="4360287224"></ins>
+							<script>
+								(adsbygoogle = window.adsbygoogle || []).push({});
+							</script>
+						</div>
+					{% endif %}
+					<div class="mb-4 fadeIn">
+						<div class="text-start mb-1-6 fadeIn">
 							<h2 class="h3 mb-0 text-success">Overview</h2>
 						</div>
 						<p>{{ overview }}</p>
 					</div>
-					<div class="mb-4 wow fadeIn">
-						<div class="text-start mb-1-6 wow fadeIn">
+					<div class="mb-4 fadeIn">
+						<div class="text-start mb-1-6 fadeIn">
 							<h2 class="h3 mb-0 text-success">Roster</h2>
 						</div>
 						<div class="row">
 							{% if team.players is not empty %}
+								{% if isPremiumTeam == false %}
+									<div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+										<div class="card h-100">
+											<div class="d-flex flex-column justify-content-between round-2 rounded">
+												<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6724869879733839" crossorigin="anonymous"></script>
+												<ins class="adsbygoogle" style="display:inline-block;width:184px;height:274px" data-ad-client="ca-pub-6724869879733839" data-ad-slot="8910740478"></ins>
+												<script>
+													(adsbygoogle = window.adsbygoogle || []).push({});
+												</script>
+											</div>
+										</div>
+									</div>
+								{% endif %}
 								{% for player in team.players %}
 									<div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
 										<div class="card mb-4 h-100">
@@ -209,7 +248,7 @@ $('#myTable').DataTable();
 									</div>
 								{% endfor %}
 							{% else %}
-							<p>No Players in this team.</p>
+								<p>No Players in this team.</p>
 							{% endif %}
 						</div>
 					</div>

@@ -183,31 +183,48 @@
 				</div>
 				<div class="row gx-5 justify-content-center">
 					<div class="col-lg-6">
-						<div class="card mb-4 bg-secondary">
-							<div class="card-body p-4">
-								<div class="d-flex">
-									<div class="flex-shrink-0">
-										<i class="fa fa-quote-right fs-1 text-orange"></i>
+						{% if feedbacks is not empty and feedbacks|length >= 2 %}
+							{% for feedback in feedbacks %}
+								<div class="card mb-4 bg-secondary">
+									<div class="card-body p-4">
+										<div class="d-flex">
+											<div class="flex-shrink-0">
+												<i class="fa fa-quote-right fs-1 text-orange"></i>
+											</div>
+											<div class="ms-4">
+												<p class="mb-1">{{ feedback.message|slice(0, 300) }}</p>
+												<div class="small text-muted">- {{ feedback.fullName }}, {{ feedback.country|country_name }}</div>
+											</div>
+										</div>
 									</div>
-									<div class="ms-4">
-										<p class="mb-1">Coming Soon!</p>
+								</div>
+							{% endfor %}
+						{% else %}
+							<div class="card mb-4 bg-secondary">
+								<div class="card-body p-4">
+									<div class="d-flex">
+										<div class="flex-shrink-0">
+											<i class="fa fa-quote-right fs-1 text-orange"></i>
+										</div>
+										<div class="ms-4">
+											<p class="mb-1">Coming Soon!</p>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						<div class="card bg-secondary">
-							<div class="card-body p-4">
-								<div class="d-flex">
-									<div class="flex-shrink-0">
-										<i class="fa fa-quote-right fs-1 text-orange"></i>
-									</div>
-									<div class="ms-4">
-										<p class="mb-1">Coming Soon!</p>
-										<!-- <div class="small text-muted">- Client Name, Location</div> -->
+							<div class="card bg-secondary">
+								<div class="card-body p-4">
+									<div class="d-flex">
+										<div class="flex-shrink-0">
+											<i class="fa fa-quote-right fs-1 text-orange"></i>
+										</div>
+										<div class="ms-4">
+											<p class="mb-1">Coming Soon!</p>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
+						{% endif %}
 					</div>
 				</div>
 			</div>

@@ -35,6 +35,7 @@ class ProfileController extends AbstractController
         $user = $profile->getUser();
         $isBanned = $user->isBanned();
         $isPremium = $user->isPremium();
+        $isPremiumProfile = $profile->getUser()->isPremium();
         if ($profile->getBio())
         {
             $bio = $profile->getBio();
@@ -45,6 +46,7 @@ class ProfileController extends AbstractController
 
         return $this->render('pages/profile/index.html.twig', [
             'isPremium' => $isPremium,
+            'isPremiumProfile' => $isPremiumProfile,
             'isBanned' => $isBanned,
             'hasExperiences' => $hasExperiences,
             'profile' => $profile,
@@ -58,7 +60,7 @@ class ProfileController extends AbstractController
     #[Route('/players', name: 'profile.list', methods: ['GET'])]
     public function list(Request $request, EntityManagerInterface $manager): Response
     {
-        
+        $isPremium = $this->getUser()->isPremium();
         $searchForm = $this->createForm(ProfileSearchType::class);
         $searchForm->handleRequest($request);
     
@@ -85,6 +87,7 @@ class ProfileController extends AbstractController
         return $this->render('pages/profile/list.html.twig', [
             'searchForm' => $searchForm->createView(),
             'profiles' => $profiles,
+            'isPremium' => $isPremium,
         ]);
     }
 
@@ -96,6 +99,7 @@ class ProfileController extends AbstractController
         string $ingameName,
         string $game
     ): Response {
+        $isPremium = $this->getUser()->isPremium();
         $gameCode = $manager->getRepository(Game::class)->findOneBy(['code' => $game]);
         $profile = $manager->getRepository(Profile::class)->findOneBy(['ingameName' => $ingameName, 'game' => $gameCode]);
 
@@ -103,8 +107,6 @@ class ProfileController extends AbstractController
             return $this->redirectToRoute('account.index');
         }
 
-        // $currentUser = $this->getUser();
-        // $isPremium = $currentUser->isPremium();
         $experiences = $profile->getExperiences();
         $hasExperiences = $experiences->count() > 0;
 
@@ -147,6 +149,7 @@ class ProfileController extends AbstractController
         }
 
         return $this->render('pages/profile/edit.html.twig', [
+            'isPremium' => $isPremium,
             'profileForm' => $profileForm->createView(),
             'experienceForm' => $experienceForm->createView(),
             'experiences' => $experiences,

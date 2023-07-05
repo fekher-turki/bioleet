@@ -26,6 +26,7 @@ class UserController extends AbstractController
         UserPasswordHasherInterface $hasher,
     ): Response {
         $currentUser = $this->getUser();
+        $isPremium = $currentUser->isPremium();
         $socialMedia = $currentUser->getSocialMedia();
 
         // avatar form
@@ -127,6 +128,7 @@ class UserController extends AbstractController
 
         return $this->render('pages/user/edit.html.twig', [
             'user' => $this->getUser(),
+            'isPremium' => $isPremium,
             'avatarForm' => $avatarForm->createView(),
             'form' => $form->createView(),
             'passwordForm' => $passwordForm->createView(),
@@ -141,6 +143,7 @@ class UserController extends AbstractController
         EntityManagerInterface $manager,
     ): Response {
         $currentUser = $this->getUser();
+        $isPremium = $currentUser->isPremium();
         $setup = $currentUser->getSetup();
 
         // social media form
@@ -160,6 +163,7 @@ class UserController extends AbstractController
 
         return $this->render('pages/user/setup.html.twig', [
             'user' => $this->getUser(),
+            'isPremium' => $isPremium,
             'setupForm' => $setupForm->createView()
         ]);
     }

@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Feedback;
 use App\Form\ContactType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,9 +17,16 @@ class HomeController extends AbstractController
 {
     #[Route('/', name: 'home.index')]
     public function index(
+        EntityManagerInterface $manager,
         MailerInterface $mailer,
         Request $request,
     ): Response {
+        $feedbacks = $manager->getRepository(Feedback::class)->createQueryBuilder('f')
+            ->select('f')
+            ->orderBy('RAND()')
+            ->setMaxResults(2)
+            ->getQuery()
+            ->getResult();
         $contactForm = $this->createForm(ContactType::class);
         $contactForm->handleRequest($request);
 
@@ -45,6 +54,7 @@ class HomeController extends AbstractController
 
         return $this->render('pages/home/index.html.twig', [
             'contactForm' => $contactForm->createView(),
+            'feedbacks' => $feedbacks
         ]);
     }
 }

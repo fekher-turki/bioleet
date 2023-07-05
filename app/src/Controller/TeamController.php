@@ -38,6 +38,7 @@ class TeamController extends AbstractController
         $user = $team->getOwner();
         $isBanned = $user->isBanned();
         $isPremium = $user->isPremium();
+        $isPremiumTeam = $team->getOwner()->isPremium();
         if ($team->getOverview())
         {
             $overview = $team->getOverview();
@@ -48,6 +49,7 @@ class TeamController extends AbstractController
 
         return $this->render('pages/team/index.html.twig', [
             'isPremium' => $isPremium,
+            'isPremiumTeam' => $isPremiumTeam,
             'isBanned' => $isBanned,
             'team' => $team,
             'overview' => $overview,
@@ -58,7 +60,7 @@ class TeamController extends AbstractController
     #[Route('/teams', name: 'team.list', methods: ['GET'])]
     public function list(Request $request, EntityManagerInterface $manager): Response
     {
-        
+        $isPremium = $this->getUser()->isPremium();
         $searchForm = $this->createForm(TeamSearchType::class);
         $searchForm->handleRequest($request);
     
@@ -84,6 +86,7 @@ class TeamController extends AbstractController
         return $this->render('pages/team/list.html.twig', [
             'searchForm' => $searchForm->createView(),
             'teams' => $teams,
+            'isPremium' => $isPremium,
         ]);
     }
 
@@ -95,7 +98,8 @@ class TeamController extends AbstractController
         string $teamUrl,
         string $game
         ): Response
-    {        
+    {
+        $isPremium = $this->getUser()->isPremium();
         $gameCode = $manager->getRepository(Game::class)->findOneBy(['code' => $game]);
         $team = $manager->getRepository(Team::class)->findOneBy(['teamUrl' => $teamUrl, 'game' => $gameCode]);
         $socialMedia = $team->getSocialMedia();
@@ -162,6 +166,7 @@ class TeamController extends AbstractController
 
         return $this->render('pages/team/edit.html.twig', [
             'team' => $team,
+            'isPremium' => $isPremium,
             'logoForm' => $logoForm->createView(),
             'teamForm' => $teamForm->createView(),
             'socialMediaForm' => $socialMediaForm->createView()
@@ -176,7 +181,8 @@ class TeamController extends AbstractController
         string $teamUrl,
         string $game
         ): Response
-    {        
+    {
+        $isPremium = $this->getUser()->isPremium();
         $gameCode = $manager->getRepository(Game::class)->findOneBy(['code' => $game]);
         $team = $manager->getRepository(Team::class)->findOneBy(['teamUrl' => $teamUrl, 'game' => $gameCode]);
         $inviteLink = $request->getSchemeAndHttpHost() . '/account/team/invite/' . $team->getGame()->getCode() . '/' . $team->getTeamUrl();
@@ -187,6 +193,7 @@ class TeamController extends AbstractController
 
         return $this->render('pages/team/manage.html.twig', [
             'team' => $team,
+            'isPremium' => $isPremium,
             'inviteLink' => $inviteLink
         ]);
     }
