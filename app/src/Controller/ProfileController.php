@@ -60,7 +60,11 @@ class ProfileController extends AbstractController
     #[Route('/players', name: 'profile.list', methods: ['GET'])]
     public function list(Request $request, EntityManagerInterface $manager): Response
     {
-        $isPremium = $this->getUser()->isPremium();
+        if ($this->getUser()) {
+            $isPremium = $this->getUser()->isPremium();
+        } else {
+            $isPremium = false;
+        }
         $searchForm = $this->createForm(ProfileSearchType::class);
         $searchForm->handleRequest($request);
     

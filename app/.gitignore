@@ -9,6 +9,7 @@
 /var/
 /vendor/
 /public/images/teams
+/public/images/games
 /public/images/users
 ###< symfony/framework-bundle ###
 
