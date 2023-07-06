@@ -11,7 +11,7 @@ use App\Form\LogoType;
 use App\Form\SocialMediaType;
 use App\Form\TeamSearchType;
 use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -94,7 +94,7 @@ class TeamController extends AbstractController
         ]);
     }
 
-    #[Security("is_granted('ROLE_USER')")]
+    #[IsGranted('ROLE_USER')]
     #[Route('/account/team/edit/{game}/{teamUrl}', name: 'team.edit', methods: ['GET', 'POST'])]
     public function edit(
         Request $request,
@@ -177,7 +177,7 @@ class TeamController extends AbstractController
         ]);
     }
 
-    #[Security("is_granted('ROLE_USER')")]
+    #[IsGranted('ROLE_USER')]
     #[Route('/account/team/manage/{game}/{teamUrl}', name: 'team.manage', methods: ['GET', 'POST'])]
     public function manage(
         Request $request,
@@ -202,7 +202,7 @@ class TeamController extends AbstractController
         ]);
     }
 
-    #[Security("is_granted('ROLE_USER')")]
+    #[IsGranted('ROLE_USER')]
     #[Route('/account/team/invite/{game}/{teamUrl}', name: 'team.invite', methods: ['GET', 'POST'])]
     public function invite(
         Request $request,
@@ -277,7 +277,7 @@ class TeamController extends AbstractController
         ]);
     }
 
-    #[Security("is_granted('ROLE_USER')")]
+    #[IsGranted('ROLE_USER')]
     #[Route('/account/team/{teamId}/kick/{playerId}', name: 'team.kick', methods: ['GET'])]
     public function kick(
         EntityManagerInterface $manager,
@@ -303,7 +303,7 @@ class TeamController extends AbstractController
         return $this->redirectToRoute('account.dashboard');
     }
 
-    #[Security("is_granted('ROLE_USER')")]
+    #[IsGranted('ROLE_USER')]
     #[Route('/account/team/{game}/{teamUrl}/delete', name: 'team.delete', methods: ['GET'])]
     public function delete(
         EntityManagerInterface $manager,

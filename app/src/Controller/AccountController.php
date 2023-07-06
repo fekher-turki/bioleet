@@ -8,7 +8,7 @@ use App\Entity\Team;
 use App\Form\CreateProfileType;
 use App\Form\CreateTeamType;
 use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,14 +18,14 @@ use Symfony\Component\String\Slugger\AsciiSlugger;
 
 class AccountController extends AbstractController
 {
-    #[Security("is_granted('ROLE_USER')")]
+    #[IsGranted('ROLE_USER')]
     #[Route("/account", name: "account.index")]
     public function redirectToDashboard(): RedirectResponse
     {
         return $this->redirectToRoute('account.dashboard');
     }
 
-    #[Security("is_granted('ROLE_USER')")]
+    #[IsGranted('ROLE_USER')]
     #[Route('/account/dashboard', name: 'account.dashboard', methods: ['GET', 'POST'])]
     public function dashboard(Request $request, EntityManagerInterface $manager): Response
     {

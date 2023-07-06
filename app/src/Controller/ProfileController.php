@@ -8,7 +8,7 @@ use App\Form\EditProfileType;
 use App\Form\ExperienceType;
 use App\Form\ProfileSearchType;
 use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -95,7 +95,7 @@ class ProfileController extends AbstractController
         ]);
     }
 
-    #[Security("is_granted('ROLE_USER')")]
+    #[IsGranted('ROLE_USER')]
     #[Route('/account/profile/{game}/{ingameName}', name: 'profile.edit', methods: ['GET', 'POST'])]
     public function edit(
         Request $request,
@@ -161,7 +161,7 @@ class ProfileController extends AbstractController
         ]);
     }
 
-    #[Security("is_granted('ROLE_USER')")]
+    #[IsGranted('ROLE_USER')]
     #[Route('/account/profile/{game}/{ingameName}/delete', name: 'profile.delete', methods: ['GET'])]
     public function delete(
         EntityManagerInterface $manager,

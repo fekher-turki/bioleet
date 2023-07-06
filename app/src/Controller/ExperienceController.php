@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Experience;
 use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +21,7 @@ class ExperienceController extends AbstractController
     //     ]);
     // }
 
-    #[Security("is_granted('ROLE_USER')")]
+    #[IsGranted('ROLE_USER')]
     #[Route('/account/profile/experience/{id}', name: 'experience.delete', methods: ['GET'])]
     public function delete(
         EntityManagerInterface $manager,
