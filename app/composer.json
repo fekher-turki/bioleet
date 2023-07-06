@@ -14,7 +14,6 @@
         "easycorp/easyadmin-bundle": "^4.6",
         "intervention/image": "^2.7",
         "liip/imagine-bundle": "^2.11",
-        "sensio/framework-extra-bundle": "^6.2",
         "symfony/asset": "6.2.*",
         "symfony/console": "6.2.*",
         "symfony/dotenv": "6.2.*",
