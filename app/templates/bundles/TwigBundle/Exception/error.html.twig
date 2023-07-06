@@ -5,31 +5,13 @@
 
 {% block stylesheets %}
 	{{ parent() }}
-    <style>
-        .error-container {
-            text-align: center;
-            margin-top: 100px;
-        }
-        .error-container h1 {
-            font-size: 100px;
-        }
-        .error-container p {
-            font-size: 20px;
-            margin-top: 20px;
-        }
-        .error-container a {
-            margin-top: 30px;
-        }
-    </style>
 {% endblock %}
-
 
 {% block body %}
 	<div class="container mx-auto mt-4">
-         <div class="container error-container">
-        <h1><i class="fas fa-exclamation-circle"></i> ERROR</h1>
-        <p>Page not found</p>
-        <a href="{{ path('home.index') }}" class="btn btn-primary"><i class="fas fa-home"></i> Go to Homepage</a>
-    </div>
+        <i class="fa-solid circle-exclamation fa-5x text-orange"></i>
+        <h1 class="text-orange text-4xl mt-4">Error Incurred</h1>
+        <p class="text-white text-lg mt-2">Seems an error has incurred.</p>
+        <a href="{{ path('home.index') }}" class="text-orange mt-4 text-lg underline">Return to homepage</a>
     </div>
 {% endblock %}
