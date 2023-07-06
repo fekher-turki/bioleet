@@ -32,9 +32,6 @@ class TeamController extends AbstractController
     {
         $gameCode = $manager->getRepository(Game::class)->findOneBy(['code' => $game]);
         $team = $manager->getRepository(Team::class)->findOneBy(['teamUrl' => $teamUrl, 'game' => $gameCode]);
-        if (!$team) {
-            return $this->redirectToRoute('account.index');
-        }
         $user = $team->getOwner();
         $isBanned = $user->isBanned();
         $isPremium = $user->isPremium();
