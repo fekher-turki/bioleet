@@ -5,24 +5,20 @@
 	| BioLeet.com
 {% endblock %}
 
-{% block meta_description %}
-	{{ overview }}
-{% endblock %}
-
 {% block stylesheets %}
 	{{ parent() }}
+	{% block dynamic_meta %}
+		<meta name="description" content="{{ overview }}">
+		<meta property="og:title" content="{{ team.teamName }}">
+		{% if team.logo == "default-logo.png" %}
+			<meta property="og:image" content="{{ asset('images/default/default-logo.png') | imagine_filter('logo_720') }}?bg=3e4c54&amp;h=800&amp;ixlib=java-2.1.0&amp;rect=121%2C4%2C467%2C467&amp;w=800&amp;s=b7849a6a6f471ee77b3e67e5b07a5d90">
+		{% else %}
+			<meta property="og:image" content="{{ asset('images/teams/' ~ team.logo) | imagine_filter('logo_720') }}?bg=3e4c54&amp;h=800&amp;ixlib=java-2.1.0&amp;rect=121%2C4%2C467%2C467&amp;w=800&amp;s=b7849a6a6f471ee77b3e67e5b07a5d90">
+		{% endif %}
+	{% endblock %}
 	<meta property="og:type" content="article">
 	<meta property="og:url" content="{{ app.request.schemeAndHttpHost ~ app.request.requestUri }}">
-	<meta property="og:title" content="{{ team.teamName }}">
 	<meta property="og:description" content="Team overview for {{ team.teamName }}">
-	{% if team.logo == "default-logo.png" %}
-		<meta property="og:image" content="{{ asset('images/default/default-logo.png') | imagine_filter('logo_720') }}?bg=3e4c54&amp;h=800&amp;ixlib=java-2.1.0&amp;rect=121%2C4%2C467%2C467&amp;w=800&amp;s=b7849a6a6f471ee77b3e67e5b07a5d90">
-	{% else %}
-		<meta property="og:image" content="{{ asset('images/teams/' ~ team.logo) | imagine_filter('logo_720') }}?bg=3e4c54&amp;h=800&amp;ixlib=java-2.1.0&amp;rect=121%2C4%2C467%2C467&amp;w=800&amp;s=b7849a6a6f471ee77b3e67e5b07a5d90">
-	{% endif %}
-	<meta property="og:image:height" content="720">
-	<meta property="og:image:width" content="720">
-	<meta property="og:site_name" content="BioLeet.com">
 	<meta name="twitter:card" content="summary">
 	<meta name="twitter:site" content="@BioLeetCom">
 	<meta name="twitter:title" content="{{ team.teamName }}">
@@ -254,6 +250,6 @@
 					</div>
 				</div>
 			</div>
-		</div>
-	{% endif %}
-</div>{% endblock %}
+		{% endif %}
+	</div>
+{% endblock %}
