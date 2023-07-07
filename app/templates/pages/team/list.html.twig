@@ -80,11 +80,11 @@
 								{% else %}
 									<img src="{{ asset('images/teams/' ~ team.logo) | imagine_filter('logo_256') }}" class="card-img-top" alt="{{ team.teamName }}">
 								{% endif %}
-								<img src="{{ asset('images/games/' ~ team.game.code|lower ~ '.png') }}" style="width: 40px; padding-right: 10px;" class="position-absolute end-0" alt="{{ team.game.name }}">
+								<img src="{{ asset('images/games/' ~ team.game.code ~ '.png') }}" style="width: 40px; padding-right: 10px;" class="position-absolute end-0" alt="{{ team.game.name }}">
 								<div class="card-body d-flex flex-column justify-content-between">
 									<div>
 										<h4 class="text-center">
-											<img src="{{ asset('images/countries/' ~ team.country|lower ~ '.png') }}" style="width: 32px;" alt="{{ team.country|country_name }}">
+											<img src="{{ asset('images/countries/' ~ team.country ~ '.png') }}" style="width: 32px;" alt="{{ team.country|country_name }}">
 											{{team.teamName}}
 											{% if team.isVerified %}
 												<span class="h5 mb-2">

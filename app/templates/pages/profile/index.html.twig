@@ -112,9 +112,9 @@
 								</h2>
 								<h2 class="h3 mb-1">{{ user.firstName|upper ~ " " ~ user.lastName|upper }}
 								</h2>
-								<h2 class="h3 mb-1"><img src="{{ asset('images/countries/' ~ user.country|lower ~ '.png') }}" style="width: 40px;" alt="{{ user.country|country_name }}">
+								<h2 class="h3 mb-1"><img src="{{ asset('images/countries/' ~ user.country ~ '.png') }}" style="width: 40px;" alt="{{ user.country|country_name }}">
 									{{ user.country|country_name }}</h2>
-								<h2 class="h3 mb-1"><img src="{{ asset('images/games/' ~ profile.game.code|lower ~ '.png') }}" style="width: 40px;" alt="{{ profile.game.name }}">
+								<h2 class="h3 mb-1"><img src="{{ asset('images/games/' ~ profile.game.code ~ '.png') }}" style="width: 40px;" alt="{{ profile.game.name }}">
 									{{ profile.game.code|upper }}</h2>
 								{% if profile.team %}
 									<h2 class="h3 mb-2">
@@ -210,7 +210,7 @@
 					<div class="ps-lg-1-6 ps-xl-5">
 						<div class="mb-3 fadeIn ">
 							<div class="text-start mb-1-6 fadeIn">
-								<h2 class="h3 mb-0 text-light"><img src="{{ asset('images/games/' ~ profile.game.code|lower ~ '.png') }}" style="width: 48px;" alt="{{profile.game.name}}">
+								<h2 class="h3 mb-0 text-light"><img src="{{ asset('images/games/' ~ profile.game.code ~ '.png') }}" style="width: 48px;" alt="{{profile.game.name}}">
 									{{ profile.ingameName }}
 									-
 									{{ profile.game.name }}</h2>
