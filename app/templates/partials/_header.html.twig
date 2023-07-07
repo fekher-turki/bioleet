@@ -150,9 +150,9 @@
 												profileSelector.append(
 												    `<div class="mb-2">
 												        <a href="/profile/${value.game.code}/${value.ingameName}">
-												            <img src="{{ asset('images/countries/' ~ '${value.user.country}'|lower ~ '.png') }}" style="width: 32px; padding-left: 5px;" alt="${value.user.country}">
+												            <img src="{{ asset('images/countries/' ~ '${value.user.country}' ~ '.png') }}" style="width: 32px; padding-left: 5px;" alt="${value.user.country}">
 												            ${value.ingameName}
-												            <img src="{{ asset('images/games/' ~ '${value.game.code}'|lower ~ '.png') }}" style="width: 32px; padding-right: 10px;" class="position-absolute end-0" alt="${value.game.name}">
+												            <img src="{{ asset('images/games/' ~ '${value.game.code}' ~ '.png') }}" style="width: 32px; padding-right: 10px;" class="position-absolute end-0" alt="${value.game.name}">
 												        </a>
 												    </div>`
 												);
@@ -163,9 +163,9 @@
 												teamSelector.append(
 												    `<div>
 												        <a href="/team/${value.game.code}/${value.teamUrl}">
-												            <img src="{{ asset('images/countries/' ~ '${value.country}'|lower ~ '.png') }}" style="width: 32px; padding-left: 5px;" alt="${value.country}">
+												            <img src="{{ asset('images/countries/' ~ '${value.country}' ~ '.png') }}" style="width: 32px; padding-left: 5px;" alt="${value.country}">
 												            ${value.teamName}
-												            <img src="{{ asset('images/games/' ~ '${value.game.code}'|lower ~ '.png') }}" style="width: 32px; padding-right: 10px;" class="position-absolute end-0" alt="${value.game.name}">
+												            <img src="{{ asset('images/games/' ~ '${value.game.code}' ~ '.png') }}" style="width: 32px; padding-right: 10px;" class="position-absolute end-0" alt="${value.game.name}">
 												        </a>
 												    </div>`
 												);
