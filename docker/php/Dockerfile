@@ -16,10 +16,12 @@ WORKDIR /var/www/bioleet
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-RUN apt-get update && apt-get install -y nano
+RUN apt-get update && apt-get install -y nano procps
 
 RUN curl -sS https://get.symfony.com/cli/installer | bash
 RUN mv /root/.symfony5/bin/symfony /usr/local/bin/symfony
+RUN mkdir -p /var/www/bioleet/public/media/cache \
+    && chown -R www-data:www-data /var/www/bioleet/public/media/cache
 RUN git config --global user.email "turki.fekher@gmail.com" \ 
     && git config --global user.name "Fekher Turki" \
     && git config --global --add safe.directory /var/www/bioleet
