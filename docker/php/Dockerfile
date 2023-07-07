@@ -13,8 +13,8 @@ RUN apt update \
 RUN echo "short_open_tag = Off" >> /usr/local/etc/php/php.ini
 
 WORKDIR /var/www/bioleet  \
-    && chown -R www-data:www-data /var/www/bioleet \
-    && chmod -R 775 /var/www/bioleet
+    && chown -R www-data:www-data /var/www/bioleet/public \
+    && chmod -R 775 /var/www/bioleet/public
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
