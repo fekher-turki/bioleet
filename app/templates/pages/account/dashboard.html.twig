@@ -128,7 +128,7 @@
 						{% for profile in profiles %}
 							<tr>
 								<td>
-									<img src="{{ asset('images/games/' ~ profile.game.code ~ '.png') }}" width="32" alt="{{ profile.game.name }}"/>
+									<img src="{{ asset('images/games/' ~ profile.game.code|lower ~ '.png') }}" width="32" alt="{{ profile.game.name }}"/>
 									{{ profile.game.name }}
 								</td>
 								<td>
@@ -284,7 +284,7 @@
 						{% for team in teams %}
 							<tr>
 								<td>
-									<img src="{{ asset('images/games/' ~ team.game.code ~ '.png') }}" width="32" alt="{{ team.game.name }}"/>
+									<img src="{{ asset('images/games/' ~ team.game.code|lower ~ '.png') }}" width="32" alt="{{ team.game.name }}"/>
 									{{ team.game.name }}
 								</td>
 								<td>
