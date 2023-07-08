@@ -5,11 +5,16 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\SignUpType;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
@@ -31,7 +36,7 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/signup', 'security.signup', methods: ['GET', 'POST'])]
-    public function signup(Request $request, EntityManagerInterface $manager): Response
+    public function signup(Request $request, EntityManagerInterface $manager, MailerInterface $mailer, TokenGeneratorInterface $tokenGenerator): Response
     {
         $user = new User();
         $user->setRoles(['ROLE_USER']);
@@ -47,14 +52,27 @@ class SecurityController extends AbstractController
             if ($existingUser) {
                 $form->get('username')->addError(new FormError('This username is already taken.'));
             } else {
-
                 $user->setNickname($user->getUsername());
-                $this->addFlash(
-                    'success',
-                    'Your account has been successfully created'
-                );
+                $user->setEmailVerified(false);
+
+                $verificationToken = $tokenGenerator->generateToken();
+                $user->setVerificationToken($verificationToken);
+
                 $manager->persist($user);
                 $manager->flush();
+
+                $email = (new TemplatedEmail())
+                    ->from(new Address('BioLeetCom@hotmail.com', 'BioLeet Mail Bot'))
+                    ->to($user->getEmail())
+                    ->subject('Email Verification')
+                    ->text('Click the link to verify your email: '.$this->generateUrl('security.verify_email', ['token' => $verificationToken], UrlGeneratorInterface::ABSOLUTE_URL));
+                
+                $mailer->send($email);
+                
+                $this->addFlash(
+                    'success',
+                    'Your account has been successfully created. Please check your email to verify your account.'
+                );
 
                 return $this->redirectToRoute('security.login');
             }
@@ -63,5 +81,21 @@ class SecurityController extends AbstractController
         return $this->render('pages/security/signup.html.twig', [
             'form' => $form->createView()
         ]);
+    }
+
+    #[Route('/verify-email/{token}', name: 'security.verify_email', methods: ['GET'])]
+    public function verifyEmail(string $token, EntityManagerInterface $manager): Response
+    {
+        $user = $manager->getRepository(User::class)->findOneBy(['verificationToken' => $token]);
+        $user->setEmailVerified(true);
+        $manager->persist($user);
+        $manager->flush();
+
+        $this->addFlash(
+            'success',
+            'Your email has been successfully verified. You can now log in.'
+        );
+
+        return $this->redirectToRoute('security.login');
     }
 }

@@ -128,6 +128,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Setup::class, orphanRemoval: true)]
     private Collection $setup;
 
+    #[ORM\Column]
+    private ?bool $emailVerified = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $verificationToken = null;
+
     public function __construct()
     {
         $this->nickname = $this->username;
@@ -615,6 +621,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
                 $setup->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isEmailVerified(): ?bool
+    {
+        return $this->emailVerified;
+    }
+
+    public function setEmailVerified(bool $emailVerified): static
+    {
+        $this->emailVerified = $emailVerified;
+
+        return $this;
+    }
+
+    public function getVerificationToken(): ?string
+    {
+        return $this->verificationToken;
+    }
+
+    public function setVerificationToken(?string $verificationToken): static
+    {
+        $this->verificationToken = $verificationToken;
 
         return $this;
     }
