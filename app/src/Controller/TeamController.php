@@ -217,50 +217,59 @@ class TeamController extends AbstractController
                 
         if ($inviteForm->isSubmitted() && $inviteForm->isValid()) {
             $invite = $inviteForm->get('password')->getData();
-            if( $team->getPlayers()->count() == 10) {
-                $this->addFlash(
-                    'warning',
-                    'This team is full'
-                );
-            }
-            else if ($profile->getTeam() == $team ) {
-                $this->addFlash(
-                    'warning',
-                    'Your are already joined this team'
-                );
+            if ($profile) {
+                if( $team->getPlayers()->count() == 10) {
+                    $this->addFlash(
+                        'warning',
+                        'This team is full'
+                    );
+                }
+                else if ($profile->getTeam() == $team ) {
+                    $this->addFlash(
+                        'warning',
+                        'Your are already joined this team'
+                    );
+        
+                    $referer = $request->headers->get('referer');
+                    return new RedirectResponse($referer);
     
-                $referer = $request->headers->get('referer');
-                return new RedirectResponse($referer);
-
-            }
-            else if ( $profile->getTeam()) {
+                }
+                else if ( $profile->getTeam()) {
+                    $this->addFlash(
+                        'warning',
+                        'Your are already in a team'
+                    );
+        
+                    $referer = $request->headers->get('referer');
+                    return new RedirectResponse($referer);
+                }
+                else if ($team->getPassword() == $invite) {
+                    
+                    $profile->setTeam($team);
+                    $manager->persist($profile);
+                    $manager->flush();
+    
+                    $this->addFlash(
+                        'success',
+                        'Your have successfully joined this team'
+                    );
+        
+                    $referer = $request->headers->get('referer');
+                    return new RedirectResponse($referer);
+                }
+                else if ($team->getPassword() != $invite) {
+                    $this->addFlash(
+                        'warning',
+                        'Password is incorrect'
+                    );
+    
+                    $referer = $request->headers->get('referer');
+                    return new RedirectResponse($referer);
+                }
+            }else{
                 $this->addFlash(
                     'warning',
-                    'Your are already in a team'
-                );
-    
-                $referer = $request->headers->get('referer');
-                return new RedirectResponse($referer);
-            }
-            else if ($team->getPassword() == $invite) {
-                
-
-                $profile->setTeam($team);
-                $manager->persist($profile);
-                $manager->flush();
-
-                $this->addFlash(
-                    'success',
-                    'Your have successfully joined this team'
-                );
-    
-                $referer = $request->headers->get('referer');
-                return new RedirectResponse($referer);
-            }
-            else if ($team->getPassword() != $invite) {
-                $this->addFlash(
-                    'warning',
-                    'Password is incorrect'
+                    'Create '.$gameCode->getCode().' Profile first'
                 );
 
                 $referer = $request->headers->get('referer');
