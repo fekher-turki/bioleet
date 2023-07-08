@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Team;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -37,6 +38,18 @@ class TeamRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function getTeamsNotOwnedByUser(User $user)
+    {
+        return $this->createQueryBuilder('team')
+            ->leftJoin('team.players', 'profile')
+            ->andWhere('profile.user = :user')
+            ->andWhere('profile.team IS NOT NULL')
+            ->andWhere('team.owner != :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
     }
 
     public function findEntitiesByString($str)

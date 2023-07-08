@@ -294,38 +294,68 @@
 									<button class="btn btn btn-outline-light btn-sm me-2" onclick="window.location.href='{{ path('team.index', {'game': team.game.code, 'teamUrl': team.teamUrl}) }}'">
 										<i class="fa fa-eye"></i>
 									</button>
-									<button class="btn btn btn-outline-light btn-sm me-2" onclick="window.location.href='{{ path('team.edit', {'game': team.game.code, 'teamUrl': team.teamUrl}) }}'">
-										<i class="fa fa-pencil"></i>
-									</button>
-									<button class="btn btn btn-outline-light btn-sm me-2" onclick="window.location.href='{{ path('team.manage', {'game': team.game.code, 'teamUrl': team.teamUrl}) }}'">
-										<i class="fa fa-gear"></i>
-									</button>
-									{% set deleteTeamModalId = 'deleteTeamModal' ~ team.id %}
+									{% if team.owner != user %}
+										{% set leaveTeamModalId = 'leaveTeamModal' ~ team.id %}
 
-									<button type="button" class="btn btn btn-outline-light btn-sm me-2" data-bs-toggle="modal" data-bs-target="#{{ deleteTeamModalId }}">
-										<i class="fa fa-trash"></i>
-									</button>
+										<button type="button" class="btn btn btn-outline-light btn-sm me-2" data-bs-toggle="modal" data-bs-target="#{{ leaveTeamModalId }}">
+											<i class="fa fa-person-walking-arrow-right"></i>
+										</button>
 
-									{% set deleteTeamModalTitle = 'Confirmation' %}
-									{% set deleteTeamModalBody %}
-									You are about to delete your team, once you confirm it will not be restored!
-									{% endset %}
+										{% set leaveTeamModalTitle = 'Confirmation' %}
+										{% set leaveTeamModalBody %}
+										You are about to leave your team, once you confirm it will not be restored!
+										{% endset %}
 
-									{% set deleteTeamModalFooter %}
-									<button class="btn btn-danger" onclick="window.location.href='{{ path('team.delete', {'game': team.game.code, 'teamUrl': team.teamUrl}) }}'">
-										Delete
-									</button>
-									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">
-										Cancel
-									</button>
-									{% endset %}
+										{% set leaveTeamModalFooter %}
+										<button class="btn btn-danger" onclick="window.location.href='{{ path('team.leave', {'game': team.game.code, 'teamUrl': team.teamUrl}) }}'">
+											Leave
+										</button>
+										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">
+											Cancel
+										</button>
+										{% endset %}
 
-									{% include 'partials/modal.html.twig' with {
+										{% include 'partials/modal.html.twig' with {
+										modalId: leaveTeamModalId,
+										modalTitle: leaveTeamModalTitle,
+										modalBody: leaveTeamModalBody,
+										modalFooter: leaveTeamModalFooter
+									} only %}
+									{% else %}
+										<button class="btn btn btn-outline-light btn-sm me-2" onclick="window.location.href='{{ path('team.edit', {'game': team.game.code, 'teamUrl': team.teamUrl}) }}'">
+											<i class="fa fa-pencil"></i>
+										</button>
+										<button class="btn btn btn-outline-light btn-sm me-2" onclick="window.location.href='{{ path('team.manage', {'game': team.game.code, 'teamUrl': team.teamUrl}) }}'">
+											<i class="fa fa-gear"></i>
+										</button>
+										
+										{% set deleteTeamModalId = 'deleteTeamModal' ~ team.id %}
+
+										<button type="button" class="btn btn btn-outline-light btn-sm me-2" data-bs-toggle="modal" data-bs-target="#{{ deleteTeamModalId }}">
+											<i class="fa fa-trash"></i>
+										</button>
+
+										{% set deleteTeamModalTitle = 'Confirmation' %}
+										{% set deleteTeamModalBody %}
+										You are about to delete your team, once you confirm it will not be restored!
+										{% endset %}
+
+										{% set deleteTeamModalFooter %}
+										<button class="btn btn-danger" onclick="window.location.href='{{ path('team.delete', {'game': team.game.code, 'teamUrl': team.teamUrl}) }}'">
+											Delete
+										</button>
+										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">
+											Cancel
+										</button>
+										{% endset %}
+
+										{% include 'partials/modal.html.twig' with {
 										modalId: deleteTeamModalId,
 										modalTitle: deleteTeamModalTitle,
 										modalBody: deleteTeamModalBody,
 										modalFooter: deleteTeamModalFooter
 									} only %}
+									{% endif %}
 								</td>
 							</tr>
 						{% endfor %}

@@ -30,11 +30,19 @@ class AccountController extends AbstractController
     public function dashboard(Request $request, EntityManagerInterface $manager): Response
     {
         $currentUser = $this->getUser();
-        $profiles = $currentUser->getProfiles();
         $isPremium = $currentUser->isPremium();
+        $profiles = $currentUser->getProfiles();
+        if (!$currentUser->isPremium()) {
+            $profiles = [$profiles[0]];
+        }
         $hasProfiles = $currentUser->getProfiles()->count() > 0;
-        $teams = $currentUser->getTeams();
-        $hasTeams = $currentUser->getTeams()->count() > 0;
+        
+        $ownedTeams = $currentUser->getTeams();
+        
+        $joinedTeams = $manager->getRepository(Team::class)->getTeamsNotOwnedByUser($currentUser);
+        $teams = array_merge($ownedTeams->toArray(), $joinedTeams);
+        
+        $hasTeams = !empty($teams);
 
         // new Profile
         $profile = new Profile();

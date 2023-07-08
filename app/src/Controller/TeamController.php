@@ -310,6 +310,33 @@ class TeamController extends AbstractController
     }
 
     #[IsGranted('ROLE_USER')]
+    #[Route('/account/team/leave/{game}/{teamUrl}', name: 'team.leave', methods: ['GET'])]
+    public function leave(
+        EntityManagerInterface $manager,
+        string $game,
+        string $teamUrl
+    ): Response
+    {
+        $gameCode = $manager->getRepository(Game::class)->findOneBy(['code' => $game]);
+        $team = $manager->getRepository(Team::class)->findOneBy(['teamUrl' => $teamUrl, 'game' => $gameCode]);
+        $player = $manager->getRepository(Profile::class)->findOneBy(['user' => $this->getUser(), 'game' => $gameCode]);
+
+        if (!$team) {
+            return $this->redirectToRoute('account.dashboard');
+        }
+
+        $team->removePlayer($player);
+        $manager->flush();
+
+        $this->addFlash(
+            'success',
+            'You have left team '.$team->getTeamName()
+        );
+
+        return $this->redirectToRoute('account.dashboard');
+    }
+
+    #[IsGranted('ROLE_USER')]
     #[Route('/account/team/{game}/{teamUrl}/delete', name: 'team.delete', methods: ['GET'])]
     public function delete(
         EntityManagerInterface $manager,
