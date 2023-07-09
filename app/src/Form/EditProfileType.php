@@ -76,7 +76,7 @@ class EditProfileType extends AbstractType
                 'required' => false,
                 'constraints' => [
                     new Assert\Regex([
-                        'pattern' => '/^[a-zA-Z0-9]+$/',
+                        'pattern' => '/^[A-Za-z0-9_-]{11}$/',
                         'message' => 'Please put your youtube video id',
                     ]),
                 ]
