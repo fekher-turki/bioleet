@@ -67,15 +67,18 @@ class EditProfileType extends AbstractType
                 'required' => false,
             ])
             ->add('montage', TextType::class, [
-                'label' => 'Montage Video',
+                'label' => 'Montage Video id',
                 'label_attr' => ['class' => 'form-label text-light'],
                 'attr' => [
-                    'placeholder' => 'Montage Video',
+                    'placeholder' => 'Montage Video id',
                     'class' => 'form-control text-light bg-dark'
                 ],
                 'required' => false,
                 'constraints' => [
-                    new Assert\Url(),
+                    new Assert\Regex([
+                        'pattern' => '/^[a-zA-Z0-9]+$/',
+                        'message' => 'Please put your youtube video id',
+                    ]),
                 ]
             ])
             ->add('submit', SubmitType::class, [
