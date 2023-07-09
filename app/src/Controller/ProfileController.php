@@ -23,6 +23,7 @@ class ProfileController extends AbstractController
         string $game,
         string $ingameName,
     ): Response {
+        $currentUser = $this->getUser();
         $gameCode = $manager->getRepository(Game::class)->findOneBy(['code' => $game]);
         $profile = $manager->getRepository(Profile::class)->findOneBy(['ingameName' => $ingameName, 'game' => $gameCode]);
 
@@ -50,6 +51,7 @@ class ProfileController extends AbstractController
             'bio' => $bio,
             'team' => false,
             'user' => $user,
+            'currentUser' => $currentUser,
             'embed' => "https://www.youtube.com/embed/",
         ]);
     }
@@ -154,7 +156,8 @@ class ProfileController extends AbstractController
             'profileForm' => $profileForm->createView(),
             'experienceForm' => $experienceForm->createView(),
             'experiences' => $experiences,
-            'hasExperiences' => $hasExperiences
+            'hasExperiences' => $hasExperiences,
+            'profile' => $profile
         ]);
     }
 

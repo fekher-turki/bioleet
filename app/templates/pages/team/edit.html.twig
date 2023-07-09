@@ -50,6 +50,15 @@
 			</div>
 		{% endif %}
 		<div class="col-md-6 offset-md-3 mt-3">
+			<div class="d-flex flex-row-reverse">
+				<div class="p-2 form-group">
+					<div class="input-group mb-3">
+						<a href="{{ path('team.index', {'game': team.game.code, 'teamUrl': team.teamUrl}) }}" class="btn btn-primary">
+							View Team
+						</a>
+					</div>
+				</div>
+			</div>
 			<h4 class="mt-4">Edit Logo</h4>
 
 			{{ form_start(logoForm) }}

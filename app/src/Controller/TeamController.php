@@ -30,6 +30,7 @@ class TeamController extends AbstractController
         string $teamUrl,
     ): Response
     {
+        $currentUser = $this->getUser();
         $gameCode = $manager->getRepository(Game::class)->findOneBy(['code' => $game]);
         $team = $manager->getRepository(Team::class)->findOneBy(['teamUrl' => $teamUrl, 'game' => $gameCode]);
         $user = $team->getOwner();
@@ -50,7 +51,8 @@ class TeamController extends AbstractController
             'isBanned' => $isBanned,
             'team' => $team,
             'overview' => $overview,
-            'user' => $user
+            'user' => $user,
+            'currentUser' => $currentUser
         ]);
     }
 

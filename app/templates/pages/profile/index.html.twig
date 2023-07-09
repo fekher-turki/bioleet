@@ -6,14 +6,14 @@
 {% endblock %}
 
 {% block dynamic_meta %}
-		<meta name="description" content="{{ bio }}">
-		<meta property="og:title" content="{{ profile.user.firstName ~ " '" ~ profile.ingameName ~ "' " ~ profile.user.lastName }}">
-		{% if user.avatar == "default-avatar.png" %}
-			<meta property="og:image" content="{{ asset('images/default/default-avatar.png') | imagine_filter('avatar_720') }}?bg=3e4c54&amp;h=800&amp;ixlib=java-2.1.0&amp;rect=121%2C4%2C467%2C467&amp;w=800&amp;s=b7849a6a6f471ee77b3e67e5b07a5d90">
-		{% else %}
-			<meta property="og:image" content="{{ asset('images/users/' ~ user.avatar) | imagine_filter('avatar_720') }}?bg=3e4c54&amp;h=800&amp;ixlib=java-2.1.0&amp;rect=121%2C4%2C467%2C467&amp;w=800&amp;s=b7849a6a6f471ee77b3e67e5b07a5d90">
-		{% endif %}
-	{% endblock %}
+	<meta name="description" content="{{ bio }}">
+	<meta property="og:title" content="{{ profile.user.firstName ~ " '" ~ profile.ingameName ~ "' " ~ profile.user.lastName }}">
+	{% if user.avatar == "default-avatar.png" %}
+		<meta property="og:image" content="{{ asset('images/default/default-avatar.png') | imagine_filter('avatar_720') }}?bg=3e4c54&amp;h=800&amp;ixlib=java-2.1.0&amp;rect=121%2C4%2C467%2C467&amp;w=800&amp;s=b7849a6a6f471ee77b3e67e5b07a5d90">
+	{% else %}
+		<meta property="og:image" content="{{ asset('images/users/' ~ user.avatar) | imagine_filter('avatar_720') }}?bg=3e4c54&amp;h=800&amp;ixlib=java-2.1.0&amp;rect=121%2C4%2C467%2C467&amp;w=800&amp;s=b7849a6a6f471ee77b3e67e5b07a5d90">
+	{% endif %}
+{% endblock %}
 
 {% block stylesheets %}
 	{{ parent() }}
@@ -90,6 +90,13 @@
 							<img src="{{ asset('images/default/default-avatar.png') | imagine_filter('avatar_720') }}" alt="{{ user.nickname }}" class="bg-custom-dark">
 						{% else %}
 							<img src="{{ asset('images/users/' ~ user.avatar) | imagine_filter('avatar_720') }}" alt="{{ user.nickname }}" class="bg-custom-dark">
+						{% endif %}
+						{% if user == currentUser %}
+							<div class="position-relative">
+								<a href="{{ path('profile.edit', {'game': profile.game.code, 'ingameName': profile.ingameName}) }}" class="btn btn-dark position-absolute top-0 end-0 mt-3 me-3">
+									Edit Profile
+								</a>
+							</div>
 						{% endif %}
 						<div class="card-body p-1-9 p-xl-5 bg-secondary">
 							<div>
