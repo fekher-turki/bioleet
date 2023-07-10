@@ -47,11 +47,13 @@
 			<div class="row justify-content-center">
 				<div class="col-md-7 col-lg-4 mb-5 mb-lg-0 fadeIn">
 					<div class="card border-0 shadow">
-						<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6724869879733839" crossorigin="anonymous"></script>
+						<!-- google-adsence-start -->
+						{# <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6724869879733839" crossorigin="anonymous"></script>
 						<ins class="adsbygoogle" style="display:block" data-ad-format="fluid" data-ad-layout-key="-5s+dg-49-7o+14r" data-ad-client="ca-pub-6724869879733839" data-ad-slot="3238777244"></ins>
 						<script>
 							(adsbygoogle = window.adsbygoogle || []).push({});
-						</script>
+						</script> #}
+						<!-- google-adsence-start -->
 						<div class="card-body p-1-9 p-xl-5 bg-dark">
 							<div class="mb-5">
 								<h2>
@@ -175,7 +177,8 @@
 						{% endif %}
 					</div>
 				</div>
-				<div class="card border-0 shadow">
+				<!-- google-adsence-start -->
+				{# <div class="card border-0 shadow">
 					{% if isPremiumTeam == false %}
 						<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6724869879733839" crossorigin="anonymous"></script>
 						<ins class="adsbygoogle" style="display:block" data-ad-format="fluid" data-ad-layout-key="-5s+dg-49-7o+14r" data-ad-client="ca-pub-6724869879733839" data-ad-slot="3238777244"></ins>
@@ -183,7 +186,8 @@
 							(adsbygoogle = window.adsbygoogle || []).push({});
 						</script>
 					{% endif %}
-				</div>
+				</div> #}
+				<!-- google-adsence-end -->
 			</div>
 			<div class="col-lg-8">
 				<div class="ps-lg-1-6 ps-xl-5">
@@ -195,7 +199,8 @@
 								{{ team.game.name }}</h2>
 						</div>
 					</div>
-					{% if isPremiumTeam == false %}
+					<!-- google-adsence-start -->
+					{# {% if isPremiumTeam == false %}
 						<div class="mb-4 fadeIn">
 							<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6724869879733839" crossorigin="anonymous"></script>
 							<ins class="adsbygoogle" style="display:block" data-ad-format="fluid" data-ad-layout-key="-g7-1f+56-5v+6o" data-ad-client="ca-pub-6724869879733839" data-ad-slot="4360287224"></ins>
@@ -203,7 +208,8 @@
 								(adsbygoogle = window.adsbygoogle || []).push({});
 							</script>
 						</div>
-					{% endif %}
+					{% endif %} #}
+					<!-- google-adsence-end -->
 					<div class="mb-4 fadeIn">
 						<div class="text-start mb-1-6 fadeIn">
 							<h2 class="h3 mb-0 text-success">Overview</h2>
@@ -216,7 +222,8 @@
 						</div>
 						<div class="row">
 							{% if team.players is not empty %}
-								{% if isPremiumTeam == false %}
+								<!-- google-adsence-start -->
+								{# {% if isPremiumTeam == false %}
 									<div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
 										<div class="card h-100">
 											<div class="d-flex flex-column justify-content-between round-2 rounded">
@@ -228,7 +235,8 @@
 											</div>
 										</div>
 									</div>
-								{% endif %}
+								{% endif %} #}
+								<!-- google-adsence-start -->
 								{% for player in team.players %}
 									<div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
 										<div class="card mb-4 h-100">

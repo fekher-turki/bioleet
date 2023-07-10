@@ -49,11 +49,13 @@
 			<div class="row justify-content-center">
 				<div class="col-md-7 col-lg-4 mb-5 mb-lg-0 fadeIn">
 					<div class="card border-0 shadow">
-						<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6724869879733839" crossorigin="anonymous"></script>
+						<!-- google-adsence-start -->
+						{# <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6724869879733839" crossorigin="anonymous"></script>
 						<ins class="adsbygoogle" style="display:block" data-ad-format="fluid" data-ad-layout-key="-5s+dg-49-7o+14r" data-ad-client="ca-pub-6724869879733839" data-ad-slot="3238777244"></ins>
 						<script>
 							(adsbygoogle = window.adsbygoogle || []).push({});
-						</script>
+						</script> #}
+						<!-- google-adsence-start -->
 						<div class="card-body p-1-9 p-xl-5 bg-dark">
 							<div class="mb-5">
 								<h2>
@@ -199,7 +201,8 @@
 							{% endif %}
 						</div>
 					</div>
-					<div class="card border-0 shadow">
+					<!-- google-adsence-start -->
+					{# <div class="card border-0 shadow">
 						{% if isPremiumProfile == false %}
 							<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6724869879733839" crossorigin="anonymous"></script>
 							<ins class="adsbygoogle" style="display:block" data-ad-format="fluid" data-ad-layout-key="-5s+dg-49-7o+14r" data-ad-client="ca-pub-6724869879733839" data-ad-slot="3238777244"></ins>
@@ -207,7 +210,8 @@
 								(adsbygoogle = window.adsbygoogle || []).push({});
 							</script>
 						{% endif %}
-					</div>
+					</div> #}
+					<!-- google-adsence-end -->
 				</div>
 				<div class="col-lg-8">
 					<div class="ps-lg-1-6 ps-xl-5">
@@ -219,7 +223,8 @@
 									{{ profile.game.name }}</h2>
 							</div>
 						</div>
-						{% if isPremiumProfile == false %}
+						<!-- google-adsence-start -->
+						{# {% if isPremiumProfile == false %}
 							<div class="mb-4 fadeIn">
 								<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6724869879733839" crossorigin="anonymous"></script>
 								<ins class="adsbygoogle" style="display:block" data-ad-format="fluid" data-ad-layout-key="-g7-1f+56-5v+6o" data-ad-client="ca-pub-6724869879733839" data-ad-slot="4360287224"></ins>
@@ -227,7 +232,8 @@
 									(adsbygoogle = window.adsbygoogle || []).push({});
 								</script>
 							</div>
-						{% endif %}
+						{% endif %} #}
+						<!-- google-adsence-end -->
 						<div class="mb-4 fadeIn">
 							<div class="text-start mb-1-6 fadeIn">
 								<h2 class="h3 mb-0 text-success">About</h2>
@@ -285,8 +291,8 @@
 											</div>
 										</div>
 									{% endif %}
-
-									{% if isPremiumProfile == false %}
+									<!-- google-adsence-start -->
+									{# {% if isPremiumProfile == false %}
 										<div class="col-sm-6 col-md-3 mb-1">
 											<div class="card">
 												<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6724869879733839" crossorigin="anonymous"></script>
@@ -296,8 +302,8 @@
 												</script>
 											</div>
 										</div>
-									{% endif %}
-
+									{% endif %} #}
+									<!-- google-adsence-end -->
 									{% if profile.user.setup.gpu %}
 										<div class="col-sm-6 col-md-3 mb-1">
 											<div class="card">
@@ -550,7 +556,8 @@
 								<iframe width="100%" height="400px" src="{{ embed ~ profile.montage }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 							</div>
 						{% endif %}
-						{% if isPremiumProfile == false %}
+						<!-- google-adsence-start -->
+						{# {% if isPremiumProfile == false %}
 							<div class="mb-4 fadeIn">
 								<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6724869879733839" crossorigin="anonymous"></script>
 								<ins class="adsbygoogle" style="display:block" data-ad-format="fluid" data-ad-layout-key="-g7-1f+56-5v+6o" data-ad-client="ca-pub-6724869879733839" data-ad-slot="4360287224"></ins>
@@ -558,7 +565,8 @@
 									(adsbygoogle = window.adsbygoogle || []).push({});
 								</script>
 							</div>
-						{% endif %}
+						{% endif %} #}
+						<!-- google-adsence-end -->
 					</div>
 				</div>
 			</div>
