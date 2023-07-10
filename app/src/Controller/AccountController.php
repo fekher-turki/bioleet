@@ -38,9 +38,16 @@ class AccountController extends AbstractController
         $hasProfiles = $currentUser->getProfiles()->count() > 0;
         
         $ownedTeams = $currentUser->getTeams();
-        
         $joinedTeams = $manager->getRepository(Team::class)->getTeamsNotOwnedByUser($currentUser);
-        $teams = array_merge($ownedTeams->toArray(), $joinedTeams);
+        if (!$currentUser->isPremium()) {
+            $ownedTeams = [$ownedTeams[0]];
+            $teams = array_merge($ownedTeams, $joinedTeams);
+        }else{
+            $teams = array_merge($ownedTeams->toArray(), $joinedTeams);
+        }
+
+        
+        
         
         $hasTeams = !empty($teams);
 
