@@ -28,7 +28,7 @@ class ProfileController extends AbstractController
         $profile = $manager->getRepository(Profile::class)->findOneBy(['ingameName' => $ingameName, 'game' => $gameCode]);
 
         if ($profile) {
-            $profile->setViewCount($profile->getViewCount() + 1);
+            $profile->setViews($profile->getViews() + 1);
             $manager->persist($profile);
             $manager->flush();
         }

@@ -35,7 +35,7 @@ class TeamController extends AbstractController
         $team = $manager->getRepository(Team::class)->findOneBy(['teamUrl' => $teamUrl, 'game' => $gameCode]);
 
         if ($team) {
-            $team->setViewCount($team->getViewCount() + 1);
+            $team->setViews($team->getViews() + 1);
             $manager->persist($team);
             $manager->flush();
         }
