@@ -64,6 +64,9 @@ class Team
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $views = null;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
@@ -280,6 +283,18 @@ class Team
     public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getViews(): ?int
+    {
+        return $this->views;
+    }
+
+    public function setViews(?int $views): static
+    {
+        $this->views = $views;
 
         return $this;
     }

@@ -47,6 +47,9 @@ class Profile
     #[ORM\ManyToOne(inversedBy: 'players')]
     private ?Team $team = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $views = 0;
+
     public function __construct()
     {
         $this->gameRole = new ArrayCollection();
@@ -193,6 +196,18 @@ class Profile
     public function setTeam(?Team $team): static
     {
         $this->team = $team;
+
+        return $this;
+    }
+
+    public function getViews(): ?int
+    {
+        return $this->views;
+    }
+
+    public function setViews(?int $views): static
+    {
+        $this->views = $views;
 
         return $this;
     }

@@ -33,6 +33,13 @@ class TeamController extends AbstractController
         $currentUser = $this->getUser();
         $gameCode = $manager->getRepository(Game::class)->findOneBy(['code' => $game]);
         $team = $manager->getRepository(Team::class)->findOneBy(['teamUrl' => $teamUrl, 'game' => $gameCode]);
+
+        if ($team) {
+            $team->setViewCount($team->getViewCount() + 1);
+            $manager->persist($team);
+            $manager->flush();
+        }
+
         $user = $team->getOwner();
         $isBanned = $user->isBanned();
         $isPremium = $user->isPremium();

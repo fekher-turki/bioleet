@@ -8,6 +8,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class TeamCrudController extends AbstractCrudController
@@ -35,6 +36,8 @@ class TeamCrudController extends AbstractCrudController
             ->hideOnForm(),
             TextField::new('teamName'),
             TextField::new('teamUrl'),
+            NumberField::new('views')
+                ->hideOnForm(),
             BooleanField::new('isVerified'),
             DateTimeField::new('createdAt')
                 ->hideOnForm()
